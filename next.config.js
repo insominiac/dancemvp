@@ -4,13 +4,17 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: {
-    domains: ['localhost', 'images.unsplash.com', 'backend-production-f4fe.up.railway.app'],
+    domains: ['localhost', 'images.unsplash.com', 'danncelink.vercel.app'],
   },
   experimental: {
     serverActions: {
-      allowedOrigins: ['backend-production-f4fe.up.railway.app', 'localhost:3000']
+      allowedOrigins: ['danncelink.vercel.app', 'localhost:3000']
     }
-  }
+  },
+  // Vercel-specific optimizations
+  poweredByHeader: false,
+  compress: true,
+  swcMinify: true
 }
 
 module.exports = nextConfig

@@ -6,16 +6,45 @@
   "framework": "nextjs",
   "regions": ["iad1"],
   "functions": {
-    "app/api/*": {
+    "app/api/**/*": {
       "maxDuration": 30
     }
   },
+  "headers": [
+    {
+      "source": "/api/swagger",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    },
+    {
+      "source": "/admin/api-docs",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    }
+  ],
   "env": {
     "DATABASE_URL": "@database_url",
     "REDIS_URL": "@redis_url",
     "JWT_SECRET": "@jwt_secret",
     "STRIPE_SECRET_KEY": "@stripe_secret",
-    "NEXTAUTH_SECRET": "@nextauth_secret"
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "NODE_ENV": "production"
   },
   "crons": [
     {

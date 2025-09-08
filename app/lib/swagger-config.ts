@@ -12,7 +12,7 @@ export const swaggerConfig = {
   servers: [
     {
       url: process.env.NODE_ENV === 'production' 
-        ? 'https://backend-production-f4fe.up.railway.app' 
+        ? 'https://danncelink.vercel.app' 
         : 'http://localhost:3000',
       description: process.env.NODE_ENV === 'production' ? 'Production' : 'Development'
     }
