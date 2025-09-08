@@ -1,0 +1,421 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                    String           @id @default(cuid())
+  email                 String           @unique
+  passwordHash          String           @map("password_hash")
+  fullName              String           @map("full_name")
+  phone                 String?
+  role                  UserRole         @default(USER)
+  bio                   String?
+  profileImage          String?          @map("profile_image")
+  isVerified            Boolean          @default(false) @map("is_verified")
+  websiteUrl            String?          @map("website_url")
+  instagramHandle       String?          @map("instagram_handle")
+  createdAt             DateTime         @default(now()) @map("created_at")
+  updatedAt             DateTime         @updatedAt @map("updated_at")
+  auditLogs             AuditLog[]
+  bookings              Booking[]
+  organizedEvents       Event[]
+  forumPosts            ForumPost[]
+  forumReplies          ForumReply[]
+  instructor            Instructor?
+  notifications         Notification[]
+  partnerMatchesAsUser1 PartnerMatch[]   @relation("User1Relation")
+  partnerMatchesAsUser2 PartnerMatch[]   @relation("User2Relation")
+  sentPartnerRequests   PartnerRequest[] @relation("RequesterRelation")
+  testimonials          Testimonial[]
+  transactions          Transaction[]
+  userStyles            UserStyle[]
+
+  @@index([role])
+  @@index([createdAt])
+  @@map("users")
+}
+
+model Instructor {
+  id               String            @id @default(cuid())
+  userId           String            @unique @map("user_id")
+  specialty        String?
+  experienceYears  Int?              @map("experience_years")
+  rating           Decimal?          @db.Decimal(3, 2)
+  isActive         Boolean           @default(true) @map("is_active")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  classInstructors ClassInstructor[]
+  user             User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("instructors")
+}
+
+model Class {
+  id               String            @id @default(cuid())
+  title            String
+  description      String
+  level            String
+  durationMins     Int               @map("duration_mins")
+  maxCapacity      Int               @map("max_capacity")
+  price            Decimal           @db.Decimal(10, 2)
+  scheduleDays     String?           @map("schedule_days")
+  scheduleTime     String?           @map("schedule_time")
+  requirements     String?
+  imageUrl         String?           @map("image_url")
+  isActive         Boolean           @default(true) @map("is_active")
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  bookings         Booking[]
+  classInstructors ClassInstructor[]
+  classStyles      ClassStyle[]
+
+  @@index([createdAt])
+  @@index([isActive])
+  @@map("classes")
+}
+
+model Event {
+  id               String       @id @default(cuid())
+  title            String
+  description      String
+  eventType        String       @map("event_type")
+  startDate        DateTime     @map("start_date")
+  endDate          DateTime     @map("end_date")
+  startTime        String       @map("start_time")
+  endTime          String       @map("end_time")
+  venueId          String       @map("venue_id")
+  price            Decimal      @db.Decimal(10, 2)
+  maxAttendees     Int          @map("max_attendees")
+  currentAttendees Int          @default(0) @map("current_attendees")
+  imageUrl         String?      @map("image_url")
+  organizerUserId  String?      @map("organizer_user_id")
+  status           EventStatus  @default(DRAFT)
+  isFeatured       Boolean      @default(false) @map("is_featured")
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @updatedAt @map("updated_at")
+  bookings         Booking[]
+  eventStyles      EventStyle[]
+  organizer        User?        @relation(fields: [organizerUserId], references: [id])
+  venue            Venue        @relation(fields: [venueId], references: [id])
+
+  @@index([venueId])
+  @@index([startDate, startTime])
+  @@index([status])
+  @@map("events")
+}
+
+model Venue {
+  id           String   @id @default(cuid())
+  name         String
+  addressLine1 String   @map("address_line1")
+  addressLine2 String?  @map("address_line2")
+  city         String
+  state        String
+  country      String
+  postalCode   String   @map("postal_code")
+  latitude     Decimal? @db.Decimal(9, 6)
+  longitude    Decimal? @db.Decimal(9, 6)
+  phone        String?
+  websiteUrl   String?  @map("website_url")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+  events       Event[]
+
+  @@index([name])
+  @@index([city])
+  @@index([country])
+  @@map("venues")
+}
+
+model ClassInstructor {
+  id           String     @id @default(cuid())
+  classId      String     @map("class_id")
+  instructorId String     @map("instructor_id")
+  isPrimary    Boolean    @default(false) @map("is_primary")
+  createdAt    DateTime   @default(now()) @map("created_at")
+  updatedAt    DateTime   @updatedAt @map("updated_at")
+  class        Class      @relation(fields: [classId], references: [id], onDelete: Cascade)
+  instructor   Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@unique([classId, instructorId])
+  @@map("class_instructors")
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  userId        String        @map("user_id")
+  classId       String?       @map("class_id")
+  eventId       String?       @map("event_id")
+  bookingDate   DateTime      @default(now()) @map("booking_date")
+  status        BookingStatus @default(PENDING)
+  amountPaid    Decimal       @map("amount_paid") @db.Decimal(10, 2)
+  paymentMethod String?       @map("payment_method")
+  notes         String?
+  createdAt     DateTime      @default(now()) @map("created_at")
+  updatedAt     DateTime      @updatedAt @map("updated_at")
+  class         Class?        @relation(fields: [classId], references: [id], onDelete: Cascade)
+  event         Event?        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions  Transaction[]
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([status])
+  @@map("bookings")
+}
+
+model Transaction {
+  id                String            @id @default(cuid())
+  bookingId         String?           @map("booking_id")
+  userId            String            @map("user_id")
+  provider          PaymentProvider
+  providerPaymentId String?           @map("provider_payment_id")
+  providerRefundId  String?           @map("provider_refund_id")
+  type              TransactionType
+  status            TransactionStatus @default(CREATED)
+  amount            Decimal           @db.Decimal(10, 2)
+  currency          String            @default("USD")
+  payload           String?
+  createdAt         DateTime          @default(now()) @map("created_at")
+  updatedAt         DateTime          @updatedAt @map("updated_at")
+  booking           Booking?          @relation(fields: [bookingId], references: [id])
+  user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerPaymentId])
+  @@map("transactions")
+}
+
+model DanceStyle {
+  id          String       @id @default(cuid())
+  name        String       @unique
+  category    String?
+  isActive    Boolean      @default(true) @map("is_active")
+  createdAt   DateTime     @default(now()) @map("created_at")
+  updatedAt   DateTime     @updatedAt @map("updated_at")
+  classStyles ClassStyle[]
+  eventStyles EventStyle[]
+  userStyles  UserStyle[]
+
+  @@map("dance_styles")
+}
+
+model UserStyle {
+  id          String      @id @default(cuid())
+  userId      String      @map("user_id")
+  styleId     String      @map("style_id")
+  proficiency Proficiency @default(BEGINNER)
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+  style       DanceStyle  @relation(fields: [styleId], references: [id])
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, styleId])
+  @@map("user_styles")
+}
+
+model ClassStyle {
+  id        String     @id @default(cuid())
+  classId   String     @map("class_id")
+  styleId   String     @map("style_id")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  class     Class      @relation(fields: [classId], references: [id], onDelete: Cascade)
+  style     DanceStyle @relation(fields: [styleId], references: [id])
+
+  @@unique([classId, styleId])
+  @@map("class_styles")
+}
+
+model EventStyle {
+  id        String     @id @default(cuid())
+  eventId   String     @map("event_id")
+  styleId   String     @map("style_id")
+  createdAt DateTime   @default(now()) @map("created_at")
+  updatedAt DateTime   @updatedAt @map("updated_at")
+  event     Event      @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  style     DanceStyle @relation(fields: [styleId], references: [id])
+
+  @@unique([eventId, styleId])
+  @@map("event_styles")
+}
+
+model ForumPost {
+  id           String       @id @default(cuid())
+  userId       String       @map("user_id")
+  category     String
+  title        String
+  content      String
+  viewsCount   Int          @default(0) @map("views_count")
+  likesCount   Int          @default(0) @map("likes_count")
+  repliesCount Int          @default(0) @map("replies_count")
+  isPinned     Boolean      @default(false) @map("is_pinned")
+  isLocked     Boolean      @default(false) @map("is_locked")
+  createdAt    DateTime     @default(now()) @map("created_at")
+  updatedAt    DateTime     @updatedAt @map("updated_at")
+  user         User         @relation(fields: [userId], references: [id], onDelete: SetNull)
+  replies      ForumReply[]
+
+  @@index([createdAt])
+  @@map("forum_posts")
+}
+
+model ForumReply {
+  id         String       @id @default(cuid())
+  postId     String       @map("post_id")
+  userId     String       @map("user_id")
+  parentId   String?      @map("parent_id")
+  content    String
+  likesCount Int          @default(0) @map("likes_count")
+  isSolution Boolean      @default(false) @map("is_solution")
+  createdAt  DateTime     @default(now()) @map("created_at")
+  updatedAt  DateTime     @updatedAt @map("updated_at")
+  parent     ForumReply?  @relation("ReplyToReply", fields: [parentId], references: [id], onDelete: Cascade)
+  replies    ForumReply[] @relation("ReplyToReply")
+  post       ForumPost    @relation(fields: [postId], references: [id], onDelete: Cascade)
+  user       User         @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([createdAt])
+  @@map("forum_replies")
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  type      String
+  title     String
+  message   String
+  isRead    Boolean  @default(false) @map("is_read")
+  priority  String   @default("normal")
+  actionUrl String?  @map("action_url")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  action    String
+  tableName String   @map("table_name")
+  recordId  String   @map("record_id")
+  oldValues String?  @map("old_values")
+  newValues String?  @map("new_values")
+  ipAddress String?  @map("ip_address")
+  userAgent String?  @map("user_agent")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("audit_logs")
+}
+
+model ContactMessage {
+  id            String   @id @default(cuid())
+  name          String
+  email         String
+  phone         String?
+  subject       String
+  message       String
+  isRead        Boolean  @default(false) @map("is_read")
+  adminResponse String?  @map("admin_response")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  @@map("contact_messages")
+}
+
+model Testimonial {
+  id         String   @id @default(cuid())
+  userId     String   @map("user_id")
+  rating     Int
+  message    String
+  isFeatured Boolean  @default(false) @map("is_featured")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("testimonials")
+}
+
+model PartnerRequest {
+  id               String   @id @default(cuid())
+  requesterId      String   @map("requester_id")
+  skillLevel       String   @map("skill_level")
+  locationCity     String   @map("location_city")
+  availabilityText String   @map("availability_text")
+  message          String?
+  status           String   @default("active")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+  requester        User     @relation("RequesterRelation", fields: [requesterId], references: [id], onDelete: Cascade)
+
+  @@map("partner_requests")
+}
+
+model PartnerMatch {
+  id         String   @id @default(cuid())
+  user1Id    String   @map("user1_id")
+  user2Id    String   @map("user2_id")
+  matchScore Float    @map("match_score")
+  status     String   @default("pending")
+  createdAt  DateTime @default(now()) @map("created_at")
+  updatedAt  DateTime @updatedAt @map("updated_at")
+  user1      User     @relation("User1Relation", fields: [user1Id], references: [id], onDelete: Cascade)
+  user2      User     @relation("User2Relation", fields: [user2Id], references: [id], onDelete: Cascade)
+
+  @@map("partner_matches")
+}
+
+enum UserRole {
+  USER
+  INSTRUCTOR
+  ADMIN
+}
+
+enum EventStatus {
+  DRAFT
+  PUBLISHED
+  CANCELLED
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  REFUNDED
+}
+
+enum PaymentProvider {
+  STRIPE
+  PAYPAL
+  OTHER
+}
+
+enum TransactionType {
+  PAYMENT
+  REFUND
+  ADJUSTMENT
+}
+
+enum TransactionStatus {
+  CREATED
+  SUCCEEDED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum Proficiency {
+  BEGINNER
+  INTERMEDIATE
+  ADVANCED
+}

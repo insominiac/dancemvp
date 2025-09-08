@@ -1,0 +1,1769 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dance Platform API",
+    "description": "Complete API documentation for the Dance Platform application. This API provides endpoints for managing users, classes, events, bookings, and more.",
+    "version": "2.0.0",
+    "contact": {
+      "name": "API Support",
+      "email": "support@danceplatform.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000",
+      "description": "Development server"
+    },
+    {
+      "url": "https://api.danceplatform.com",
+      "description": "Production server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT authentication token"
+      },
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "auth-token",
+        "description": "Authentication cookie"
+      }
+    },
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "clh3k4j5k0000vy0w8k9z1234"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "user@example.com"
+          },
+          "fullName": {
+            "type": "string",
+            "example": "John Doe"
+          },
+          "phone": {
+            "type": "string",
+            "example": "+1-555-0123"
+          },
+          "role": {
+            "type": "string",
+            "enum": ["USER", "INSTRUCTOR", "ADMIN"],
+            "example": "USER"
+          },
+          "bio": {
+            "type": "string",
+            "example": "Dance enthusiast with 5 years of experience"
+          },
+          "isVerified": {
+            "type": "boolean",
+            "example": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "Class": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "example": "Hip Hop Fundamentals"
+          },
+          "description": {
+            "type": "string",
+            "example": "Learn the basics of hip hop dance"
+          },
+          "level": {
+            "type": "string",
+            "example": "Beginner"
+          },
+          "durationMins": {
+            "type": "integer",
+            "example": 60
+          },
+          "maxCapacity": {
+            "type": "integer",
+            "example": 30
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal",
+            "example": 25.00
+          },
+          "scheduleDays": {
+            "type": "string",
+            "example": "Monday, Wednesday, Friday"
+          },
+          "scheduleTime": {
+            "type": "string",
+            "example": "6:00 PM"
+          },
+          "requirements": {
+            "type": "string",
+            "example": "Comfortable clothing, sneakers"
+          },
+          "imageUrl": {
+            "type": "string",
+            "example": "/images/hiphop-class.jpg"
+          },
+          "isActive": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string",
+            "example": "Summer Dance Workshop"
+          },
+          "description": {
+            "type": "string"
+          },
+          "eventType": {
+            "type": "string",
+            "example": "Workshop"
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "startTime": {
+            "type": "string",
+            "example": "09:00"
+          },
+          "endTime": {
+            "type": "string",
+            "example": "17:00"
+          },
+          "venueId": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "maxAttendees": {
+            "type": "integer"
+          },
+          "currentAttendees": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["DRAFT", "PUBLISHED", "CANCELLED"]
+          },
+          "isFeatured": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Booking": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "classId": {
+            "type": "string"
+          },
+          "eventId": {
+            "type": "string"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "CONFIRMED", "CANCELLED", "COMPLETED", "REFUNDED"]
+          },
+          "amountPaid": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "paymentMethod": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      },
+      "Venue": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "Downtown Dance Studio"
+          },
+          "addressLine1": {
+            "type": "string"
+          },
+          "addressLine2": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "latitude": {
+            "type": "number"
+          },
+          "longitude": {
+            "type": "number"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "websiteUrl": {
+            "type": "string"
+          }
+        }
+      },
+      "DanceStyle": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string",
+            "example": "Hip Hop"
+          },
+          "category": {
+            "type": "string",
+            "example": "Street"
+          },
+          "isActive": {
+            "type": "boolean"
+          }
+        }
+      },
+      "Transaction": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "bookingId": {
+            "type": "string"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string",
+            "enum": ["STRIPE", "PAYPAL", "OTHER"]
+          },
+          "type": {
+            "type": "string",
+            "enum": ["PAYMENT", "REFUND", "ADJUSTMENT"]
+          },
+          "status": {
+            "type": "string",
+            "enum": ["CREATED", "SUCCEEDED", "FAILED", "REFUNDED", "CANCELLED"]
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "currency": {
+            "type": "string",
+            "example": "USD"
+          }
+        }
+      },
+      "LoginRequest": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "example": "admin@dev.local"
+          },
+          "password": {
+            "type": "string",
+            "format": "password",
+            "example": "admin123"
+          }
+        }
+      },
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Login successful"
+          },
+          "user": {
+            "$ref": "#/components/schemas/User"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "An error occurred"
+          }
+        }
+      },
+      "PaginationMeta": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "example": 100
+          },
+          "page": {
+            "type": "integer",
+            "example": 1
+          },
+          "limit": {
+            "type": "integer",
+            "example": 10
+          },
+          "totalPages": {
+            "type": "integer",
+            "example": 10
+          }
+        }
+      },
+      "Statistics": {
+        "type": "object",
+        "properties": {
+          "totalUsers": {
+            "type": "integer"
+          },
+          "totalClasses": {
+            "type": "integer"
+          },
+          "totalEvents": {
+            "type": "integer"
+          },
+          "totalBookings": {
+            "type": "integer"
+          },
+          "totalVenues": {
+            "type": "integer"
+          },
+          "totalInstructors": {
+            "type": "integer"
+          },
+          "totalRevenue": {
+            "type": "number"
+          },
+          "userBreakdown": {
+            "type": "object",
+            "properties": {
+              "admins": {
+                "type": "integer"
+              },
+              "instructors": {
+                "type": "integer"
+              },
+              "students": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "parameters": {
+      "pageParam": {
+        "name": "page",
+        "in": "query",
+        "description": "Page number",
+        "schema": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        }
+      },
+      "limitParam": {
+        "name": "limit",
+        "in": "query",
+        "description": "Number of items per page",
+        "schema": {
+          "type": "integer",
+          "default": 10,
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "searchParam": {
+        "name": "search",
+        "in": "query",
+        "description": "Search term",
+        "schema": {
+          "type": "string"
+        }
+      },
+      "idParam": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Resource ID",
+        "schema": {
+          "type": "string"
+        }
+      }
+    },
+    "responses": {
+      "UnauthorizedError": {
+        "description": "Authentication required",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Authentication required"
+            }
+          }
+        }
+      },
+      "ForbiddenError": {
+        "description": "Insufficient permissions",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Admin privileges required"
+            }
+          }
+        }
+      },
+      "NotFoundError": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Error"
+            },
+            "example": {
+              "error": "Resource not found"
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Authentication endpoints"
+    },
+    {
+      "name": "Admin - Users",
+      "description": "User management (Admin only)"
+    },
+    {
+      "name": "Admin - Classes",
+      "description": "Class management (Admin only)"
+    },
+    {
+      "name": "Admin - Events",
+      "description": "Event management (Admin only)"
+    },
+    {
+      "name": "Admin - Bookings",
+      "description": "Booking management (Admin only)"
+    },
+    {
+      "name": "Admin - Venues",
+      "description": "Venue management (Admin only)"
+    },
+    {
+      "name": "Admin - Dance Styles",
+      "description": "Dance style management (Admin only)"
+    },
+    {
+      "name": "Admin - Transactions",
+      "description": "Transaction management (Admin only)"
+    },
+    {
+      "name": "Admin - Statistics",
+      "description": "Dashboard statistics (Admin only)"
+    },
+    {
+      "name": "Public",
+      "description": "Public endpoints"
+    }
+  ],
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "User login",
+        "description": "Authenticate user and receive JWT token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid credentials",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "User logout",
+        "description": "Clear user session",
+        "responses": {
+          "200": {
+            "description": "Logout successful",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Logout successful"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/admin/stats": {
+      "get": {
+        "tags": ["Admin - Statistics"],
+        "summary": "Get dashboard statistics",
+        "description": "Retrieve comprehensive statistics for the admin dashboard",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "responses": {
+          "200": {
+            "description": "Statistics retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "stats": {
+                      "$ref": "#/components/schemas/Statistics"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/users": {
+      "get": {
+        "tags": ["Admin - Users"],
+        "summary": "List all users",
+        "description": "Retrieve a paginated list of all users",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/pageParam"},
+          {"$ref": "#/components/parameters/limitParam"},
+          {"$ref": "#/components/parameters/searchParam"},
+          {
+            "name": "role",
+            "in": "query",
+            "description": "Filter by user role",
+            "schema": {
+              "type": "string",
+              "enum": ["USER", "INSTRUCTOR", "ADMIN"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "users": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/User"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin - Users"],
+        "summary": "Create new user",
+        "description": "Create a new user account",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password", "fullName"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "fullName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["USER", "INSTRUCTOR", "ADMIN"]
+                  },
+                  "bio": {
+                    "type": "string"
+                  },
+                  "isVerified": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/users/{id}": {
+      "get": {
+        "tags": ["Admin - Users"],
+        "summary": "Get user by ID",
+        "description": "Retrieve a specific user by their ID",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/idParam"}
+        ],
+        "responses": {
+          "200": {
+            "description": "User retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Admin - Users"],
+        "summary": "Update user",
+        "description": "Update an existing user",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/idParam"}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password"
+                  },
+                  "fullName": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": ["USER", "INSTRUCTOR", "ADMIN"]
+                  },
+                  "bio": {
+                    "type": "string"
+                  },
+                  "isVerified": {
+                    "type": "boolean"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "user": {
+                      "$ref": "#/components/schemas/User"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin - Users"],
+        "summary": "Delete user",
+        "description": "Delete a user account",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/idParam"}
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "User deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/api/admin/classes": {
+      "get": {
+        "tags": ["Admin - Classes"],
+        "summary": "List all classes",
+        "description": "Retrieve a paginated list of all classes",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/pageParam"},
+          {"$ref": "#/components/parameters/limitParam"},
+          {"$ref": "#/components/parameters/searchParam"},
+          {
+            "name": "level",
+            "in": "query",
+            "description": "Filter by class level",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isActive",
+            "in": "query",
+            "description": "Filter by active status",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Classes retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "classes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Class"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin - Classes"],
+        "summary": "Create new class",
+        "description": "Create a new dance class",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "description", "level", "durationMins", "maxCapacity", "price"],
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "string"
+                  },
+                  "durationMins": {
+                    "type": "string"
+                  },
+                  "maxCapacity": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "scheduleDays": {
+                    "type": "string"
+                  },
+                  "scheduleTime": {
+                    "type": "string"
+                  },
+                  "requirements": {
+                    "type": "string"
+                  },
+                  "imageUrl": {
+                    "type": "string"
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  },
+                  "instructorIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "styleIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Class created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "class": {
+                      "$ref": "#/components/schemas/Class"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/classes/{id}": {
+      "get": {
+        "tags": ["Admin - Classes"],
+        "summary": "Get class by ID",
+        "description": "Retrieve a specific class by its ID",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/idParam"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Class retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Class"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
+      "put": {
+        "tags": ["Admin - Classes"],
+        "summary": "Update class",
+        "description": "Update an existing class",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/idParam"}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "level": {
+                    "type": "string"
+                  },
+                  "durationMins": {
+                    "type": "string"
+                  },
+                  "maxCapacity": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "scheduleDays": {
+                    "type": "string"
+                  },
+                  "scheduleTime": {
+                    "type": "string"
+                  },
+                  "requirements": {
+                    "type": "string"
+                  },
+                  "imageUrl": {
+                    "type": "string"
+                  },
+                  "isActive": {
+                    "type": "boolean"
+                  },
+                  "instructorIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "styleIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Class updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "class": {
+                      "$ref": "#/components/schemas/Class"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Admin - Classes"],
+        "summary": "Delete class",
+        "description": "Delete a class",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/idParam"}
+        ],
+        "responses": {
+          "200": {
+            "description": "Class deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Class deleted successfully"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Cannot delete class with active bookings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFoundError"
+          }
+        }
+      }
+    },
+    "/api/admin/events": {
+      "get": {
+        "tags": ["Admin - Events"],
+        "summary": "List all events",
+        "description": "Retrieve a paginated list of all events",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/pageParam"},
+          {"$ref": "#/components/parameters/limitParam"},
+          {"$ref": "#/components/parameters/searchParam"},
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by event status",
+            "schema": {
+              "type": "string",
+              "enum": ["DRAFT", "PUBLISHED", "CANCELLED"]
+            }
+          },
+          {
+            "name": "venueId",
+            "in": "query",
+            "description": "Filter by venue ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Events retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin - Events"],
+        "summary": "Create new event",
+        "description": "Create a new event",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["title", "description", "eventType", "startDate", "endDate", "venueId", "price", "maxAttendees"],
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "eventType": {
+                    "type": "string"
+                  },
+                  "startDate": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "endDate": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "startTime": {
+                    "type": "string"
+                  },
+                  "endTime": {
+                    "type": "string"
+                  },
+                  "venueId": {
+                    "type": "string"
+                  },
+                  "price": {
+                    "type": "string"
+                  },
+                  "maxAttendees": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["DRAFT", "PUBLISHED", "CANCELLED"]
+                  },
+                  "isFeatured": {
+                    "type": "boolean"
+                  },
+                  "styleIds": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "event": {
+                      "$ref": "#/components/schemas/Event"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/bookings": {
+      "get": {
+        "tags": ["Admin - Bookings"],
+        "summary": "List all bookings",
+        "description": "Retrieve a paginated list of all bookings",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/pageParam"},
+          {"$ref": "#/components/parameters/limitParam"},
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by booking status",
+            "schema": {
+              "type": "string",
+              "enum": ["PENDING", "CONFIRMED", "CANCELLED", "COMPLETED", "REFUNDED"]
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Filter by user ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "classId",
+            "in": "query",
+            "description": "Filter by class ID",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "eventId",
+            "in": "query",
+            "description": "Filter by event ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Bookings retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "bookings": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Booking"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      },
+      "post": {
+        "tags": ["Admin - Bookings"],
+        "summary": "Create new booking",
+        "description": "Create a new booking",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["userId", "amountPaid"],
+                "properties": {
+                  "userId": {
+                    "type": "string"
+                  },
+                  "classId": {
+                    "type": "string"
+                  },
+                  "eventId": {
+                    "type": "string"
+                  },
+                  "status": {
+                    "type": "string",
+                    "enum": ["PENDING", "CONFIRMED"]
+                  },
+                  "amountPaid": {
+                    "type": "string"
+                  },
+                  "paymentMethod": {
+                    "type": "string"
+                  },
+                  "notes": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Booking created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "booking": {
+                      "$ref": "#/components/schemas/Booking"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/venues": {
+      "get": {
+        "tags": ["Admin - Venues"],
+        "summary": "List all venues",
+        "description": "Retrieve a list of all venues",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "responses": {
+          "200": {
+            "description": "Venues retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "venues": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Venue"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/dance-styles": {
+      "get": {
+        "tags": ["Admin - Dance Styles"],
+        "summary": "List all dance styles",
+        "description": "Retrieve a list of all dance styles",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "responses": {
+          "200": {
+            "description": "Dance styles retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "styles": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DanceStyle"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/admin/transactions": {
+      "get": {
+        "tags": ["Admin - Transactions"],
+        "summary": "List all transactions",
+        "description": "Retrieve a paginated list of all transactions",
+        "security": [
+          {"bearerAuth": []},
+          {"cookieAuth": []}
+        ],
+        "parameters": [
+          {"$ref": "#/components/parameters/pageParam"},
+          {"$ref": "#/components/parameters/limitParam"},
+          {
+            "name": "status",
+            "in": "query",
+            "description": "Filter by transaction status",
+            "schema": {
+              "type": "string",
+              "enum": ["CREATED", "SUCCEEDED", "FAILED", "REFUNDED", "CANCELLED"]
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Filter by transaction type",
+            "schema": {
+              "type": "string",
+              "enum": ["PAYMENT", "REFUND", "ADJUSTMENT"]
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "description": "Filter by user ID",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transactions retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Transaction"
+                      }
+                    },
+                    "pagination": {
+                      "$ref": "#/components/schemas/PaginationMeta"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/UnauthorizedError"
+          },
+          "403": {
+            "$ref": "#/components/responses/ForbiddenError"
+          }
+        }
+      }
+    },
+    "/api/public/classes": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "List public classes",
+        "description": "Retrieve a list of all active public classes",
+        "responses": {
+          "200": {
+            "description": "Classes retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "classes": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Class"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/public/events": {
+      "get": {
+        "tags": ["Public"],
+        "summary": "List public events",
+        "description": "Retrieve a list of all published events",
+        "responses": {
+          "200": {
+            "description": "Events retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "events": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Event"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,46 @@
+[
+  {
+    "id": "cmfa1pboq0006v15mh0l8ca6x",
+    "title": "Hip Hop Basics",
+    "description": "Learn the fundamentals of hip hop dance in this beginner-friendly class",
+    "level": "Beginner",
+    "price": "25",
+    "maxCapacity": 30,
+    "instructorId": "cmfa1pbdn0001v15mvg3x57pd",
+    "createdAt": "2025-09-07T18:47:48.074Z",
+    "updatedAt": "2025-09-07T18:47:48.074Z"
+  },
+  {
+    "id": "cmfa1pbso0008v15m5y4nnoqi",
+    "title": "Ballet Advanced",
+    "description": "Advanced ballet techniques for experienced dancers",
+    "level": "Advanced",
+    "price": "35",
+    "maxCapacity": 20,
+    "instructorId": "cmfa1pbfp0002v15mw5sue2ec",
+    "createdAt": "2025-09-07T18:47:48.216Z",
+    "updatedAt": "2025-09-07T18:47:48.216Z"
+  },
+  {
+    "id": "cmfa1pbun000av15mj1gwmdnt",
+    "title": "Contemporary Flow",
+    "description": "Express yourself through fluid contemporary movement",
+    "level": "Intermediate",
+    "price": "30",
+    "maxCapacity": 25,
+    "instructorId": "cmfa1pbdn0001v15mvg3x57pd",
+    "createdAt": "2025-09-07T18:47:48.287Z",
+    "updatedAt": "2025-09-07T18:47:48.287Z"
+  },
+  {
+    "id": "cmfa1pbwo000cv15mh7g3ml4w",
+    "title": "Salsa Night",
+    "description": "Social salsa dancing for all levels",
+    "level": "All Levels",
+    "price": "20",
+    "maxCapacity": 40,
+    "instructorId": "cmfa1pbfp0002v15mw5sue2ec",
+    "createdAt": "2025-09-07T18:47:48.360Z",
+    "updatedAt": "2025-09-07T18:47:48.360Z"
+  }
+]

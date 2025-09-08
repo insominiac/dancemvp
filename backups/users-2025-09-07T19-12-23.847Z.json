@@ -1,0 +1,47 @@
+[
+  {
+    "id": "cmfa1pb6e0000v15mnzd4a75a",
+    "email": "admin@dance.com",
+    "password": "$2b$10$0P7M37tfDglcIL1N9WPyyOVCUVfDpd/JG2FxIZqVINGHtmqsfF1zC",
+    "fullName": "Admin User",
+    "role": "ADMIN",
+    "createdAt": "2025-09-07T18:47:47.414Z",
+    "updatedAt": "2025-09-07T18:47:47.414Z"
+  },
+  {
+    "id": "cmfa1pbdn0001v15mvg3x57pd",
+    "email": "sarah@dance.com",
+    "password": "$2b$10$yt03Tm9b.sFEJAmuLELeh.KaG5009dYhqknaeWKrhsl8CpS8m25pS",
+    "fullName": "Sarah Johnson",
+    "role": "INSTRUCTOR",
+    "createdAt": "2025-09-07T18:47:47.675Z",
+    "updatedAt": "2025-09-07T18:47:47.675Z"
+  },
+  {
+    "id": "cmfa1pbfp0002v15mw5sue2ec",
+    "email": "maria@dance.com",
+    "password": "$2b$10$yt03Tm9b.sFEJAmuLELeh.KaG5009dYhqknaeWKrhsl8CpS8m25pS",
+    "fullName": "Maria Rodriguez",
+    "role": "INSTRUCTOR",
+    "createdAt": "2025-09-07T18:47:47.749Z",
+    "updatedAt": "2025-09-07T18:47:47.749Z"
+  },
+  {
+    "id": "cmfa1pbkm0003v15ml1h99l5p",
+    "email": "john@email.com",
+    "password": "$2b$10$kegT5mi7dj6UBrIqccfq3u.ESb/nnvo05lAr9D23lBE6iIlAQOCuy",
+    "fullName": "John Smith",
+    "role": "STUDENT",
+    "createdAt": "2025-09-07T18:47:47.927Z",
+    "updatedAt": "2025-09-07T18:47:47.927Z"
+  },
+  {
+    "id": "cmfa1pbmp0004v15m6411z8qi",
+    "email": "emma@email.com",
+    "password": "$2b$10$kegT5mi7dj6UBrIqccfq3u.ESb/nnvo05lAr9D23lBE6iIlAQOCuy",
+    "fullName": "Emma Wilson",
+    "role": "STUDENT",
+    "createdAt": "2025-09-07T18:47:48.001Z",
+    "updatedAt": "2025-09-07T18:47:48.001Z"
+  }
+]
