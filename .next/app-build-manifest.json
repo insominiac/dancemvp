@@ -15,14 +15,6 @@
       "static/css/316367bbd65edf4f.css",
       "static/chunks/app/layout-88dbb716f0125b31.js"
     ],
-    "/admin/api-docs/page": [
-      "static/chunks/webpack-4eae68c151628de8.js",
-      "static/chunks/fd9d1056-62aaf4b921c84028.js",
-      "static/chunks/23-bf450310e51a83be.js",
-      "static/chunks/main-app-0b6d3b5d1f72e347.js",
-      "static/chunks/59-e43682835bf4ff9f.js",
-      "static/chunks/app/admin/api-docs/page-cb50e531e8a62a07.js"
-    ],
     "/admin/page": [
       "static/chunks/webpack-4eae68c151628de8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
@@ -30,6 +22,14 @@
       "static/chunks/main-app-0b6d3b5d1f72e347.js",
       "static/chunks/231-c63117a5b6b390d2.js",
       "static/chunks/app/admin/page-fbcbd3ec032d0924.js"
+    ],
+    "/admin/api-docs/page": [
+      "static/chunks/webpack-4eae68c151628de8.js",
+      "static/chunks/fd9d1056-62aaf4b921c84028.js",
+      "static/chunks/23-bf450310e51a83be.js",
+      "static/chunks/main-app-0b6d3b5d1f72e347.js",
+      "static/chunks/59-e43682835bf4ff9f.js",
+      "static/chunks/app/admin/api-docs/page-cb50e531e8a62a07.js"
     ],
     "/api-docs/page": [
       "static/chunks/webpack-4eae68c151628de8.js",
@@ -39,13 +39,13 @@
       "static/chunks/59-e43682835bf4ff9f.js",
       "static/chunks/app/api-docs/page-5025c4bb456f3f61.js"
     ],
-    "/(public)/classes/[id]/page": [
+    "/(public)/booking/confirmation/[id]/page": [
       "static/chunks/webpack-4eae68c151628de8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/23-bf450310e51a83be.js",
       "static/chunks/main-app-0b6d3b5d1f72e347.js",
       "static/chunks/231-c63117a5b6b390d2.js",
-      "static/chunks/app/(public)/classes/[id]/page-cb3f380c0170a8bc.js"
+      "static/chunks/app/(public)/booking/confirmation/[id]/page-16be9d46793d6925.js"
     ],
     "/(public)/layout": [
       "static/chunks/webpack-4eae68c151628de8.js",
@@ -55,13 +55,13 @@
       "static/chunks/231-c63117a5b6b390d2.js",
       "static/chunks/app/(public)/layout-fe711cf1d230e478.js"
     ],
-    "/(public)/booking/confirmation/[id]/page": [
+    "/(public)/classes/[id]/page": [
       "static/chunks/webpack-4eae68c151628de8.js",
       "static/chunks/fd9d1056-62aaf4b921c84028.js",
       "static/chunks/23-bf450310e51a83be.js",
       "static/chunks/main-app-0b6d3b5d1f72e347.js",
       "static/chunks/231-c63117a5b6b390d2.js",
-      "static/chunks/app/(public)/booking/confirmation/[id]/page-16be9d46793d6925.js"
+      "static/chunks/app/(public)/classes/[id]/page-cb3f380c0170a8bc.js"
     ],
     "/(public)/events/page": [
       "static/chunks/webpack-4eae68c151628de8.js",
