@@ -1,1 +1,1 @@
-{"version":1,"functions":{"/api/admin/classes/[id]":{},"/api/admin/classes":{},"/api/swagger":{}}}
+{"version":1,"functions":{"/api/swagger":{},"/api/admin/classes/[id]":{},"/api/admin/classes":{}}}

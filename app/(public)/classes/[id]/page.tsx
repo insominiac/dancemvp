@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { QuickBooking } from '@/app/components/payments/CheckoutButton'
 
 interface ClassDetail {
   id: string
@@ -31,18 +32,6 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
   const router = useRouter()
   const [classData, setClassData] = useState<ClassDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
-  const [showBookingModal, setShowBookingModal] = useState(false)
-  const [bookingStep, setBookingStep] = useState(1)
-  const [bookingData, setBookingData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    emergencyContact: '',
-    emergencyPhone: '',
-    experience: 'beginner',
-    notes: '',
-    agreeToTerms: false
-  })
 
   useEffect(() => {
     fetchClassDetails()
@@ -63,35 +52,6 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
     }
   }
 
-  const handleBookingSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
-    if (bookingStep === 1) {
-      setBookingStep(2)
-      return
-    }
-
-    // Final submission
-    try {
-      const res = await fetch('/api/public/bookings', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          classId: params.id,
-          ...bookingData
-        })
-      })
-
-      if (res.ok) {
-        const data = await res.json()
-        router.push(`/booking/confirmation/${data.bookingId}`)
-      } else {
-        alert('Booking failed. Please try again.')
-      }
-    } catch (err) {
-      alert('An error occurred. Please try again.')
-    }
-  }
 
   if (isLoading) {
     return (
@@ -281,17 +241,27 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
               </div>
             </div>
 
-            <button
-              onClick={() => setShowBookingModal(true)}
-              disabled={!isAvailable}
-              className={`w-full py-3 rounded-lg font-semibold transition ${
-                isAvailable
-                  ? 'bg-purple-600 text-white hover:bg-purple-700'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-            >
-              {isAvailable ? 'Book This Class' : 'Class Unavailable'}
-            </button>
+            {isAvailable ? (
+              <QuickBooking
+                bookingType="class"
+                itemId={classData.id}
+                itemName={classData.title}
+                price={parseFloat(classData.price)}
+                userId={"temp-user-id"}  // TODO: Get from auth context
+                className="w-full py-3 rounded-lg font-semibold text-white bg-purple-600 hover:bg-purple-700 transition-colors"
+                onAuthRequired={() => {
+                  // TODO: Redirect to login
+                  alert('Please sign in to book this class')
+                }}
+              />
+            ) : (
+              <button
+                disabled
+                className="w-full py-3 rounded-lg font-semibold bg-gray-300 text-gray-500 cursor-not-allowed"
+              >
+                Class Unavailable
+              </button>
+            )}
 
             <p className="text-xs text-gray-500 text-center mt-4">
               Free cancellation up to 24 hours before class
@@ -300,225 +270,6 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
         </div>
       </div>
 
-      {/* Booking Modal */}
-      {showBookingModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold">Book Class: {classData.title}</h2>
-              <button
-                onClick={() => {
-                  setShowBookingModal(false)
-                  setBookingStep(1)
-                }}
-                className="text-gray-500 hover:text-gray-700"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Progress Steps */}
-            <div className="flex items-center justify-center mb-8">
-              <div className={`flex items-center ${bookingStep >= 1 ? 'text-purple-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  bookingStep >= 1 ? 'bg-purple-600 text-white' : 'bg-gray-300'
-                }`}>
-                  1
-                </div>
-                <span className="ml-2">Your Information</span>
-              </div>
-              <div className="w-16 h-1 bg-gray-300 mx-4">
-                <div className={`h-full ${bookingStep >= 2 ? 'bg-purple-600' : ''}`} style={{ width: bookingStep >= 2 ? '100%' : '0%' }}></div>
-              </div>
-              <div className={`flex items-center ${bookingStep >= 2 ? 'text-purple-600' : 'text-gray-400'}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  bookingStep >= 2 ? 'bg-purple-600 text-white' : 'bg-gray-300'
-                }`}>
-                  2
-                </div>
-                <span className="ml-2">Confirm & Pay</span>
-              </div>
-            </div>
-
-            <form onSubmit={handleBookingSubmit}>
-              {bookingStep === 1 ? (
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Full Name *</label>
-                      <input
-                        type="text"
-                        required
-                        value={bookingData.name}
-                        onChange={(e) => setBookingData({...bookingData, name: e.target.value})}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
-                      <input
-                        type="email"
-                        required
-                        value={bookingData.email}
-                        onChange={(e) => setBookingData({...bookingData, email: e.target.value})}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
-                    <input
-                      type="tel"
-                      required
-                      value={bookingData.phone}
-                      onChange={(e) => setBookingData({...bookingData, phone: e.target.value})}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Emergency Contact</label>
-                      <input
-                        type="text"
-                        value={bookingData.emergencyContact}
-                        onChange={(e) => setBookingData({...bookingData, emergencyContact: e.target.value})}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Emergency Phone</label>
-                      <input
-                        type="tel"
-                        value={bookingData.emergencyPhone}
-                        onChange={(e) => setBookingData({...bookingData, emergencyPhone: e.target.value})}
-                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Dance Experience</label>
-                    <select
-                      value={bookingData.experience}
-                      onChange={(e) => setBookingData({...bookingData, experience: e.target.value})}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                    >
-                      <option value="beginner">Complete Beginner</option>
-                      <option value="some">Some Experience</option>
-                      <option value="intermediate">Intermediate</option>
-                      <option value="advanced">Advanced</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">Special Requirements or Notes</label>
-                    <textarea
-                      value={bookingData.notes}
-                      onChange={(e) => setBookingData({...bookingData, notes: e.target.value})}
-                      rows={3}
-                      className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
-                      placeholder="Any injuries, medical conditions, or special needs we should know about?"
-                    />
-                  </div>
-
-                  <div className="flex justify-end gap-3 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => setShowBookingModal(false)}
-                      className="px-6 py-2 border rounded-lg hover:bg-gray-50"
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      className="px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
-                    >
-                      Continue to Payment
-                    </button>
-                  </div>
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {/* Booking Summary */}
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <h3 className="font-semibold mb-3">Booking Summary</h3>
-                    <div className="space-y-2 text-sm">
-                      <div className="flex justify-between">
-                        <span>Class:</span>
-                        <span className="font-medium">{classData.title}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Schedule:</span>
-                        <span className="font-medium">{classData.schedule}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span>Duration:</span>
-                        <span className="font-medium">
-                          {new Date(classData.startDate).toLocaleDateString()} - {new Date(classData.endDate).toLocaleDateString()}
-                        </span>
-                      </div>
-                      <div className="flex justify-between pt-2 border-t">
-                        <span className="font-semibold">Total:</span>
-                        <span className="font-semibold text-lg">${classData.price}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Payment Method (Placeholder) */}
-                  <div>
-                    <h3 className="font-semibold mb-3">Payment Method</h3>
-                    <div className="border rounded-lg p-4 bg-blue-50 text-blue-700">
-                      <p className="text-sm">
-                        💳 Payment processing will be integrated here.
-                        For now, this is a demo booking flow.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Terms and Conditions */}
-                  <div>
-                    <label className="flex items-start">
-                      <input
-                        type="checkbox"
-                        required
-                        checked={bookingData.agreeToTerms}
-                        onChange={(e) => setBookingData({...bookingData, agreeToTerms: e.target.checked})}
-                        className="mt-1 mr-2"
-                      />
-                      <span className="text-sm text-gray-600">
-                        I agree to the terms and conditions, cancellation policy, and acknowledge that I am physically able to participate in this class.
-                      </span>
-                    </label>
-                  </div>
-
-                  <div className="flex justify-between gap-3 pt-4">
-                    <button
-                      type="button"
-                      onClick={() => setBookingStep(1)}
-                      className="px-6 py-2 border rounded-lg hover:bg-gray-50"
-                    >
-                      ← Back
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={!bookingData.agreeToTerms}
-                      className={`px-6 py-2 rounded-lg ${
-                        bookingData.agreeToTerms
-                          ? 'bg-purple-600 text-white hover:bg-purple-700'
-                          : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                      }`}
-                    >
-                      Complete Booking
-                    </button>
-                  </div>
-                </div>
-              )}
-            </form>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

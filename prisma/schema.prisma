@@ -155,25 +155,33 @@ model ClassInstructor {
 }
 
 model Booking {
-  id            String        @id @default(cuid())
-  userId        String        @map("user_id")
-  classId       String?       @map("class_id")
-  eventId       String?       @map("event_id")
-  bookingDate   DateTime      @default(now()) @map("booking_date")
-  status        BookingStatus @default(PENDING)
-  amountPaid    Decimal       @map("amount_paid") @db.Decimal(10, 2)
-  paymentMethod String?       @map("payment_method")
-  notes         String?
-  createdAt     DateTime      @default(now()) @map("created_at")
-  updatedAt     DateTime      @updatedAt @map("updated_at")
-  class         Class?        @relation(fields: [classId], references: [id], onDelete: Cascade)
-  event         Event?        @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  transactions  Transaction[]
+  id              String        @id @default(cuid())
+  userId          String        @map("user_id")
+  classId         String?       @map("class_id")
+  eventId         String?       @map("event_id")
+  bookingDate     DateTime      @default(now()) @map("booking_date")
+  status          BookingStatus @default(PENDING)
+  totalAmount     Decimal       @default(0) @map("total_amount") @db.Decimal(10, 2)  // Original price
+  amountPaid      Decimal       @map("amount_paid") @db.Decimal(10, 2)   // Amount actually paid
+  discountAmount  Decimal       @default(0) @map("discount_amount") @db.Decimal(10, 2) // Discount applied
+  taxAmount       Decimal       @default(0) @map("tax_amount") @db.Decimal(10, 2)      // Tax amount
+  paymentMethod   String?       @map("payment_method")
+  paymentStatus   String        @default("pending") @map("payment_status") // pending, succeeded, failed
+  stripeSessionId String?       @map("stripe_session_id")                  // Stripe Checkout Session
+  confirmationCode String?      @map("confirmation_code")                  // Unique booking confirmation
+  notes           String?
+  createdAt       DateTime      @default(now()) @map("created_at")
+  updatedAt       DateTime      @updatedAt @map("updated_at")
+  class           Class?        @relation(fields: [classId], references: [id], onDelete: Cascade)
+  event           Event?        @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions    Transaction[]
 
   @@index([userId])
   @@index([createdAt])
   @@index([status])
+  @@index([paymentStatus])
+  @@index([stripeSessionId])
   @@map("bookings")
 }
 
@@ -182,19 +190,25 @@ model Transaction {
   bookingId         String?           @map("booking_id")
   userId            String            @map("user_id")
   provider          PaymentProvider
-  providerPaymentId String?           @map("provider_payment_id")
-  providerRefundId  String?           @map("provider_refund_id")
+  providerPaymentId String?           @map("provider_payment_id") // Stripe Payment Intent ID
+  providerRefundId  String?           @map("provider_refund_id")  // Stripe Refund ID
+  stripeSessionId   String?           @map("stripe_session_id")   // Stripe Checkout Session ID
   type              TransactionType
   status            TransactionStatus @default(CREATED)
   amount            Decimal           @db.Decimal(10, 2)
   currency          String            @default("USD")
-  payload           String?
+  paymentMethodType String?           @map("payment_method_type") // card, apple_pay, google_pay, etc.
+  last4             String?           @map("last_4")             // Last 4 digits of card
+  brand             String?                                      // visa, mastercard, etc.
+  payload           String?                                      // Full Stripe response JSON
+  failureReason     String?           @map("failure_reason")     // Reason for payment failure
   createdAt         DateTime          @default(now()) @map("created_at")
   updatedAt         DateTime          @updatedAt @map("updated_at")
   booking           Booking?          @relation(fields: [bookingId], references: [id])
   user              User              @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerPaymentId])
+  @@index([stripeSessionId])
   @@map("transactions")
 }
 
