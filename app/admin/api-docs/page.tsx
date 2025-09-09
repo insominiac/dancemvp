@@ -10,35 +10,71 @@ export default function ApiDocsPage() {
       const cssLink = document.createElement('link');
       cssLink.rel = 'stylesheet';
       cssLink.type = 'text/css';
-      cssLink.href = 'https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.css';
+      cssLink.href = 'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.css';
       document.head.appendChild(cssLink);
 
       // Add JavaScript
       const script = document.createElement('script');
-      script.src = 'https://unpkg.com/swagger-ui-dist@4.15.5/swagger-ui-bundle.js';
+      script.src = 'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js';
       script.onload = () => {
-        // Initialize Swagger UI
-        const ui = (window as any).SwaggerUIBundle({
-          url: '/api/swagger',
-          dom_id: '#swagger-ui',
-          deepLinking: true,
-          presets: [
-            (window as any).SwaggerUIBundle.presets.apis,
-            (window as any).SwaggerUIBundle.presets.standalone
-          ],
-          plugins: [
-            (window as any).SwaggerUIBundle.plugins.DownloadUrl
-          ],
-          layout: 'StandaloneLayout',
-          tryItOutEnabled: true,
-          supportedSubmitMethods: ['get', 'post', 'put', 'delete'],
-          onComplete: () => {
-            console.log('Swagger UI loaded successfully');
-          },
-          onFailure: (error: any) => {
-            console.error('Failed to load Swagger UI:', error);
+        // Wait a bit for the script to fully initialize
+        setTimeout(() => {
+          try {
+            // Initialize Swagger UI with proper error handling
+            const ui = (window as any).SwaggerUIBundle({
+              url: '/api/swagger',
+              dom_id: '#swagger-ui',
+              deepLinking: true,
+              presets: [
+                (window as any).SwaggerUIBundle.presets.apis
+              ],
+              plugins: [
+                (window as any).SwaggerUIBundle.plugins.DownloadUrl
+              ],
+              // Remove the problematic layout or use 'BaseLayout' instead
+              layout: 'BaseLayout',
+              tryItOutEnabled: true,
+              supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'options'],
+              defaultModelsExpandDepth: 1,
+              defaultModelExpandDepth: 1,
+              docExpansion: 'list',
+              filter: true,
+              showRequestHeaders: true,
+              onComplete: () => {
+                console.log('Swagger UI loaded successfully');
+                // Hide loading indicator
+                const loading = document.getElementById('swagger-loading');
+                if (loading) loading.style.display = 'none';
+              },
+              onFailure: (error: any) => {
+                console.error('Failed to load Swagger UI:', error);
+                // Show error message
+                const container = document.getElementById('swagger-ui');
+                if (container) {
+                  container.innerHTML = `
+                    <div class="bg-red-50 border border-red-200 rounded-lg p-6 m-4">
+                      <h3 class="text-lg font-semibold text-red-800 mb-2">Failed to load API documentation</h3>
+                      <p class="text-red-600">There was an error loading the Swagger UI. Please try refreshing the page.</p>
+                      <p class="text-sm text-red-500 mt-2">Error: ${error.message || 'Unknown error'}</p>
+                    </div>
+                  `;
+                }
+              }
+            });
+          } catch (error) {
+            console.error('Error initializing Swagger UI:', error);
+            // Show error message
+            const container = document.getElementById('swagger-ui');
+            if (container) {
+              container.innerHTML = `
+                <div class="bg-red-50 border border-red-200 rounded-lg p-6 m-4">
+                  <h3 class="text-lg font-semibold text-red-800 mb-2">Configuration Error</h3>
+                  <p class="text-red-600">There was an error configuring the Swagger UI.</p>
+                </div>
+              `;
+            }
           }
-        });
+        }, 100);
       };
       document.body.appendChild(script);
     };

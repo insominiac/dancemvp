@@ -9,40 +9,44 @@ export default function ApiDocsPage() {
       // Load Swagger UI CSS
       const link = document.createElement('link')
       link.rel = 'stylesheet'
-      link.href = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui.css'
+      link.href = 'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.css'
       document.head.appendChild(link)
 
       // Load Swagger UI JS
       const script = document.createElement('script')
-      script.src = 'https://cdn.jsdelivr.net/npm/swagger-ui-dist@5.9.0/swagger-ui-bundle.js'
+      script.src = 'https://unpkg.com/swagger-ui-dist@5.11.0/swagger-ui-bundle.js'
       script.onload = () => {
-        // Initialize Swagger UI after script loads
-        const SwaggerUIBundle = (window as any).SwaggerUIBundle
-        if (SwaggerUIBundle) {
-          SwaggerUIBundle({
-            url: '/swagger.json',
-            dom_id: '#swagger-ui',
-            deepLinking: true,
-            presets: [
-              (window as any).SwaggerUIBundle.presets.apis,
-              (window as any).SwaggerUIBundle.SwaggerUIStandalonePreset
-            ],
-            plugins: [
-              (window as any).SwaggerUIBundle.plugins.DownloadUrl
-            ],
-            layout: 'StandaloneLayout',
-            persistAuthorization: true,
-            tryItOutEnabled: true,
-            filter: true,
-            validatorUrl: null,
-            defaultModelsExpandDepth: 1,
-            defaultModelExpandDepth: 1,
-            docExpansion: 'list',
-            onComplete: () => {
-              console.log('Swagger UI loaded successfully')
-            }
-          })
-        }
+        // Wait for script to initialize and use proper API endpoint
+        setTimeout(() => {
+          const SwaggerUIBundle = (window as any).SwaggerUIBundle
+          if (SwaggerUIBundle) {
+            SwaggerUIBundle({
+              url: '/api/swagger', // Fixed URL
+              dom_id: '#swagger-ui',
+              deepLinking: true,
+              presets: [
+                (window as any).SwaggerUIBundle.presets.apis
+              ],
+              plugins: [
+                (window as any).SwaggerUIBundle.plugins.DownloadUrl
+              ],
+              layout: 'BaseLayout', // Fixed layout
+              persistAuthorization: true,
+              tryItOutEnabled: true,
+              filter: true,
+              validatorUrl: null,
+              defaultModelsExpandDepth: 1,
+              defaultModelExpandDepth: 1,
+              docExpansion: 'list',
+              onComplete: () => {
+                console.log('Swagger UI loaded successfully')
+              },
+              onFailure: (error: any) => {
+                console.error('Swagger UI error:', error)
+              }
+            })
+          }
+        }, 100)
       }
       document.body.appendChild(script)
     }
