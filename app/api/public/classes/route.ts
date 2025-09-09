@@ -6,10 +6,11 @@ export async function GET() {
     // Fetch only active classes that haven't ended
     const classes = await prisma.class.findMany({
       where: {
-        status: 'ACTIVE',
-        endDate: {
-          gte: new Date() // Only show classes that haven't ended
-        }
+        isActive: true, // Use isActive instead of status
+        OR: [
+          { endDate: null }, // Classes without end date are ongoing
+          { endDate: { gte: new Date() } } // Classes that haven't ended
+        ]
       },
       include: {
         venue: {
@@ -17,7 +18,8 @@ export async function GET() {
             id: true,
             name: true,
             city: true,
-            address: true
+            addressLine1: true, // Use addressLine1 instead of address
+            addressLine2: true
           }
         },
         classInstructors: {
@@ -26,7 +28,7 @@ export async function GET() {
               include: {
                 user: {
                   select: {
-                    name: true,
+                    fullName: true, // Use fullName instead of name
                     email: true
                   }
                 }
@@ -51,9 +53,10 @@ export async function GET() {
           }
         }
       },
-      orderBy: {
-        startDate: 'asc'
-      }
+      orderBy: [
+        { startDate: 'asc' }, // Classes with start dates first
+        { createdAt: 'asc' }  // Then by creation date
+      ]
     })
 
     // Calculate current students for each class

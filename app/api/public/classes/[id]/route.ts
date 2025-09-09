@@ -9,18 +9,16 @@ export async function GET(
     const classData = await prisma.class.findUnique({
       where: {
         id: params.id,
-        status: 'ACTIVE' // Only show active classes
+        isActive: true // Use isActive instead of status
       },
       include: {
         venue: {
           select: {
             id: true,
             name: true,
-            address: true,
             city: true,
-            state: true,
-            zipCode: true,
-            amenities: true
+            addressLine1: true, // Use addressLine1 instead of address
+            addressLine2: true
           }
         },
         classInstructors: {
@@ -30,7 +28,7 @@ export async function GET(
                 user: {
                   select: {
                     id: true,
-                    name: true,
+                    fullName: true, // Use fullName instead of name
                     email: true
                   }
                 }

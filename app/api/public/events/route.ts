@@ -17,7 +17,8 @@ export async function GET() {
             id: true,
             name: true,
             city: true,
-            address: true
+            addressLine1: true, // Use addressLine1 instead of address
+            addressLine2: true
           }
         },
         eventStyles: {

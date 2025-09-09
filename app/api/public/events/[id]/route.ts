@@ -16,11 +16,9 @@ export async function GET(
           select: {
             id: true,
             name: true,
-            address: true,
             city: true,
-            state: true,
-            zipCode: true,
-            amenities: true
+            addressLine1: true, // Use addressLine1 instead of address
+            addressLine2: true
           }
         },
         eventStyles: {

@@ -66,17 +66,23 @@ model Class {
   price            Decimal           @db.Decimal(10, 2)
   scheduleDays     String?           @map("schedule_days")
   scheduleTime     String?           @map("schedule_time")
+  startDate        DateTime?         @map("start_date") // Added for filtering ongoing classes
+  endDate          DateTime?         @map("end_date")   // Added for filtering active classes
   requirements     String?
   imageUrl         String?           @map("image_url")
+  venueId          String?           @map("venue_id")   // Added venue relation
   isActive         Boolean           @default(true) @map("is_active")
   createdAt        DateTime          @default(now()) @map("created_at")
   updatedAt        DateTime          @updatedAt @map("updated_at")
+  venue            Venue?            @relation(fields: [venueId], references: [id]) // Added venue relation
   bookings         Booking[]
   classInstructors ClassInstructor[]
   classStyles      ClassStyle[]
 
   @@index([createdAt])
   @@index([isActive])
+  @@index([startDate])
+  @@index([venueId])
   @@map("classes")
 }
 
@@ -125,6 +131,7 @@ model Venue {
   websiteUrl   String?  @map("website_url")
   createdAt    DateTime @default(now()) @map("created_at")
   updatedAt    DateTime @updatedAt @map("updated_at")
+  classes      Class[]  // Added classes relation
   events       Event[]
 
   @@index([name])
