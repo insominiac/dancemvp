@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 import { withAdminAuth, ApiResponse } from '@/app/lib/admin-api-wrapper'
-
-const prisma = new PrismaClient()
+import prisma from '@/app/lib/db'
 
 // GET all classes with filters
 export const GET = withAdminAuth(async (request, { user }) => {

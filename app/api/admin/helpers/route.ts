@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import prisma from '@/app/lib/db'
 
 // GET helper data for forms (instructors, venues, dance styles)
 export async function GET() {
@@ -82,7 +80,5 @@ export async function GET() {
       { error: 'Failed to fetch helper data' },
       { status: 500 }
     )
-  } finally {
-    await prisma.$disconnect()
   }
 }

@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 import { requireAdmin } from '@/app/lib/auth'
-
-const prisma = new PrismaClient()
+import prisma from '@/app/lib/db'
 
 // GET all instructors with pagination
 export async function GET(request: NextRequest) {

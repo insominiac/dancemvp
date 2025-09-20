@@ -1,7 +1,5 @@
 import { NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-
-const prisma = new PrismaClient()
+import prisma from '@/app/lib/db'
 
 export async function GET() {
   try {
@@ -36,7 +34,5 @@ export async function GET() {
       { error: 'Failed to fetch tables info' },
       { status: 500 }
     )
-  } finally {
-    await prisma.$disconnect()
   }
 }

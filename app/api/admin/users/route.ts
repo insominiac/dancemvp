@@ -1,10 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { requireAdmin, hasPermission } from '@/app/lib/auth'
 import { AuditLogger } from '@/app/lib/audit-logger'
-
-const prisma = new PrismaClient()
+import prisma from '@/app/lib/db'
 
 // GET all users with pagination and filters
 export async function GET(request: NextRequest) {
