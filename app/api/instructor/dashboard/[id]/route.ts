@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import prisma from '@/app/lib/db'
-import { z } from 'zod'
-
-const instructorIdSchema = z.string().uuid('Invalid instructor ID format')
+import { instructorIdSchema } from '@/app/lib/validations'
 
 export async function GET(
   request: NextRequest,

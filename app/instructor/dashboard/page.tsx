@@ -480,6 +480,17 @@ export default function InstructorDashboard() {
                   <p className="text-xs text-orange-700">Manage lesson plans & materials</p>
                 </div>
               </Link>
+              
+              <Link 
+                href="/instructor/analytics"
+                className="flex items-center p-3 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition"
+              >
+                <span className="text-lg mr-3">📈</span>
+                <div>
+                  <p className="font-medium text-indigo-900">Performance Analytics</p>
+                  <p className="text-xs text-indigo-700">Track teaching & engagement metrics</p>
+                </div>
+              </Link>
             </div>
           </div>
 
