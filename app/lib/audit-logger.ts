@@ -171,6 +171,46 @@ export class AuditLogger {
       newValues: { [configKey]: newValue }
     })
   }
+
+  static async logEmailSent(userId: string, recipient: string, emailType: string, metadata?: object) {
+    await this.log({
+      userId,
+      action: 'EMAIL_SENT',
+      tableName: 'email_logs',
+      recordId: recipient,
+      newValues: { recipient, emailType, ...metadata }
+    })
+  }
+
+  static async logFileUpload(userId: string, fileName: string, fileSize: number, fileType: string) {
+    await this.log({
+      userId,
+      action: 'FILE_UPLOAD',
+      tableName: 'file_uploads',
+      recordId: fileName,
+      newValues: { fileName, fileSize, fileType }
+    })
+  }
+
+  static async logPermissionChange(adminUserId: string, targetUserId: string, permission: string, granted: boolean) {
+    await this.log({
+      userId: adminUserId,
+      action: 'PERMISSION_CHANGE',
+      tableName: 'user_permissions',
+      recordId: targetUserId,
+      newValues: { permission, granted }
+    })
+  }
+
+  static async logPaymentEvent(userId: string, paymentId: string, action: string, amount?: number, metadata?: object) {
+    await this.log({
+      userId,
+      action: `PAYMENT_${action.toUpperCase()}`,
+      tableName: 'payments',
+      recordId: paymentId,
+      newValues: { action, amount, ...metadata }
+    })
+  }
 }
 
 // Prisma middleware for automatic audit logging

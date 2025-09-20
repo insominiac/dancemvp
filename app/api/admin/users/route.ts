@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { PrismaClient } from '@prisma/client'
 import bcrypt from 'bcryptjs'
 import { requireAdmin, hasPermission } from '@/app/lib/auth'
+import { AuditLogger } from '@/app/lib/audit-logger'
 
 const prisma = new PrismaClient()
 
@@ -136,6 +137,14 @@ export async function POST(request: NextRequest) {
     
     const { passwordHash: _, ...sanitizedUser } = user
     
+    // Log user creation
+    await AuditLogger.logCreate(
+      currentUser.id,
+      'users',
+      user.id,
+      { email: user.email, fullName: user.fullName, role: user.role }
+    )
+    
     return NextResponse.json({
       message: 'User created successfully',
       user: sanitizedUser
@@ -158,6 +167,12 @@ export async function POST(request: NextRequest) {
         { status: 403 }
       )
     }
+    
+    // Log error
+    await AuditLogger.logSystemEvent('USER_CREATION_ERROR', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    })
     
     return NextResponse.json(
       { error: 'Failed to create user' },

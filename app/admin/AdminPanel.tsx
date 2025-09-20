@@ -12,6 +12,7 @@ import EventManagement from './sections/EventManagement'
 import BookingManagement from './sections/BookingManagement'
 import ForumModeration from './sections/ForumModeration'
 import PartnerMatchingManagement from './sections/PartnerMatchingManagement'
+import AuditTrail from './sections/AuditTrail'
 
 interface Stats {
   totalUsers: number
@@ -99,7 +100,8 @@ export default function AdminPanel() {
     { id: 'styles', label: 'Dance Styles', icon: '💃', badge: stats?.totalDanceStyles },
     { id: 'partner-matching', label: 'Partner Matching', icon: '💕', badge: stats?.activePartnerRequests },
     { id: 'forum', label: 'Forum', icon: '💬', badge: stats?.totalForumPosts },
-    { id: 'messages', label: 'Messages', icon: '📧', badge: stats?.unreadMessages }
+    { id: 'messages', label: 'Messages', icon: '📧', badge: stats?.unreadMessages },
+    { id: 'audit', label: 'Audit Trail', icon: '🔍' }
   ]
 
   const renderDashboard = () => {
@@ -278,6 +280,8 @@ export default function AdminPanel() {
         return <ForumModeration />
       case 'partner-matching':
         return <PartnerMatchingManagement />
+      case 'audit':
+        return <AuditTrail />
       default:
         return (
           <div className="bg-white rounded-lg shadow p-6">

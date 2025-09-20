@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { authenticateUser, isValidEmail } from '@/app/lib/auth'
 import { createSession, checkRoleConflict } from '@/app/lib/session-middleware'
 import { generateDeviceFingerprint } from '@/app/lib/device-fingerprint'
+import { AuditLogger } from '@/app/lib/audit-logger'
 import prisma from '@/app/lib/db'
 import { UserRole } from '@prisma/client'
 
@@ -138,6 +139,9 @@ export async function POST(request: NextRequest) {
         maxAge: 24 * 60 * 60
       })
 
+      // Log successful demo login
+      await AuditLogger.logLogin(user.id)
+
       return response
     }
 
@@ -145,6 +149,9 @@ export async function POST(request: NextRequest) {
     const user = await authenticateUser(email, password)
     
     if (!user) {
+      // Log failed login attempt
+      await AuditLogger.logFailedLogin(email, 'Invalid credentials')
+      
       return NextResponse.json(
         {
           error: 'Invalid email or password',
@@ -156,6 +163,9 @@ export async function POST(request: NextRequest) {
 
     // Check if user account is verified (optional requirement)
     if (!user.isVerified) {
+      // Log failed login attempt due to unverified account
+      await AuditLogger.logFailedLogin(email, 'Account not verified')
+      
       return NextResponse.json(
         {
           error: 'Please verify your email address before logging in',
@@ -217,10 +227,19 @@ export async function POST(request: NextRequest) {
       maxAge: 24 * 60 * 60
     })
 
+    // Log successful login
+    await AuditLogger.logLogin(user.id)
+
     return response
 
   } catch (error) {
     console.error('Login error:', error)
+    
+    // Log system error
+    await AuditLogger.logSystemEvent('LOGIN_ERROR', {
+      error: error instanceof Error ? error.message : 'Unknown error',
+      timestamp: new Date().toISOString()
+    })
     
     return NextResponse.json(
       {
