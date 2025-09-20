@@ -130,7 +130,7 @@ export async function GET(
           venue: {
             select: {
               name: true,
-              address: true,
+              addressLine1: true,
               city: true
             }
           },
@@ -261,28 +261,28 @@ export async function GET(
     const transformedTodaysClasses = todaysClasses.map(cls => ({
       id: cls.id,
       title: cls.title,
-      time: cls.schedule || 'TBD',
-      duration: cls.duration,
+      time: cls.scheduleTime || 'TBD',
+      duration: cls.durationMins || 60,
       enrolled: cls.bookings.length,
-      capacity: cls.maxStudents,
+      capacity: cls.maxCapacity || 20,
       venue: cls.venue?.name || 'TBD',
       location: cls.venue ? `${cls.venue.name}, ${cls.venue.city}` : 'TBD',
       students: cls.bookings.map(booking => ({
         name: booking.user.fullName,
         email: booking.user.email
       })),
-      styles: cls.classStyles.map(cs => cs.style.name)
+      styles: cls.classStyles?.map(cs => cs.style.name) || []
     }))
 
     // Transform upcoming classes
     const transformedUpcomingClasses = upcomingClasses.map(cls => ({
       id: cls.id,
       title: cls.title,
-      startDate: cls.startDate.toISOString(),
-      time: cls.schedule || 'TBD',
-      duration: cls.duration,
+      startDate: cls.startDate?.toISOString() || new Date().toISOString(),
+      time: cls.scheduleTime || 'TBD',
+      duration: cls.durationMins || 60,
       enrolled: cls.bookings.length,
-      capacity: cls.maxStudents,
+      capacity: cls.maxCapacity || 20,
       venue: cls.venue?.name || 'TBD',
       location: cls.venue ? `${cls.venue.name}, ${cls.venue.city}` : 'TBD'
     }))
@@ -336,9 +336,9 @@ export async function GET(
         name: instructor.user.fullName,
         email: instructor.user.email,
         phone: instructor.user.phone,
-        bio: instructor.bio,
-        experience: instructor.experience,
-        specialties: instructor.specialties || [],
+        bio: instructor.user.bio,
+        experience: instructor.experienceYears,
+        specialties: instructor.specialty ? [instructor.specialty] : [],
         joinedDate: instructor.user.createdAt.toISOString()
       },
       stats,
