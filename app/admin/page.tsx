@@ -18,6 +18,7 @@ import NotificationCenter from './sections/NotificationCenter'
 import ContentManagement from './sections/ContentManagement'
 import ContactMessages from './sections/ContactMessages'
 import AuditTrail from './sections/AuditTrail'
+import SEOManagement from './sections/SEOManagement'
 
 interface Stats {
   totalUsers: number
@@ -121,6 +122,7 @@ export default function AdminPanel() {
     { id: 'partners', label: 'Partner Matching', icon: '🤝', badge: stats?.activePartnerRequests },
     { id: 'notifications', label: 'Notifications', icon: '🔔', badge: stats?.unreadNotifications },
     { id: 'messages', label: 'Contact Messages', icon: '📧', badge: stats?.unreadMessages },
+    { id: 'seo', label: 'SEO Management', icon: '🔍' },
     { id: 'audit', label: 'Audit Logs', icon: '📋' },
     { id: 'api-docs', label: 'API Documentation', icon: '📖' }
   ]
@@ -343,6 +345,8 @@ export default function AdminPanel() {
         return <NotificationCenter />
       case 'messages':
         return <ContactMessages />
+      case 'seo':
+        return <SEOManagement />
       case 'audit':
         return <AuditTrail />
       case 'api-docs':

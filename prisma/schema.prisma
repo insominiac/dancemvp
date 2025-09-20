@@ -499,6 +499,39 @@ model Match {
   @@map("matches")
 }
 
+model SeoPage {
+  id                 String   @id @default(cuid())
+  path               String   @unique // e.g., '/', '/classes', '/events', '/about'
+  title              String?  // Page title for <title> tag
+  description        String?  // Meta description
+  keywords           String?  // Meta keywords
+  author             String?  // Meta author
+  robots             String?  // Meta robots (index, noindex, follow, etc.)
+  canonical          String?  // Canonical URL
+  ogTitle            String?  @map("og_title") // Open Graph title
+  ogDescription      String?  @map("og_description") // Open Graph description
+  ogImage            String?  @map("og_image") // Open Graph image URL
+  ogType             String?  @map("og_type") // Open Graph type (website, article, etc.)
+  ogUrl              String?  @map("og_url") // Open Graph URL
+  twitterCard        String?  @map("twitter_card") // Twitter card type
+  twitterTitle       String?  @map("twitter_title") // Twitter title
+  twitterDescription String?  @map("twitter_description") // Twitter description
+  twitterImage       String?  @map("twitter_image") // Twitter image
+  twitterCreator     String?  @map("twitter_creator") // Twitter creator handle
+  structuredData     String?  @map("structured_data") // JSON-LD structured data
+  customMeta         String?  @map("custom_meta") // Additional custom meta tags (JSON)
+  isActive           Boolean  @default(true) @map("is_active")
+  priority           Int      @default(5) // SEO priority (1-10)
+  lastModified       DateTime @default(now()) @map("last_modified")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  @@index([path])
+  @@index([isActive])
+  @@index([priority])
+  @@map("seo_pages")
+}
+
 enum UserRole {
   USER
   INSTRUCTOR
