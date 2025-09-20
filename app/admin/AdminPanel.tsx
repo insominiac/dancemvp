@@ -2,12 +2,16 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useAuth } from '@/app/lib/auth-context'
+import { useRouter } from 'next/navigation'
 
 // Import section components
 import UserManagement from './sections/UserManagement'
 import ClassManagement from './sections/ClassManagement'
 import EventManagement from './sections/EventManagement'
 import BookingManagement from './sections/BookingManagement'
+import ForumModeration from './sections/ForumModeration'
+import PartnerMatchingManagement from './sections/PartnerMatchingManagement'
 
 interface Stats {
   totalUsers: number
@@ -33,6 +37,8 @@ interface Stats {
 }
 
 export default function AdminPanel() {
+  const { user, logout } = useAuth()
+  const router = useRouter()
   const [activeSection, setActiveSection] = useState('dashboard')
   const [stats, setStats] = useState<Stats | null>(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -73,6 +79,15 @@ export default function AdminPanel() {
     }
   }
 
+  const handleLogout = async () => {
+    try {
+      await logout()
+      router.push('/login')
+    } catch (error) {
+      console.error('Logout error:', error)
+    }
+  }
+
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
     { id: 'users', label: 'Users', icon: '👥', badge: stats?.totalUsers },
@@ -82,6 +97,7 @@ export default function AdminPanel() {
     { id: 'venues', label: 'Venues', icon: '🏢', badge: stats?.totalVenues },
     { id: 'transactions', label: 'Transactions', icon: '💰', badge: stats?.totalTransactions },
     { id: 'styles', label: 'Dance Styles', icon: '💃', badge: stats?.totalDanceStyles },
+    { id: 'partner-matching', label: 'Partner Matching', icon: '💕', badge: stats?.activePartnerRequests },
     { id: 'forum', label: 'Forum', icon: '💬', badge: stats?.totalForumPosts },
     { id: 'messages', label: 'Messages', icon: '📧', badge: stats?.unreadMessages }
   ]
@@ -258,6 +274,10 @@ export default function AdminPanel() {
         return <EventManagement helperData={helperData} />
       case 'bookings':
         return <BookingManagement helperData={helperData} />
+      case 'forum':
+        return <ForumModeration />
+      case 'partner-matching':
+        return <PartnerMatchingManagement />
       default:
         return (
           <div className="bg-white rounded-lg shadow p-6">
@@ -285,14 +305,36 @@ export default function AdminPanel() {
               </span>
             </div>
             <div className="flex items-center gap-4">
+              {user && (
+                <div className="flex items-center gap-3">
+                  <div className="text-right">
+                    <p className="text-sm font-medium text-gray-900">{user.fullName}</p>
+                    <p className="text-xs text-gray-500">{user.role} • {user.email}</p>
+                  </div>
+                  <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                    <span className="text-purple-600 font-semibold text-sm">
+                      {user.fullName.charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+              )}
+              <div className="border-l border-gray-300 h-6"></div>
               <button 
                 onClick={() => {
                   fetchAdminData()
                   fetchHelperData()
                 }}
                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+                title="Refresh data"
               >
                 🔄 Refresh
+              </button>
+              <button 
+                onClick={handleLogout}
+                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                title="Logout"
+              >
+                🚪 Logout
               </button>
               <Link href="/" className="text-gray-600 hover:text-gray-900">
                 ← Back to Site
@@ -333,6 +375,17 @@ export default function AdminPanel() {
                   </button>
                 </li>
               ))}
+              
+              {/* Logout Button in Sidebar */}
+              <li className="pt-4 border-t border-gray-200">
+                <button
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-3 rounded-lg transition flex items-center gap-3 text-red-600 hover:bg-red-50 hover:text-red-700"
+                >
+                  <span className="text-xl">🚪</span>
+                  <span>Logout</span>
+                </button>
+              </li>
             </ul>
           </nav>
         </aside>

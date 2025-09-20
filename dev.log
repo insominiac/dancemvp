@@ -1,0 +1,69 @@
+
+> dance-platform@2.0.0 dev
+> next dev
+
+  ▲ Next.js 14.2.0
+  - Local:        http://localhost:3000
+  - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 3.8s
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 3.5s (466 modules)
+ GET /_next/static/css/css-app_styles_dance-theme_css.css?v=1758174953111 404 in 3814ms
+ GET /_next/static/css/css-app_globals_css-node_modules_next_font_google_target_css.css?v=1758174953111 404 in 3834ms
+ GET /_next/static/chunks/webpack.js?v=1758174953111 404 in 4017ms
+ GET /_next/static/chunks/app-pages-internals.js 404 in 3384ms
+ GET /_next/static/chunks/app/(public)/page.js 404 in 3381ms
+ ✓ Compiled in 1038ms (452 modules)
+ GET /_next/static/chunks/app/(public)/layout.js 404 in 830ms
+ ✓ Compiled /middleware in 152ms (71 modules)
+ ✓ Compiled /login in 456ms (500 modules)
+ GET /login 200 in 719ms
+ GET /login 200 in 711ms
+ ✓ Compiled /api/auth/me in 216ms (285 modules)
+ GET /api/auth/me 200 in 1945ms
+ GET /api/auth/me 200 in 1926ms
+ GET /api/auth/me 200 in 406ms
+ GET /api/auth/me 200 in 398ms
+ ✓ Compiled /dashboard in 382ms (566 modules)
+ ✓ Compiled /api/auth/login in 359ms (390 modules)
+🔓 Development user login
+ ✓ Compiled /api/user/dashboard/[id] in 92ms (392 modules)
+ ✓ Compiled (460 modules)
+ POST /api/auth/login 200 in 2002ms
+ POST /api/auth/login 200 in 1936ms
+ ✓ Compiled /api/auth/sessions in 241ms (462 modules)
+ GET /api/auth/sessions?userId=cmfpu23d10002sryhwktjx8jb 200 in 504ms
+ GET /api/auth/sessions?userId=cmfpu23d10002sryhwktjx8jb 200 in 496ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 1997ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 1982ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 1735ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 1728ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 507ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 501ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 384ms
+ GET /api/notifications?userId=cmfpu23d10002sryhwktjx8jb&limit=10 200 in 379ms
+ GET /api/user/dashboard/cmfpu23d10002sryhwktjx8jb 200 in 5171ms
+ GET /api/user/dashboard/cmfpu23d10002sryhwktjx8jb 200 in 5150ms
+ ✓ Compiled /unauthorized in 463ms (732 modules)
+ GET /api/user/dashboard/cmfpu23d10002sryhwktjx8jb 200 in 1739ms
+ GET /api/user/dashboard/cmfpu23d10002sryhwktjx8jb 200 in 1731ms
+ GET /api/user/dashboard/cmfpu23d10002sryhwktjx8jb 200 in 3170ms
+ GET /api/user/dashboard/cmfpu23d10002sryhwktjx8jb 200 in 3162ms
+ GET /unauthorized 200 in 155ms
+ GET /unauthorized 200 in 148ms
+ GET /api/auth/me 200 in 1259ms
+ GET /api/auth/me 200 in 1249ms
+ GET /api/auth/me 200 in 503ms
+ GET /api/auth/me 200 in 498ms
+ POST /api/auth/login 200 in 2695ms
+ POST /api/auth/login 200 in 2685ms
+ ✓ Compiled in 129ms (71 modules)
+ ○ Compiling /_error ...
+ ✓ Compiled /_error in 2.2s (761 modules)
+ GET /_next/static/css/css-app_globals_css-node_modules_next_font_google_target_css.css?v=1758174953111 404 in 2551ms
+ GET /_next/static/css/css-app_styles_dance-theme_css.css?v=1758174953111 404 in 2540ms
+ GET /_next/static/chunks/webpack.js?v=1758174953111 404 in 2378ms
+ GET /sw.js 404 in 116ms
+ GET /sw.js 404 in 2ms

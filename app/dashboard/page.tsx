@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { useAuth, useRequireAuth } from '@/app/lib/auth-context'
 // import { QuickBooking } from '@/app/components/payments/CheckoutButton'
 
 interface DashboardData {
@@ -59,20 +61,26 @@ export default function UserDashboard() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { user, loading, logout } = useAuth()
+  const router = useRouter()
   
-  // TODO: Replace with actual user ID from authentication
-  const userId = "temp-user-id"
+  // Require authentication for dashboard access
+  useRequireAuth()
 
   useEffect(() => {
-    fetchDashboardData()
-  }, [])
+    if (user) {
+      fetchDashboardData()
+    }
+  }, [user])
 
   const fetchDashboardData = async () => {
+    if (!user) return
+    
     setIsLoading(true)
     setError(null)
     
     try {
-      const response = await fetch(`/api/user/dashboard/${userId}`)
+      const response = await fetch(`/api/user/dashboard/${user.id}`)
       
       if (!response.ok) {
         throw new Error('Failed to fetch dashboard data')
@@ -118,7 +126,7 @@ export default function UserDashboard() {
     return formatDate(dateString)
   }
 
-  if (isLoading) {
+  if (loading || isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -127,6 +135,11 @@ export default function UserDashboard() {
         </div>
       </div>
     )
+  }
+
+  // Don't render if no user (will redirect via useRequireAuth)
+  if (!user) {
+    return null
   }
 
   if (error || !dashboardData) {
@@ -147,35 +160,48 @@ export default function UserDashboard() {
     )
   }
 
-  const { user, stats, upcomingBookings, recentActivity, recommendedClasses } = dashboardData
+  const { user: dashboardUser, stats, upcomingBookings, recentActivity, recommendedClasses } = dashboardData
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div>
       {/* Header */}
       <header className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">
-                Welcome back, {user.name}! 👋
+                Welcome back, {user.fullName}! 👋
               </h1>
               <p className="text-gray-600">
-                Member since {formatDate(user.memberSince)}
+                Member since {formatDate(user.createdAt)}
               </p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
               <Link 
                 href="/classes" 
-                className="px-4 py-2 text-purple-600 hover:text-purple-700 font-medium"
+                className="hidden sm:inline-block px-4 py-2 text-purple-600 hover:text-purple-700 font-medium"
               >
                 Browse Classes
               </Link>
               <Link 
                 href="/events" 
-                className="px-4 py-2 text-purple-600 hover:text-purple-700 font-medium"
+                className="hidden sm:inline-block px-4 py-2 text-purple-600 hover:text-purple-700 font-medium"
               >
                 View Events
               </Link>
+              <div className="hidden md:block text-sm text-gray-600">
+                Signed in as <span className="font-medium">{user.fullName}</span>
+              </div>
+              <button
+                onClick={async () => {
+                  await logout()
+                  router.push('/login')
+                }}
+                className="px-3 py-2 sm:px-4 sm:py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium text-sm"
+              >
+                <span className="hidden sm:inline">Sign Out</span>
+                <span className="sm:hidden">Logout</span>
+              </button>
             </div>
           </div>
         </div>

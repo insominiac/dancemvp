@@ -1,8 +1,9 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
+import { useAuth, useRequireInstructor } from '@/app/lib/auth-context'
 
 interface InstructorLayoutProps {
   children: ReactNode
@@ -10,6 +11,25 @@ interface InstructorLayoutProps {
 
 export default function InstructorLayout({ children }: InstructorLayoutProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { user, logout, loading } = useAuth()
+  
+  // Require instructor or admin privileges
+  useRequireInstructor()
+  
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      </div>
+    )
+  }
+  
+  // Don't render if no user (will redirect via useRequireInstructor)
+  if (!user) {
+    return null
+  }
 
   const navigation = [
     {
@@ -74,7 +94,7 @@ export default function InstructorLayout({ children }: InstructorLayoutProps) {
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-purple-600">Instructor Portal</span>
+              <span className="text-xl font-bold text-purple-600 dance-logo" style={{fontSize: '1.5rem'}}>Instructor Portal</span>
             </Link>
           </div>
           
@@ -102,17 +122,28 @@ export default function InstructorLayout({ children }: InstructorLayoutProps) {
             <div className="flex-shrink-0 w-full group block">
               <div className="flex items-center">
                 <div className="inline-block h-9 w-9 rounded-full bg-purple-600 flex items-center justify-center">
-                  <span className="text-sm font-medium text-white">I</span>
+                  <span className="text-sm font-medium text-white">
+                    {user.fullName.charAt(0).toUpperCase()}
+                  </span>
                 </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                    Demo Instructor
+                <div className="ml-3 flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate">
+                    {user.fullName}
                   </p>
-                  <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                    <Link href="/api/auth/logout" className="hover:underline">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-medium text-gray-500">
+                      {user.role.toLowerCase()}
+                    </p>
+                    <button 
+                      onClick={async () => {
+                        await logout()
+                        router.push('/login')
+                      }}
+                      className="text-xs font-medium text-gray-500 hover:text-gray-700 hover:underline"
+                    >
                       Sign out
-                    </Link>
-                  </p>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -126,7 +157,7 @@ export default function InstructorLayout({ children }: InstructorLayoutProps) {
         <div className="lg:hidden bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 py-2">
             <div className="flex items-center justify-between">
-              <Link href="/" className="text-lg font-bold text-purple-600">
+              <Link href="/" className="text-lg font-bold text-purple-600 dance-logo" style={{fontSize: '1.25rem'}}>
                 Instructor Portal
               </Link>
               <button className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">

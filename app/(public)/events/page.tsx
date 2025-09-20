@@ -131,67 +131,82 @@ export default function EventsPage() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Header */}
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Upcoming Events</h1>
-        <p className="text-xl text-gray-600">
-          Join our exciting dance events, workshops, and competitions
-        </p>
-      </div>
-
-      {/* Featured Events */}
-      {events.filter(e => e.isFeatured).length > 0 && (
-        <div className="mb-12">
-          <h2 className="text-2xl font-bold mb-6">Featured Events</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {events.filter(e => e.isFeatured).slice(0, 2).map((event) => (
-              <div key={event.id} className="bg-gradient-to-r from-purple-600 to-purple-800 rounded-lg p-6 text-white">
-                <div className="flex justify-between items-start mb-4">
-                  <h3 className="text-2xl font-bold">{event.title}</h3>
-                  <span className="text-yellow-300">⭐ Featured</span>
-                </div>
-                <p className="mb-4 opacity-90">{event.description}</p>
-                <div className="flex justify-between items-end">
-                  <div>
-                    <p className="text-sm opacity-75">
-                      {formatEventDate(event.startDate, event.endDate)}
-                    </p>
-                    <p className="text-2xl font-bold mt-2">${event.price}</p>
-                  </div>
-                  <Link
-                    href={`/events/${event.id}`}
-                    className="px-6 py-2 bg-white text-purple-600 rounded-lg hover:bg-gray-100 transition"
-                  >
-                    Learn More
-                  </Link>
-                </div>
-              </div>
-            ))}
+    <div>
+      {/* Header Section */}
+      <section className="py-20" style={{background: 'linear-gradient(135deg, var(--neutral-light), rgba(255,255,255,0.8)'}}>
+        <div className="dance-container">
+          <div className="dance-section-header">
+            <h1 className="dance-section-title text-5xl mb-4">Upcoming Events</h1>
+            <p className="text-xl">Join our exciting dance events, workshops, and competitions</p>
           </div>
         </div>
-      )}
+      </section>
 
-      {/* Search and Filters */}
-      <div className="bg-white rounded-lg shadow-sm p-6 mb-8">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
-          {/* Search */}
-          <div className="md:col-span-2">
+      <div className="dance-container py-12">
+
+        {/* Featured Events */}
+        {events.filter(e => e.isFeatured).length > 0 && (
+          <div className="mb-16">
+            <div className="dance-section-header mb-8">
+              <h2 className="text-3xl font-bold dance-font" style={{color: 'var(--primary-dark)'}}>Featured Events</h2>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              {events.filter(e => e.isFeatured).slice(0, 2).map((event) => (
+                <div key={event.id} className="dance-card" style={{
+                  background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
+                  color: 'white',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}>
+                  <div className="absolute top-4 right-4">
+                    <span className="text-2xl">⭐</span>
+                  </div>
+                  <h3 className="text-3xl font-bold mb-4 dance-font">{event.title}</h3>
+                  <p className="mb-6 opacity-90 text-lg">{event.description}</p>
+                  <div className="flex justify-between items-end">
+                    <div>
+                      <p className="text-sm opacity-75 mb-2">
+                        {formatEventDate(event.startDate, event.endDate)}
+                      </p>
+                      <p className="text-3xl font-bold">${event.price}</p>
+                    </div>
+                    <Link
+                      href={`/events/${event.id}`}
+                      className="px-8 py-3 bg-white rounded-full font-semibold hover:transform hover:-translate-y-1 hover:shadow-lg transition-all"
+                      style={{color: 'var(--primary-dark)'}}
+                    >
+                      Learn More
+                    </Link>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Search and Filters */}
+        <div className="dance-search-container">
+          <div className="flex flex-wrap gap-4 mb-6">
             <input
               type="text"
-              placeholder="Search events..."
+              placeholder="🔍 Search events..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="dance-search-input"
             />
+            <button
+              onClick={filterEvents}
+              className="dance-search-button"
+            >
+              Search Events
+            </button>
           </div>
-
-          {/* Event Type Filter */}
-          <div>
+          
+          <div className="flex flex-wrap gap-4 justify-center">
             <select
               value={filters.eventType}
               onChange={(e) => setFilters({...filters, eventType: e.target.value})}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="dance-filter-select"
             >
               <option value="all">All Types</option>
               <option value="Workshop">Workshop</option>
@@ -200,14 +215,11 @@ export default function EventsPage() {
               <option value="Social">Social</option>
               <option value="Masterclass">Masterclass</option>
             </select>
-          </div>
-
-          {/* Price Range Filter */}
-          <div>
+            
             <select
               value={filters.priceRange}
               onChange={(e) => setFilters({...filters, priceRange: e.target.value})}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="dance-filter-select"
             >
               <option value="all">Any Price</option>
               <option value="0-50">Under $50</option>
@@ -215,112 +227,161 @@ export default function EventsPage() {
               <option value="100-200">$100 - $200</option>
               <option value="200-9999">Over $200</option>
             </select>
-          </div>
-
-          {/* Clear Filters */}
-          <div>
+            
             <button
               onClick={() => {
                 setFilters({ eventType: 'all', month: 'all', priceRange: 'all' })
                 setSearchTerm('')
               }}
-              className="w-full px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition"
+              className="px-6 py-3 bg-gray-100 rounded-full hover:bg-gray-200 transition"
             >
               Clear Filters
             </button>
           </div>
         </div>
-      </div>
 
-      {/* Results Count */}
-      <div className="mb-6">
-        <p className="text-gray-600">
-          Showing {filteredEvents.length} of {events.length} events
-        </p>
-      </div>
+        {/* Results Count */}
+        <div className="mb-8 text-center">
+          <p style={{color: 'var(--neutral-gray)'}}>
+            Showing {filteredEvents.length} of {events.length} events
+          </p>
+        </div>
 
-      {/* Events Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredEvents.filter(e => !e.isFeatured).map((event) => (
-          <div key={event.id} className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition">
-            {/* Event Image */}
-            <div className="h-48 bg-gradient-to-br from-indigo-400 to-purple-600 relative">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-6xl opacity-50 text-white">🎉</span>
-              </div>
+        {/* Events Grid */}
+        <div className="dance-card-grid">
+          {filteredEvents.filter(e => !e.isFeatured).map((event) => (
+            <div key={event.id} className="dance-class-card" style={{
+              background: `linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)), 
+                          linear-gradient(135deg, var(--primary-dark), var(--accent-rose))`
+            }}>
               <div className="absolute top-4 right-4">
-                <span className={`px-2 py-1 text-xs rounded-full ${getEventTypeColor(event.eventType)}`}>
+                <span className={`px-3 py-1 text-xs rounded-full font-semibold ${
+                  event.eventType === 'Workshop' ? 'bg-blue-100 text-blue-800' :
+                  event.eventType === 'Competition' ? 'bg-red-100 text-red-800' :
+                  event.eventType === 'Showcase' ? 'bg-purple-100 text-purple-800' :
+                  event.eventType === 'Social' ? 'bg-green-100 text-green-800' :
+                  'bg-yellow-100 text-yellow-800'
+                }`}>
                   {event.eventType}
                 </span>
               </div>
-            </div>
 
-            {/* Event Info */}
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">{event.title}</h3>
-              <p className="text-gray-600 mb-4 line-clamp-2">{event.description}</p>
+              <div className="dance-class-content">
+                <h3 className="text-2xl font-semibold mb-2">{event.title}</h3>
+                <p className="text-sm uppercase tracking-wide mb-3" style={{color: 'var(--primary-gold)'}}>
+                  {formatEventDate(event.startDate, event.endDate)}
+                </p>
+                <p className="mb-4 opacity-0 transition-opacity duration-300 hover:opacity-100">
+                  {event.description}
+                </p>
+                
+                <div className="space-y-2 mb-4 text-sm opacity-80">
+                  <div className="flex items-center">
+                    <span className="mr-2">⏰</span>
+                    <span>{event.startTime} - {event.endTime}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="mr-2">📍</span>
+                    <span>{event.venue?.name || 'TBD'}</span>
+                  </div>
+                  <div className="flex items-center">
+                    <span className="mr-2">👥</span>
+                    <span>
+                      {getSpotsLeft(event) > 0 
+                        ? `${getSpotsLeft(event)} spots left`
+                        : 'Sold out'}
+                    </span>
+                  </div>
+                </div>
 
-              {/* Details */}
-              <div className="space-y-2 mb-4">
-                <div className="flex items-center text-sm text-gray-500">
-                  <span className="mr-2">📅</span>
-                  <span>{formatEventDate(event.startDate, event.endDate)}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-500">
-                  <span className="mr-2">⏰</span>
-                  <span>{event.startTime} - {event.endTime}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-500">
-                  <span className="mr-2">📍</span>
-                  <span>{event.venue?.name || 'TBD'}</span>
-                </div>
-                <div className="flex items-center text-sm text-gray-500">
-                  <span className="mr-2">👥</span>
-                  <span>
-                    {getSpotsLeft(event) > 0 
-                      ? `${getSpotsLeft(event)} spots left`
-                      : 'Sold out'}
-                  </span>
+                <div className="flex items-center justify-between">
+                  <div>
+                    <span className="text-3xl font-bold">${event.price}</span>
+                    <span className="text-sm opacity-75">/person</span>
+                  </div>
+                  <Link
+                    href={`/events/${event.id}`}
+                    className={`px-6 py-3 rounded-full font-semibold transition-all ${
+                      getSpotsLeft(event) > 0 && event.status === 'PUBLISHED'
+                        ? 'bg-white text-purple-900 hover:transform hover:-translate-y-1 hover:shadow-lg'
+                        : 'bg-gray-400 text-gray-600 cursor-not-allowed'
+                    }`}
+                  >
+                    {getSpotsLeft(event) > 0 ? 'View Details' : 'Sold Out'}
+                  </Link>
                 </div>
               </div>
+            </div>
+          ))}
+        </div>
 
-              {/* Price and Register Button */}
-              <div className="flex items-center justify-between">
-                <div>
-                  <span className="text-2xl font-bold text-gray-900">${event.price}</span>
-                  <span className="text-sm text-gray-500">/person</span>
+        {/* No Results */}
+        {filteredEvents.length === 0 && (
+          <div className="text-center py-20">
+            <div className="dance-card max-w-md mx-auto">
+              <div className="text-6xl mb-4">🎉</div>
+              <p className="text-lg mb-6" style={{color: 'var(--neutral-gray)'}}>
+                No events found matching your criteria.
+              </p>
+              <button
+                onClick={() => {
+                  setFilters({ eventType: 'all', month: 'all', priceRange: 'all' })
+                  setSearchTerm('')
+                }}
+                className="dance-btn dance-btn-primary"
+              >
+                Clear Filters
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {/* CTA Section */}
+        {filteredEvents.length > 0 && (
+          <div className="py-20">
+            <div className="max-w-4xl mx-auto text-center">
+              <div className="dance-card" style={{
+                background: 'linear-gradient(135deg, var(--primary-dark), var(--accent-rose))',
+                color: 'white'
+              }}>
+                <h3 className="text-4xl font-bold mb-4 dance-font">🎤 Ready to Join the Party?</h3>
+                <p className="text-xl mb-8 opacity-90">
+                  Don't miss out on our exclusive dance events! Book early to secure your spot and join our vibrant community.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-2xl mx-auto">
+                  <Link 
+                    href="/contact" 
+                    className="px-8 py-4 bg-white rounded-full font-bold text-lg hover:transform hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                    style={{color: 'var(--primary-dark)'}}
+                  >
+                    🎟️ Reserve Your Spot
+                  </Link>
+                  <Link 
+                    href="/contact" 
+                    className="px-8 py-4 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-800 hover:transform hover:scale-105 hover:shadow-2xl transition-all duration-300"
+                  >
+                    📞 Get Event Updates
+                  </Link>
                 </div>
-                <Link
-                  href={`/events/${event.id}`}
-                  className={`px-4 py-2 rounded-lg transition ${
-                    getSpotsLeft(event) > 0 && event.status === 'PUBLISHED'
-                      ? 'bg-purple-600 text-white hover:bg-purple-700'
-                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                  }`}
-                >
-                  {getSpotsLeft(event) > 0 ? 'View Details' : 'Sold Out'}
-                </Link>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10 text-sm">
+                  <div className="opacity-90">
+                    <div className="text-2xl mb-2">🎯</div>
+                    <p><strong>Early Bird Discounts</strong><br/>Book in advance and save</p>
+                  </div>
+                  <div className="opacity-90">
+                    <div className="text-2xl mb-2">🎆</div>
+                    <p><strong>VIP Experience</strong><br/>Front row seats available</p>
+                  </div>
+                  <div className="opacity-90">
+                    <div className="text-2xl mb-2">🎁</div>
+                    <p><strong>Group Packages</strong><br/>Bring friends and save more</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        ))}
+        )}
       </div>
-
-      {/* No Results */}
-      {filteredEvents.length === 0 && (
-        <div className="text-center py-12">
-          <p className="text-gray-500 text-lg">No events found matching your criteria.</p>
-          <button
-            onClick={() => {
-              setFilters({ eventType: 'all', month: 'all', priceRange: 'all' })
-              setSearchTerm('')
-            }}
-            className="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
-          >
-            Clear Filters
-          </button>
-        </div>
-      )}
     </div>
   )
 }

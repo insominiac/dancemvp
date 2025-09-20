@@ -34,7 +34,7 @@ export async function GET() {
       prisma.testimonial.count(),
       prisma.danceStyle.count(),
       prisma.notification.count({ where: { isRead: false } }),
-      prisma.partnerRequest.count({ where: { status: 'active' } }),
+      prisma.matchRequest.count({ where: { status: 'PENDING' } }),
       prisma.contactMessage.count({ where: { isRead: false } })
     ])
 

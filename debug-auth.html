@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Auth Debug</title>
+    <script>
+        async function testAuth() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    credentials: 'include'
+                });
+                const data = await response.json();
+                console.log('Auth data:', data);
+                document.getElementById('result').innerHTML = JSON.stringify(data, null, 2);
+            } catch (error) {
+                console.error('Auth error:', error);
+                document.getElementById('result').innerHTML = 'Error: ' + error.message;
+            }
+        }
+
+        async function testLogin() {
+            try {
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({
+                        email: 'student@test.com',
+                        password: 'password123'
+                    })
+                });
+                const data = await response.json();
+                console.log('Login data:', data);
+                document.getElementById('loginResult').innerHTML = JSON.stringify(data, null, 2);
+                
+                // Test auth after login
+                setTimeout(testAuth, 1000);
+            } catch (error) {
+                console.error('Login error:', error);
+                document.getElementById('loginResult').innerHTML = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Auth Debug</h1>
+    <button onclick="testLogin()">Test Login</button>
+    <button onclick="testAuth()">Test Auth</button>
+    
+    <h2>Login Result:</h2>
+    <pre id="loginResult">Click "Test Login" button</pre>
+    
+    <h2>Auth Result:</h2>
+    <pre id="result">Click "Test Auth" button</pre>
+</body>
+</html>

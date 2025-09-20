@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useAuth, useRequireAdmin } from '@/app/lib/auth-context'
 
 // Import section components
 import UserManagement from './sections/UserManagement'
@@ -14,6 +15,9 @@ import InstructorManagement from './sections/InstructorManagement'
 import TransactionAnalytics from './sections/TransactionAnalytics'
 import ForumModeration from './sections/ForumModeration'
 import NotificationCenter from './sections/NotificationCenter'
+import ContentManagement from './sections/ContentManagement'
+import ContactMessages from './sections/ContactMessages'
+import AuditTrail from './sections/AuditTrail'
 
 interface Stats {
   totalUsers: number
@@ -44,11 +48,33 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [helperData, setHelperData] = useState<any>(null)
-
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+  
+  // Require admin privileges - ALL HOOKS MUST BE CALLED BEFORE ANY CONDITIONAL RETURNS
+  const { user, logout, loading: authLoading } = useAuth()
+  useRequireAdmin()
+  
+  // ALL useEffect hooks must be called before conditional returns
   useEffect(() => {
-    fetchAdminData()
-    fetchHelperData()
-  }, [])
+    if (!authLoading && user) {
+      fetchAdminData()
+      fetchHelperData()
+    }
+  }, [authLoading, user])
+  
+  // Show loading state while checking authentication
+  if (authLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      </div>
+    )
+  }
+  
+  // Don't render if no user (will redirect via useRequireAdmin)
+  if (!user) {
+    return null
+  }
 
   const fetchAdminData = async () => {
     setIsLoading(true)
@@ -81,6 +107,7 @@ export default function AdminPanel() {
 
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: '📊' },
+    { id: 'content', label: 'Content Management', icon: '🎨' },
     { id: 'users', label: 'Users', icon: '👥', badge: stats?.totalUsers },
     { id: 'instructors', label: 'Instructors', icon: '🎓', badge: stats?.totalInstructors },
     { id: 'classes', label: 'Classes', icon: '📚', badge: stats?.totalClasses },
@@ -262,6 +289,8 @@ export default function AdminPanel() {
     switch(activeSection) {
       case 'dashboard':
         return renderDashboard()
+      case 'content':
+        return <ContentManagement />
       case 'users':
         return <UserManagement />
       case 'instructors':
@@ -313,35 +342,9 @@ export default function AdminPanel() {
       case 'notifications':
         return <NotificationCenter />
       case 'messages':
-        return (
-          <div>
-            <h2 className="text-3xl font-bold mb-6">Contact Messages</h2>
-            <div className="bg-white rounded-lg shadow p-6">
-              <p className="text-gray-600">Manage contact form submissions</p>
-              <ul className="mt-4 text-sm text-gray-500">
-                <li>• View unread messages</li>
-                <li>• Reply to inquiries</li>
-                <li>• Archive messages</li>
-                <li>• Mark as resolved</li>
-              </ul>
-            </div>
-          </div>
-        )
+        return <ContactMessages />
       case 'audit':
-        return (
-          <div>
-            <h2 className="text-3xl font-bold mb-6">Audit Logs</h2>
-            <div className="bg-white rounded-lg shadow p-6">
-              <p className="text-gray-600">System audit trail viewer</p>
-              <ul className="mt-4 text-sm text-gray-500">
-                <li>• View all system actions</li>
-                <li>• Filter by user/action type</li>
-                <li>• Export audit reports</li>
-                <li>• Monitor security events</li>
-              </ul>
-            </div>
-          </div>
-        )
+        return <AuditTrail />
       case 'api-docs':
         return (
           <div>
@@ -435,6 +438,9 @@ export default function AdminPanel() {
               </span>
             </div>
             <div className="flex items-center gap-4">
+              <span className="text-sm text-gray-600">
+                Welcome, {user.fullName}
+              </span>
               <button 
                 onClick={() => {
                   fetchAdminData()
@@ -447,6 +453,45 @@ export default function AdminPanel() {
               <Link href="/" className="text-gray-600 hover:text-gray-900">
                 ← Back to Site
               </Link>
+              <button 
+                onClick={async () => {
+                  if (confirm('Are you sure you want to logout?')) {
+                    setIsLoggingOut(true)
+                    try {
+                      await logout()
+                      // Clear any cached data
+                      if (typeof window !== 'undefined') {
+                        // Clear local storage
+                        localStorage.clear()
+                        // Clear session storage
+                        sessionStorage.clear()
+                        // Force page reload to clear any cached state and show logout success
+                        window.location.replace('/login?logout=success')
+                      }
+                    } catch (error) {
+                      console.error('Logout failed:', error)
+                      setIsLoggingOut(false)
+                    }
+                  }
+                }}
+                disabled={isLoggingOut}
+                className={`px-4 py-2 text-white rounded-lg transition flex items-center gap-2 ${
+                  isLoggingOut 
+                    ? 'bg-red-400 cursor-not-allowed' 
+                    : 'bg-red-600 hover:bg-red-700'
+                }`}
+              >
+                {isLoggingOut ? (
+                  <>
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+                    Logging out...
+                  </>
+                ) : (
+                  <>
+                    🚪 Logout
+                  </>
+                )}
+              </button>
             </div>
           </div>
         </div>
@@ -484,6 +529,54 @@ export default function AdminPanel() {
                 </li>
               ))}
             </ul>
+            
+            {/* User info and logout at bottom of sidebar */}
+            <div className="mt-8 pt-4 border-t border-gray-200">
+              <div className="px-4 py-3">
+                <div className="text-xs text-gray-500 mb-1">Signed in as</div>
+                <div className="text-sm font-medium text-gray-900 mb-3">{user.fullName}</div>
+                <button
+                  onClick={async () => {
+                    if (confirm('Are you sure you want to logout?')) {
+                      setIsLoggingOut(true)
+                      try {
+                        await logout()
+                        // Clear any cached data
+                        if (typeof window !== 'undefined') {
+                          // Clear local storage
+                          localStorage.clear()
+                          // Clear session storage
+                          sessionStorage.clear()
+                          // Force page reload to clear any cached state and show logout success
+                          window.location.replace('/login?logout=success')
+                        }
+                      } catch (error) {
+                        console.error('Logout failed:', error)
+                        setIsLoggingOut(false)
+                      }
+                    }
+                  }}
+                  disabled={isLoggingOut}
+                  className={`w-full text-left text-sm transition flex items-center gap-2 ${
+                    isLoggingOut 
+                      ? 'text-red-400 cursor-not-allowed' 
+                      : 'text-red-600 hover:text-red-800'
+                  }`}
+                >
+                  {isLoggingOut ? (
+                    <>
+                      <div className="animate-spin rounded-full h-3 w-3 border-b border-red-400"></div>
+                      Logging out...
+                    </>
+                  ) : (
+                    <>
+                      <span>🚪</span>
+                      Sign out
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
           </nav>
         </aside>
 

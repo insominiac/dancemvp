@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { headers } from 'next/headers'
 import { stripe } from '@/app/lib/stripe'
 import prisma from '@/app/lib/db'
+import { emailService } from '@/app/lib/email'
+import type { BookingConfirmationData } from '@/app/lib/email'
 import Stripe from 'stripe'
 
 export async function POST(request: NextRequest) {
@@ -46,6 +48,10 @@ export async function POST(request: NextRequest) {
 
     // Handle different event types
     switch (event.type) {
+      case 'checkout.session.completed':
+        await handleCheckoutSessionCompleted(event.data.object as Stripe.Checkout.Session)
+        break
+
       case 'payment_intent.succeeded':
         await handlePaymentIntentSucceeded(event.data.object as Stripe.PaymentIntent)
         break
@@ -74,6 +80,148 @@ export async function POST(request: NextRequest) {
       { error: 'Webhook handler failed' },
       { status: 500 }
     )
+  }
+}
+
+async function handleCheckoutSessionCompleted(session: Stripe.Checkout.Session) {
+  try {
+    console.log('Processing completed checkout session:', session.id)
+
+    // Find booking by session ID
+    const booking = await prisma.booking.findFirst({
+      where: {
+        stripeSessionId: session.id
+      },
+      include: {
+        user: true,
+        class: {
+          include: {
+            venue: true,
+            classInstructors: {
+              include: {
+                instructor: {
+                  include: {
+                    user: true
+                  }
+                }
+              }
+            }
+          }
+        },
+        event: {
+          include: {
+            venue: true,
+            organizer: true
+          }
+        }
+      }
+    })
+
+    if (!booking) {
+      console.error('Booking not found for session:', session.id)
+      return
+    }
+
+    // Update booking status
+    await prisma.booking.update({
+      where: { id: booking.id },
+      data: {
+        status: 'CONFIRMED',
+        paymentStatus: 'succeeded',
+        amountPaid: Number(session.amount_total || 0) / 100, // Convert from cents
+        paymentMethod: session.payment_method_types?.[0] || 'card'
+      }
+    })
+
+    // Update transaction status
+    const transaction = await prisma.transaction.findFirst({
+      where: {
+        bookingId: booking.id,
+        stripeSessionId: session.id
+      }
+    })
+
+    if (transaction) {
+      await prisma.transaction.update({
+        where: { id: transaction.id },
+        data: {
+          status: 'SUCCEEDED',
+          providerPaymentId: session.payment_intent as string,
+          payload: JSON.stringify(session)
+        }
+      })
+    }
+
+    // Update class/event current student count
+    if (booking.classId) {
+      await prisma.class.update({
+        where: { id: booking.classId },
+        data: {
+          currentStudents: {
+            increment: 1
+          }
+        }
+      })
+    } else if (booking.eventId) {
+      await prisma.event.update({
+        where: { id: booking.eventId },
+        data: {
+          currentAttendees: {
+            increment: 1
+          }
+        }
+      })
+    }
+
+    console.log('Booking confirmed via checkout session:', booking.id)
+    
+    // Send confirmation email to user
+    try {
+      const item = booking.class || booking.event
+      const isClass = Boolean(booking.class)
+      
+      if (item) {
+        const emailData: BookingConfirmationData = {
+          user: {
+            name: booking.user.fullName,
+            email: booking.user.email
+          },
+          booking: {
+            confirmationCode: booking.confirmationCode,
+            totalAmount: Number(booking.totalAmount),
+            amountPaid: Number(booking.amountPaid),
+            paymentMethod: booking.paymentMethod || 'card',
+            bookingDate: booking.createdAt.toISOString()
+          },
+          item: {
+            title: item.title,
+            type: isClass ? 'class' : 'event',
+            startDate: item.startDate.toISOString(),
+            endDate: item.endDate?.toISOString(),
+            startTime: isClass ? booking.class?.schedule : booking.event?.startTime,
+            venue: item.venue ? {
+              name: item.venue.name,
+              address: item.venue.address || '',
+              city: item.venue.city,
+              state: item.venue.state || ''
+            } : undefined,
+            instructor: isClass && booking.class?.classInstructors?.[0]?.instructor?.user ? 
+              booking.class.classInstructors[0].instructor.user.fullName : undefined,
+            organizer: !isClass && booking.event?.organizer ? 
+              booking.event.organizer.fullName : undefined
+          }
+        }
+        
+        await emailService.sendBookingConfirmation(emailData)
+        console.log('Confirmation email sent to:', booking.user.email)
+      }
+    } catch (emailError) {
+      console.error('Failed to send confirmation email:', emailError)
+      // Don't fail the webhook if email fails
+    }
+
+  } catch (error) {
+    console.error('Error handling checkout session completed:', error)
   }
 }
 

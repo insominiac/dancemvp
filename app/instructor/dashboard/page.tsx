@@ -2,52 +2,185 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { useAuth, useRequireInstructor } from '@/app/lib/auth-context'
+
+interface InstructorDashboardData {
+  instructor: {
+    id: string
+    name: string
+    email: string
+    phone?: string
+    bio?: string
+    experience?: number
+    specialties: string[]
+    joinedDate: string
+  }
+  stats: {
+    totalClasses: number
+    studentsEnrolled: number
+    upcomingThisWeek: number
+    monthlyEarnings: number
+    averageRating: number
+  }
+  todaysClasses: Array<{
+    id: string
+    title: string
+    time: string
+    duration: number
+    enrolled: number
+    capacity: number
+    venue: string
+    location: string
+    students: Array<{ name: string; email: string }>
+    styles: string[]
+  }>
+  upcomingClasses: Array<{
+    id: string
+    title: string
+    startDate: string
+    time: string
+    duration: number
+    enrolled: number
+    capacity: number
+    venue: string
+    location: string
+  }>
+  recentActivity: Array<{
+    id: string
+    message: string
+    time: string
+    type: string
+    userId: string
+    classTitle: string
+  }>
+  performanceMetrics: {
+    classesTaught: number
+    newStudents: number
+    attendanceRate: number
+  }
+}
+
+interface ResourceStats {
+  overview: {
+    totalResources: number
+    totalViews: number
+    totalDownloads: number
+    publicResources: number
+  }
+  recentResources: Array<{
+    id: string
+    title: string
+    type: string
+    category: string
+    views: number
+    createdAt: string
+  }>
+}
 
 export default function InstructorDashboard() {
-  // Demo data - in real app this would come from API
-  const instructorData = {
-    name: 'Maria Rodriguez',
-    stats: {
-      totalClasses: 8,
-      studentsEnrolled: 156,
-      upcomingThisWeek: 12,
-      monthlyEarnings: 3420.00,
-      averageRating: 4.8
-    },
-    todaysClasses: [
-      {
-        id: '1',
-        title: 'Beginner Salsa',
-        time: '18:00',
-        duration: 60,
-        enrolled: 12,
-        capacity: 15,
-        venue: 'Studio A'
-      },
-      {
-        id: '2',
-        title: 'Intermediate Bachata',
-        time: '19:30',
-        duration: 75,
-        enrolled: 8,
-        capacity: 12,
-        venue: 'Studio B'
+  const [dashboardData, setDashboardData] = useState<InstructorDashboardData | null>(null)
+  const [resourceStats, setResourceStats] = useState<ResourceStats | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [instructorId, setInstructorId] = useState<string | null>(null)
+  const { user, loading } = useAuth()
+  
+  // Require instructor authentication
+  useRequireInstructor()
+
+  useEffect(() => {
+    if (user) {
+      fetchDashboardData()
+    }
+  }, [user])
+
+  const fetchDashboardData = async () => {
+    if (!user) return
+    
+    setIsLoading(true)
+    setError(null)
+    
+    try {
+      // First, find the instructor record for current user
+      const instructorLookupResponse = await fetch(`/api/instructor/profile/${user.id}`)
+      
+      if (!instructorLookupResponse.ok) {
+        throw new Error('Instructor profile not found. Please contact admin.')
       }
-    ],
-    recentActivity: [
-      { id: '1', message: 'New student enrolled in Advanced Tango', time: '2 hours ago' },
-      { id: '2', message: 'Sarah M. completed Beginner Salsa series', time: '1 day ago' },
-      { id: '3', message: 'Payment received for December classes', time: '2 days ago' },
-      { id: '4', message: 'New message from Alex T.', time: '3 days ago' }
-    ]
+      
+      const instructorProfile = await instructorLookupResponse.json()
+      const instructorIdValue = instructorProfile.instructor.id
+      setInstructorId(instructorIdValue)
+      
+      // Fetch dashboard data and resource stats in parallel
+      const [dashboardResponse, resourceResponse] = await Promise.all([
+        fetch(`/api/instructor/dashboard/${instructorIdValue}`),
+        fetch(`/api/instructor/resources/stats?instructorId=${instructorIdValue}`)
+      ])
+      
+      if (!dashboardResponse.ok) {
+        throw new Error('Failed to fetch instructor dashboard data')
+      }
+      
+      const dashboardResult = await dashboardResponse.json()
+      setDashboardData(dashboardResult.data)
+      
+      // Resource stats are optional - don't fail the whole dashboard if they fail
+      if (resourceResponse.ok) {
+        const resourceResult = await resourceResponse.json()
+        setResourceStats(resourceResult)
+      }
+      
+    } catch (err) {
+      console.error('Dashboard error:', err)
+      setError(err instanceof Error ? err.message : 'Failed to load dashboard')
+    } finally {
+      setIsLoading(false)
+    }
   }
+
+  if (loading || isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading your dashboard...</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Don't render if no user (will redirect via useRequireInstructor)
+  if (!user) {
+    return null
+  }
+
+  if (error || !dashboardData) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+            <p>{error || 'Failed to load dashboard data'}</p>
+          </div>
+          <button 
+            onClick={fetchDashboardData}
+            className="px-4 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
+
+  const { instructor, stats, todaysClasses, recentActivity, performanceMetrics } = dashboardData
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900">
-          Welcome back, {instructorData.name}! 👋
+          Welcome back, {instructor.name}! 👋
         </h1>
         <p className="text-gray-600 mt-2">
           Here's what's happening with your classes today
@@ -63,7 +196,7 @@ export default function InstructorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm text-gray-600">Active Classes</p>
-              <p className="text-2xl font-bold text-gray-900">{instructorData.stats.totalClasses}</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.totalClasses}</p>
             </div>
           </div>
         </div>
@@ -75,7 +208,7 @@ export default function InstructorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm text-gray-600">Students Enrolled</p>
-              <p className="text-2xl font-bold text-gray-900">{instructorData.stats.studentsEnrolled}</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.studentsEnrolled}</p>
             </div>
           </div>
         </div>
@@ -87,7 +220,7 @@ export default function InstructorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm text-gray-600">This Week</p>
-              <p className="text-2xl font-bold text-gray-900">{instructorData.stats.upcomingThisWeek}</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.upcomingThisWeek}</p>
             </div>
           </div>
         </div>
@@ -99,7 +232,7 @@ export default function InstructorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm text-gray-600">This Month</p>
-              <p className="text-2xl font-bold text-gray-900">${instructorData.stats.monthlyEarnings}</p>
+              <p className="text-2xl font-bold text-gray-900">${stats.monthlyEarnings.toFixed(2)}</p>
             </div>
           </div>
         </div>
@@ -111,11 +244,118 @@ export default function InstructorDashboard() {
             </div>
             <div className="ml-4">
               <p className="text-sm text-gray-600">Avg Rating</p>
-              <p className="text-2xl font-bold text-gray-900">{instructorData.stats.averageRating}</p>
+              <p className="text-2xl font-bold text-gray-900">{stats.averageRating}</p>
             </div>
           </div>
         </div>
       </div>
+
+      {/* Teaching Resources Overview */}
+      {resourceStats && (
+        <div className="bg-white rounded-lg shadow mb-8">
+          <div className="p-6 border-b border-gray-200">
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center">
+                <span className="text-2xl mr-3">📝</span>
+                Teaching Resources
+              </h2>
+              <Link 
+                href="/instructor/materials"
+                className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+              >
+                View All →
+              </Link>
+            </div>
+          </div>
+          
+          <div className="p-6">
+            {/* Resource Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-purple-600">
+                  {resourceStats.overview.totalResources}
+                </div>
+                <div className="text-sm text-gray-600">Total Resources</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-blue-600">
+                  {resourceStats.overview.totalViews}
+                </div>
+                <div className="text-sm text-gray-600">Total Views</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-green-600">
+                  {resourceStats.overview.totalDownloads}
+                </div>
+                <div className="text-sm text-gray-600">Downloads</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-orange-600">
+                  {resourceStats.overview.publicResources}
+                </div>
+                <div className="text-sm text-gray-600">Public Resources</div>
+              </div>
+            </div>
+            
+            {/* Recent Resources */}
+            {resourceStats.recentResources.length > 0 ? (
+              <div>
+                <h3 className="text-sm font-medium text-gray-900 mb-3">Recent Resources</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {resourceStats.recentResources.slice(0, 4).map((resource) => {
+                    const getTypeIcon = (type: string) => {
+                      switch (type) {
+                        case 'LESSON_PLAN': return '📚'
+                        case 'PLAYLIST': return '🎵'
+                        case 'VIDEO': return '🎥'
+                        case 'AUDIO': return '🎧'
+                        case 'DOCUMENT': return '📄'
+                        case 'IMAGE': return '🖼️'
+                        case 'LINK': return '🔗'
+                        case 'NOTE': return '📝'
+                        default: return '📄'
+                      }
+                    }
+                    
+                    const formatCategory = (category: string) => {
+                      return category.replace(/_/g, ' ').toLowerCase().replace(/\b\w/g, l => l.toUpperCase())
+                    }
+                    
+                    return (
+                      <div key={resource.id} className="flex items-center p-3 bg-gray-50 rounded-lg">
+                        <span className="text-lg mr-3">{getTypeIcon(resource.type)}</span>
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {resource.title}
+                          </p>
+                          <div className="flex items-center justify-between text-xs text-gray-500">
+                            <span>{formatCategory(resource.category)}</span>
+                            <div className="flex items-center space-x-3">
+                              <span>{resource.views} views</span>
+                              <span>{new Date(resource.createdAt).toLocaleDateString()}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  })}
+                </div>
+              </div>
+            ) : (
+              <div className="text-center py-6">
+                <span className="text-4xl block mb-2">📝</span>
+                <p className="text-gray-600 mb-4">No resources yet</p>
+                <Link 
+                  href="/instructor/materials"
+                  className="inline-flex items-center px-4 py-2 bg-purple-600 text-white text-sm rounded-md hover:bg-purple-700 transition"
+                >
+                  Create Your First Resource
+                </Link>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -126,7 +366,7 @@ export default function InstructorDashboard() {
               <h2 className="text-xl font-semibold text-gray-900">Today's Schedule</h2>
             </div>
             
-            {instructorData.todaysClasses.length === 0 ? (
+            {todaysClasses.length === 0 ? (
               <div className="p-6 text-center">
                 <span className="text-4xl mb-4 block">🎉</span>
                 <p className="text-gray-600 mb-4">No classes scheduled for today</p>
@@ -134,7 +374,7 @@ export default function InstructorDashboard() {
               </div>
             ) : (
               <div className="divide-y divide-gray-200">
-                {instructorData.todaysClasses.map((cls) => (
+                {todaysClasses.map((cls) => (
                   <div key={cls.id} className="p-6">
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
@@ -229,6 +469,17 @@ export default function InstructorDashboard() {
                   <p className="text-xs text-green-700">See enrolled students</p>
                 </div>
               </Link>
+              
+              <Link 
+                href="/instructor/materials"
+                className="flex items-center p-3 bg-orange-50 rounded-lg hover:bg-orange-100 transition"
+              >
+                <span className="text-lg mr-3">📝</span>
+                <div>
+                  <p className="font-medium text-orange-900">Teaching Resources</p>
+                  <p className="text-xs text-orange-700">Manage lesson plans & materials</p>
+                </div>
+              </Link>
             </div>
           </div>
 
@@ -239,9 +490,13 @@ export default function InstructorDashboard() {
             </div>
             <div className="p-4">
               <div className="space-y-3">
-                {instructorData.recentActivity.map((activity) => (
+                {recentActivity.map((activity) => (
                   <div key={activity.id} className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-2 h-2 bg-purple-600 rounded-full mt-2"></div>
+                    <div className={`flex-shrink-0 w-2 h-2 rounded-full mt-2 ${
+                      activity.type === 'confirmed' ? 'bg-green-600' :
+                      activity.type === 'cancelled' ? 'bg-red-600' :
+                      'bg-purple-600'
+                    }`}></div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm text-gray-900">{activity.message}</p>
                       <p className="text-xs text-gray-500">{activity.time}</p>
@@ -260,19 +515,19 @@ export default function InstructorDashboard() {
             <div className="p-4 space-y-4">
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Classes Taught</span>
-                <span className="font-semibold text-gray-900">32</span>
+                <span className="font-semibold text-gray-900">{performanceMetrics.classesTaught}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">New Students</span>
-                <span className="font-semibold text-green-600">+12</span>
+                <span className="font-semibold text-green-600">+{performanceMetrics.newStudents}</span>
               </div>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-gray-600">Attendance Rate</span>
-                <span className="font-semibold text-blue-600">94%</span>
+                <span className="font-semibold text-blue-600">{Math.round(performanceMetrics.attendanceRate * 100)}%</span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-gray-600">Messages Sent</span>
-                <span className="font-semibold text-purple-600">28</span>
+                <span className="text-sm text-gray-600">Average Rating</span>
+                <span className="font-semibold text-purple-600">{stats.averageRating}</span>
               </div>
             </div>
           </div>

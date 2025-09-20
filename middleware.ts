@@ -15,17 +15,34 @@ const publicRoutes = [
   '/instructors',
   '/about',
   '/contact',
-  // Temporarily add admin routes as public for deployment testing
-  '/admin',
-  '/admin/api-docs',
-  '/api/admin',
-  '/api/swagger'
+  '/api/swagger',
+  '/unauthorized',
+  '/error'
 ]
 
-// Admin-only routes (not currently enforced for development)
+// Admin-only routes
 const adminRoutes = [
   '/admin',
   '/api/admin'
+]
+
+// Instructor routes (admin or instructor role required)
+const instructorRoutes = [
+  '/instructor'
+]
+
+// User routes (any authenticated user)
+const userRoutes = [
+  '/dashboard',
+  '/profile'
+]
+
+// Partner matching routes (students/users and instructors only)
+const partnerMatchingRoutes = [
+  '/dashboard/partner-matching',
+  '/api/user/partner-discovery',
+  '/api/user/match-requests',
+  '/api/user/profile'
 ]
 
 // Helper function to check if path starts with any of the given routes
@@ -36,121 +53,99 @@ function pathStartsWith(path: string, routes: string[]): boolean {
 export async function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname
   
-  // Allow all routes for now (development mode)
-  return NextResponse.next()
-
-  
-  // The authentication logic below is commented out for deployment testing
-  /*
   // Allow public routes
-  if (publicRoutes.some(route => path === route || path.startsWith('/api/public'))) {
+  if (publicRoutes.some(route => path === route) || path.startsWith('/api/public') || path.startsWith('/_next') || path.startsWith('/favicon')) {
     return NextResponse.next()
   }
 
-  // Check for admin routes
-  if (pathStartsWith(path, adminRoutes)) {
+  // Get authentication data from session cookies
+  const sessionId = request.cookies.get('session_id')?.value
+  const userId = request.cookies.get('user_id')?.value
+  const userRole = request.cookies.get('user_role')?.value
+  
+  // Also check for JWT token in header for API requests
+  const token = request.headers.get('authorization')?.replace('Bearer ', '')
+
+  // Helper function to decode JWT payload (without verification for performance)
+  function decodeToken(token: string) {
     try {
-      // Get token from cookie or header
-      const token = request.cookies.get('auth-token')?.value ||
-                   request.headers.get('authorization')?.replace('Bearer ', '')
+      return JSON.parse(Buffer.from(token.split('.')[1], 'base64').toString())
+    } catch {
+      return null
+    }
+  }
 
-      // In development mode, allow access without token (mock admin user will be used)
-      if (!token && process.env.NODE_ENV === 'development') {
-        console.log('🔓 Middleware: Development mode - allowing admin access')
-        
-        // Add a header to indicate development mode
-        const response = NextResponse.next()
-        response.headers.set('X-Dev-Mode', 'true')
-        response.headers.set('X-Dev-User', 'admin')
-        return response
+  // Helper function to handle authentication redirects
+  function handleAuthRedirect(requiresAuth: boolean = true, requiredRole?: string) {
+    // Check for session-based authentication first
+    const isAuthenticated = sessionId && userId && userRole
+    
+    // Always require authentication - no development mode bypass
+    if (!isAuthenticated && !token && requiresAuth) {
+      if (path.startsWith('/api/')) {
+        return NextResponse.json({ error: 'Authentication required' }, { status: 401 })
       }
+      return NextResponse.redirect(new URL('/login', request.url))
+    }
 
-      // In production, require token
-      if (!token && process.env.NODE_ENV === 'production') {
-        // Redirect to login for web requests
-        if (!path.startsWith('/api/')) {
+    // Handle role-based access control
+    if (requiredRole) {
+      let currentUserRole = userRole
+      
+      // If using JWT token, decode it for role
+      if (token && !currentUserRole) {
+        const payload = decodeToken(token)
+        if (!payload) {
+          if (path.startsWith('/api/')) {
+            return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
+          }
           return NextResponse.redirect(new URL('/login', request.url))
         }
-        
-        // Return 401 for API requests
-        return NextResponse.json(
-          { error: 'Authentication required' },
-          { status: 401 }
-        )
+        currentUserRole = payload.role
       }
-
-      // If token exists, verify it's an admin token
-      if (token) {
-        try {
-          // Basic JWT decode (without verification for middleware performance)
-          // Full verification happens in the auth utility
-          const payload = JSON.parse(
-            Buffer.from(token.split('.')[1], 'base64').toString()
-          )
-
-          // Check if user is admin
-          if (payload.role !== 'ADMIN') {
-            // Return 403 Forbidden for non-admin users
-            if (!path.startsWith('/api/')) {
-              return NextResponse.redirect(new URL('/unauthorized', request.url))
-            }
-            
-            return NextResponse.json(
-              { error: 'Admin privileges required' },
-              { status: 403 }
-            )
-          }
-        } catch (error) {
-          console.error('Token decode error:', error)
-          
-          // Invalid token
-          if (!path.startsWith('/api/')) {
-            return NextResponse.redirect(new URL('/login', request.url))
-          }
-          
-          return NextResponse.json(
-            { error: 'Invalid authentication token' },
-            { status: 401 }
-          )
+      if (requiredRole === 'ADMIN' && currentUserRole !== 'ADMIN') {
+        if (path.startsWith('/api/')) {
+          return NextResponse.json({ error: 'Admin privileges required' }, { status: 403 })
         }
+        return NextResponse.redirect(new URL('/unauthorized', request.url))
       }
 
-      // Allow the request to proceed
-      return NextResponse.next()
-      
-    } catch (error) {
-      console.error('Middleware error:', error)
-      
-      // On error, deny access
-      if (!path.startsWith('/api/')) {
-        return NextResponse.redirect(new URL('/error', request.url))
+      if (requiredRole === 'INSTRUCTOR' && currentUserRole !== 'ADMIN' && currentUserRole !== 'INSTRUCTOR') {
+        if (path.startsWith('/api/')) {
+          return NextResponse.json({ error: 'Instructor privileges required' }, { status: 403 })
+        }
+        return NextResponse.redirect(new URL('/unauthorized', request.url))
       }
-      
-      return NextResponse.json(
-        { error: 'Internal server error' },
-        { status: 500 }
-      )
+
+      if (requiredRole === 'STUDENT_OR_INSTRUCTOR' && currentUserRole !== 'USER' && currentUserRole !== 'INSTRUCTOR') {
+        if (path.startsWith('/api/')) {
+          return NextResponse.json({ error: 'Student or instructor privileges required' }, { status: 403 })
+        }
+        return NextResponse.redirect(new URL('/unauthorized', request.url))
+      }
     }
+
+    return NextResponse.next()
   }
 
-  // For all other authenticated routes (future user dashboard, etc.)
-  if (path.startsWith('/dashboard') || path.startsWith('/profile')) {
-    const token = request.cookies.get('auth-token')?.value ||
-                 request.headers.get('authorization')?.replace('Bearer ', '')
-
-    if (!token) {
-      if (!path.startsWith('/api/')) {
-        return NextResponse.redirect(new URL('/login', request.url))
-      }
-      
-      return NextResponse.json(
-        { error: 'Authentication required' },
-        { status: 401 }
-      )
-    }
+  // Check route-specific authentication requirements
+  if (pathStartsWith(path, adminRoutes)) {
+    return handleAuthRedirect(true, 'ADMIN')
   }
-  */
 
+  if (pathStartsWith(path, instructorRoutes)) {
+    return handleAuthRedirect(true, 'INSTRUCTOR')
+  }
+
+  if (pathStartsWith(path, partnerMatchingRoutes)) {
+    return handleAuthRedirect(true, 'STUDENT_OR_INSTRUCTOR')
+  }
+
+  if (pathStartsWith(path, userRoutes)) {
+    return handleAuthRedirect(true)
+  }
+
+  // Allow all other routes
   return NextResponse.next()
 }
 

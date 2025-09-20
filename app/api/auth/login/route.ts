@@ -1,112 +1,255 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcryptjs'
-import { generateToken, createSession } from '@/app/lib/auth'
-
-const prisma = new PrismaClient()
+import { authenticateUser, isValidEmail } from '@/app/lib/auth'
+import { createSession, checkRoleConflict } from '@/app/lib/session-middleware'
+import { generateDeviceFingerprint } from '@/app/lib/device-fingerprint'
+import prisma from '@/app/lib/db'
+import { UserRole } from '@prisma/client'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { email, password } = body
 
-    // Validate input
+    // Validate required fields
     if (!email || !password) {
       return NextResponse.json(
-        { error: 'Email and password are required' },
+        {
+          error: 'Email and password are required',
+          success: false
+        },
         { status: 400 }
       )
     }
 
-    // Special development admin login
-    if (process.env.NODE_ENV === 'development' && email === 'admin@dev.local' && password === 'admin123') {
-      console.log('🔓 Development admin login')
+    // Validate email format
+    if (!isValidEmail(email)) {
+      return NextResponse.json(
+        {
+          error: 'Invalid email format',
+          success: false
+        },
+        { status: 400 }
+      )
+    }
+
+    // Special development demo logins
+    const demoAccounts = {
+      'admin@dev.local': { password: 'admin123', role: 'ADMIN' as UserRole, fullName: 'Development Admin' },
+      'instructor@demo.com': { password: 'instructor123', role: 'INSTRUCTOR' as UserRole, fullName: 'Demo Instructor' },
+      'user@demo.com': { password: 'user123', role: 'USER' as UserRole, fullName: 'Demo User' }
+    }
+
+    const demoAccount = demoAccounts[email as keyof typeof demoAccounts]
+    
+    if (demoAccount && password === demoAccount.password) {
+      console.log(`🔓 Development ${demoAccount.role.toLowerCase()} login`)
       
-      // Check if dev admin exists, create if not
+      // Check if demo user exists, create if not
       let user = await prisma.user.findUnique({
-        where: { email: 'admin@dev.local' }
+        where: { email }
       })
 
       if (!user) {
-        console.log('Creating development admin user...')
-        const hashedPassword = await bcrypt.hash('admin123', 10)
+        console.log(`Creating development ${demoAccount.role.toLowerCase()} user...`)
+        const bcrypt = require('bcryptjs')
+        const hashedPassword = await bcrypt.hash(demoAccount.password, 10)
         
-        user = await prisma.user.create({
-          data: {
-            email: 'admin@dev.local',
-            passwordHash: hashedPassword,
-            fullName: 'Development Admin',
-            role: 'ADMIN',
-            isVerified: true
-          }
-        })
+        const userData: any = {
+          email,
+          passwordHash: hashedPassword,
+          fullName: demoAccount.fullName,
+          role: demoAccount.role,
+          isVerified: true
+        }
+
+        // If it's an instructor, create the instructor record too
+        if (demoAccount.role === 'INSTRUCTOR') {
+          user = await prisma.user.create({
+            data: {
+              ...userData,
+              instructor: {
+                create: {
+                  specialty: 'Contemporary & Ballet',
+                  experienceYears: 5,
+                  rating: 4.8,
+                  isActive: true
+                }
+              }
+            },
+            include: {
+              instructor: true
+            }
+          })
+        } else {
+          user = await prisma.user.create({
+            data: userData
+          })
+        }
       }
 
+      // Check for role conflicts
+      const roleConflict = await checkRoleConflict(request, user.role as UserRole)
+      
       // Create session
-      const token = await createSession({
-        id: user.id,
-        email: user.email,
-        role: user.role
-      })
+      const sessionResult = await createSession(request, user.id, user.role as UserRole)
+      
+      if (sessionResult.error) {
+        return NextResponse.json({
+          success: false,
+          error: sessionResult.error
+        }, { status: 500 })
+      }
 
-      return NextResponse.json({
+      // Set session cookies
+      const response = NextResponse.json({
+        success: true,
         message: 'Login successful',
         user: {
           id: user.id,
           email: user.email,
           fullName: user.fullName,
-          role: user.role
+          role: user.role,
+          isVerified: user.isVerified,
+          profileImage: user.profileImage
         },
-        token
+        sessionId: sessionResult.sessionId,
+        conflictingRole: roleConflict.conflictingRole
       })
+
+      // Set HTTP-only cookies for session management
+      response.cookies.set('session_id', sessionResult.sessionId, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60 // 24 hours
+      })
+      
+      response.cookies.set('user_id', user.id, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60
+      })
+      
+      response.cookies.set('user_role', user.role, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 24 * 60 * 60
+      })
+
+      return response
     }
 
-    // Find user by email
-    const user = await prisma.user.findUnique({
-      where: { email }
-    })
-
+    // Authenticate user
+    const user = await authenticateUser(email, password)
+    
     if (!user) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
+        {
+          error: 'Invalid email or password',
+          success: false
+        },
         { status: 401 }
       )
     }
 
-    // Verify password
-    const isPasswordValid = await bcrypt.compare(password, user.passwordHash)
-
-    if (!isPasswordValid) {
+    // Check if user account is verified (optional requirement)
+    if (!user.isVerified) {
       return NextResponse.json(
-        { error: 'Invalid email or password' },
-        { status: 401 }
+        {
+          error: 'Please verify your email address before logging in',
+          success: false,
+          requiresVerification: true
+        },
+        { status: 403 }
       )
     }
 
+    // Check for role conflicts
+    const roleConflict = await checkRoleConflict(request, user.role as UserRole)
+    
     // Create session
-    const token = await createSession({
-      id: user.id,
-      email: user.email,
-      role: user.role
-    })
+    const sessionResult = await createSession(request, user.id, user.role as UserRole)
+    
+    if (sessionResult.error) {
+      return NextResponse.json({
+        success: false,
+        error: sessionResult.error
+      }, { status: 500 })
+    }
 
-    return NextResponse.json({
+    // Set session cookies and return response
+    const response = NextResponse.json({
+      success: true,
       message: 'Login successful',
       user: {
         id: user.id,
         email: user.email,
         fullName: user.fullName,
         role: user.role,
-        isVerified: user.isVerified
+        isVerified: user.isVerified,
+        profileImage: user.profileImage
       },
-      token
+      sessionId: sessionResult.sessionId,
+      conflictingRole: roleConflict.conflictingRole
+    }, { status: 200 })
+
+    // Set HTTP-only cookies for session management
+    response.cookies.set('session_id', sessionResult.sessionId, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 // 24 hours
     })
+    
+    response.cookies.set('user_id', user.id, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60
+    })
+    
+    response.cookies.set('user_role', user.role, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60
+    })
+
+    return response
 
   } catch (error) {
     console.error('Login error:', error)
+    
     return NextResponse.json(
-      { error: 'Login failed' },
+      {
+        error: 'Internal server error. Please try again later.',
+        success: false
+      },
       { status: 500 }
     )
   }
+}
+
+// Handle unsupported methods
+export async function GET() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  )
+}
+
+export async function PUT() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  )
+}
+
+export async function DELETE() {
+  return NextResponse.json(
+    { error: 'Method not allowed' },
+    { status: 405 }
+  )
 }

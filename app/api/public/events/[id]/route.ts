@@ -27,8 +27,7 @@ export async function GET(
               select: {
                 id: true,
                 name: true,
-                category: true,
-                difficulty: true
+                category: true
               }
             }
           }

@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server'
 import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
+import bcryptjs from 'bcryptjs'
 import prisma from './db'
 
 // User type from database
@@ -51,18 +52,6 @@ export async function getCurrentUser(request: NextRequest): Promise<User | null>
     const cookieToken = cookies().get('auth-token')?.value
 
     const finalToken = token || cookieToken
-
-    // DEVELOPMENT MODE: Return mock admin user if no token
-    if (!finalToken && process.env.NODE_ENV === 'development') {
-      console.log('🔓 Development mode: Using mock admin user')
-      return {
-        id: 'dev-admin-id',
-        email: 'admin@dev.local',
-        fullName: 'Development Admin',
-        role: 'ADMIN',
-        isVerified: true
-      }
-    }
 
     if (!finalToken) {
       return null
@@ -215,5 +204,96 @@ export async function createSession(user: { id: string; email: string; role: str
  * Clear session (removes cookie)
  */
 export async function clearSession() {
+  // Clear the cookie with proper parameters
+  cookies().set('auth-token', '', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 0, // Expire immediately
+    expires: new Date(0) // Set to past date
+  })
+  
+  // Also delete the cookie
   cookies().delete('auth-token')
+}
+
+/**
+ * Hash password using bcrypt
+ */
+export async function hashPassword(password: string): Promise<string> {
+  const saltRounds = 12
+  return await bcryptjs.hash(password, saltRounds)
+}
+
+/**
+ * Verify password against hash
+ */
+export async function verifyPassword(password: string, hash: string): Promise<boolean> {
+  return await bcryptjs.compare(password, hash)
+}
+
+/**
+ * Validate email format
+ */
+export function isValidEmail(email: string): boolean {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return emailRegex.test(email)
+}
+
+/**
+ * Validate password strength
+ */
+export function isValidPassword(password: string): { valid: boolean; message?: string } {
+  if (password.length < 8) {
+    return { valid: false, message: 'Password must be at least 8 characters long' }
+  }
+  
+  if (!/(?=.*[a-z])/.test(password)) {
+    return { valid: false, message: 'Password must contain at least one lowercase letter' }
+  }
+  
+  if (!/(?=.*[A-Z])/.test(password)) {
+    return { valid: false, message: 'Password must contain at least one uppercase letter' }
+  }
+  
+  if (!/(?=.*\d)/.test(password)) {
+    return { valid: false, message: 'Password must contain at least one number' }
+  }
+  
+  return { valid: true }
+}
+
+/**
+ * Authenticate user with email and password
+ */
+export async function authenticateUser(email: string, password: string): Promise<User | null> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email: email.toLowerCase() },
+      select: {
+        id: true,
+        email: true,
+        fullName: true,
+        role: true,
+        isVerified: true,
+        passwordHash: true
+      }
+    })
+
+    if (!user || !user.passwordHash) {
+      return null
+    }
+
+    const isPasswordValid = await verifyPassword(password, user.passwordHash)
+    if (!isPasswordValid) {
+      return null
+    }
+
+    // Return user without password hash
+    const { passwordHash, ...userWithoutPassword } = user
+    return userWithoutPassword
+  } catch (error) {
+    console.error('Authentication error:', error)
+    return null
+  }
 }

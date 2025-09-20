@@ -1,8 +1,10 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { ReactNode } from 'react'
+import { useAuth, useRequireAuth } from '@/app/lib/auth-context'
+import NotificationBell from '@/app/components/notifications/NotificationBell'
 
 interface DashboardLayoutProps {
   children: ReactNode
@@ -10,8 +12,28 @@ interface DashboardLayoutProps {
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const pathname = usePathname()
+  const router = useRouter()
+  const { user, logout, loading } = useAuth()
+  
+  // Require authentication for dashboard access
+  useRequireAuth()
+  
+  // Show loading state while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+      </div>
+    )
+  }
+  
+  // Don't render if no user (will redirect via useRequireAuth)
+  if (!user) {
+    return null
+  }
 
-  const navigation = [
+  // Base navigation items
+  const baseNavigation = [
     {
       name: 'Dashboard',
       href: '/dashboard',
@@ -47,7 +69,29 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       href: '/dashboard/settings',
       icon: '⚙️',
       current: pathname === '/dashboard/settings'
+    },
+    {
+      name: 'Test Notifications',
+      href: '/dashboard/test-notifications',
+      icon: '🧪',
+      current: pathname === '/dashboard/test-notifications'
     }
+  ]
+
+  // Partner matching navigation (only for students/users and instructors)
+  const partnerMatchingNav = {
+    name: 'Partner Matching',
+    href: '/dashboard/partner-matching',
+    icon: '💝',
+    current: pathname.startsWith('/dashboard/partner-matching')
+  }
+
+  // Filter navigation based on user role
+  const navigation = [
+    ...baseNavigation.slice(0, 2), // Dashboard and Bookings
+    // Add partner matching for students/users and instructors only
+    ...(user.role === 'USER' || user.role === 'INSTRUCTOR' ? [partnerMatchingNav] : []),
+    ...baseNavigation.slice(2) // Rest of the navigation
   ]
 
   return (
@@ -62,7 +106,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="flex flex-col flex-grow bg-white border-r border-gray-200 pt-5 pb-4 overflow-y-auto">
           <div className="flex items-center flex-shrink-0 px-4">
             <Link href="/" className="flex items-center">
-              <span className="text-xl font-bold text-purple-600">Dance Platform</span>
+              <span className="text-xl font-bold text-purple-600 dance-logo" style={{fontSize: '1.5rem'}}>Dance Platform</span>
             </Link>
           </div>
           
@@ -90,17 +134,28 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             <div className="flex-shrink-0 w-full group block">
               <div className="flex items-center">
                 <div className="inline-block h-9 w-9 rounded-full bg-purple-600 flex items-center justify-center">
-                  <span className="text-sm font-medium text-white">U</span>
+                  <span className="text-sm font-medium text-white">
+                    {user.fullName.charAt(0).toUpperCase()}
+                  </span>
                 </div>
-                <div className="ml-3">
-                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                    User Dashboard
+                <div className="ml-3 flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-700 group-hover:text-gray-900 truncate">
+                    {user.fullName}
                   </p>
-                  <p className="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                    <Link href="/api/auth/logout" className="hover:underline">
+                  <div className="flex items-center justify-between">
+                    <p className="text-xs font-medium text-gray-500">
+                      {user.role.toLowerCase()}
+                    </p>
+                    <button 
+                      onClick={async () => {
+                        await logout()
+                        router.push('/login')
+                      }}
+                      className="text-xs font-medium text-gray-500 hover:text-gray-700 hover:underline"
+                    >
                       Sign out
-                    </Link>
-                  </p>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -114,13 +169,25 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
         <div className="lg:hidden bg-white shadow-sm border-b border-gray-200">
           <div className="px-4 py-2">
             <div className="flex items-center justify-between">
-              <Link href="/" className="text-lg font-bold text-purple-600">
+              <Link href="/" className="text-lg font-bold text-purple-600 dance-logo" style={{fontSize: '1.25rem'}}>
                 Dance Platform
               </Link>
-              <button className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
-                <span className="sr-only">Open main menu</span>
-                <span className="text-xl">☰</span>
-              </button>
+              <div className="flex items-center space-x-2">
+                <NotificationBell userId={user.id} />
+                <button className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+                  <span className="sr-only">Open main menu</span>
+                  <span className="text-xl">☰</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Top bar for desktop */}
+        <div className="hidden lg:block bg-white shadow-sm border-b border-gray-200">
+          <div className="px-6 py-3">
+            <div className="flex items-center justify-end">
+              <NotificationBell userId={user.id} />
             </div>
           </div>
         </div>

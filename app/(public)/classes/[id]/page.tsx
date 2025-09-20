@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { QuickBooking } from '@/app/components/payments/CheckoutButton'
+import GuestBookingForm from '@/app/(public)/components/GuestBookingForm'
 
 interface ClassDetail {
   id: string
@@ -30,6 +30,7 @@ interface ClassDetail {
 
 export default function ClassDetailPage({ params }: { params: { id: string } }) {
   const router = useRouter()
+  // const { user, isAuthenticated } = useAuth()
   const [classData, setClassData] = useState<ClassDetail | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -80,196 +81,162 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
   const isAvailable = spotsLeft > 0 && classData.status === 'ACTIVE'
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      {/* Breadcrumb */}
-      <div className="mb-6">
-        <Link href="/classes" className="text-purple-600 hover:text-purple-700">
-          ← Back to classes
-        </Link>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Main Content */}
-        <div className="lg:col-span-2">
-          {/* Class Header */}
-          <div className="bg-white rounded-lg shadow-lg p-8">
-            <div className="mb-6">
-              <div className="flex items-start justify-between mb-4">
-                <h1 className="text-3xl font-bold text-gray-900">{classData.title}</h1>
-                <span className={`px-3 py-1 rounded-full text-sm ${
-                  classData.level === 'Beginner' ? 'bg-green-100 text-green-800' :
-                  classData.level === 'Intermediate' ? 'bg-yellow-100 text-yellow-800' :
-                  classData.level === 'Advanced' ? 'bg-red-100 text-red-800' :
-                  'bg-blue-100 text-blue-800'
-                }`}>
-                  {classData.level}
-                </span>
-              </div>
-              <p className="text-gray-600 text-lg">{classData.description}</p>
+    <div>
+      {/* Hero Section */}
+      <section className="py-20" style={{background: 'linear-gradient(135deg, var(--primary-dark), var(--primary-gold))', color: 'white'}}>
+        <div className="dance-container">
+          <div className="mb-6">
+            <Link href="/classes" className="text-white hover:opacity-80 transition inline-flex items-center">
+              ← <span className="ml-2">Back to classes</span>
+            </Link>
+          </div>
+          <div className="flex items-start justify-between mb-6">
+            <div>
+              <h1 className="text-5xl font-bold mb-4 dance-font">{classData.title}</h1>
+              <p className="text-xl opacity-90">{classData.description}</p>
             </div>
+            <span className={`px-4 py-2 rounded-full text-sm font-semibold ${
+              classData.level === 'Beginner' ? 'bg-green-100 text-green-800' :
+              classData.level === 'Intermediate' ? 'bg-yellow-100 text-yellow-800' :
+              classData.level === 'Advanced' ? 'bg-red-100 text-red-800' :
+              'bg-blue-100 text-blue-800'
+            }`}>
+              {classData.level}
+            </span>
+          </div>
+        </div>
+      </section>
 
-            {/* Class Details */}
-            <div className="grid grid-cols-2 gap-6 mb-8">
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Schedule</h3>
-                <p className="text-gray-600">{classData.schedule}</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Duration</h3>
-                <p className="text-gray-600">{classData.duration} minutes per session</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">Start Date</h3>
-                <p className="text-gray-600">
-                  {new Date(classData.startDate).toLocaleDateString()}
-                </p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-gray-900 mb-2">End Date</h3>
-                <p className="text-gray-600">
-                  {new Date(classData.endDate).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
+      <div className="dance-container py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2">
+            <div className="dance-card">
+              <div className="mb-8">
 
-            {/* Venue Information */}
-            {classData.venue && (
-              <div className="border-t pt-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Location</h3>
-                <div className="bg-gray-50 rounded-lg p-4">
-                  <p className="font-medium text-gray-900">{classData.venue.name}</p>
-                  <p className="text-gray-600">{classData.venue.address}</p>
-                  <p className="text-gray-600">
-                    {classData.venue.city}{classData.venue.state && `, ${classData.venue.state}`}
-                  </p>
+                {/* Class Details */}
+                <div className="grid grid-cols-2 gap-6 mb-8">
+                  <div className="dance-card" style={{padding: '1.5rem'}}>
+                    <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>📅 Schedule</h3>
+                    <p style={{color: 'var(--neutral-gray)'}}>{classData.schedule}</p>
+                  </div>
+                  <div className="dance-card" style={{padding: '1.5rem'}}>
+                    <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>⏱️ Duration</h3>
+                    <p style={{color: 'var(--neutral-gray)'}}>{classData.duration} minutes per session</p>
+                  </div>
+                  <div className="dance-card" style={{padding: '1.5rem'}}>
+                    <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>🗓️ Start Date</h3>
+                    <p style={{color: 'var(--neutral-gray)'}}>
+                      {new Date(classData.startDate).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="dance-card" style={{padding: '1.5rem'}}>
+                    <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>📆 End Date</h3>
+                    <p style={{color: 'var(--neutral-gray)'}}>
+                      {new Date(classData.endDate).toLocaleDateString()}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            )}
 
-            {/* Instructors */}
-            {classData.classInstructors && classData.classInstructors.length > 0 && (
-              <div className="border-t pt-6 mt-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Instructor(s)</h3>
-                <div className="space-y-3">
-                  {classData.classInstructors.map((ci: any) => (
-                    <div key={ci.instructor.id} className="flex items-center space-x-4">
-                      <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
-                        <span className="text-purple-600 font-semibold">
-                          {ci.instructor.user.name?.charAt(0) || '?'}
-                        </span>
-                      </div>
-                      <div>
-                        <p className="font-medium text-gray-900">{ci.instructor.user.name}</p>
-                        <p className="text-sm text-gray-600">
-                          {ci.instructor.experience} years experience
-                        </p>
-                      </div>
+                {/* Venue Information */}
+                {classData.venue && (
+                  <div className="dance-card" style={{padding: '1.5rem', marginTop: '1.5rem'}}>
+                    <h3 className="font-semibold mb-3" style={{color: 'var(--primary-dark)'}}>📍 Location</h3>
+                    <div>
+                      <p className="font-medium mb-1" style={{color: 'var(--primary-dark)'}}>{classData.venue.name}</p>
+                      <p style={{color: 'var(--neutral-gray)'}}>{classData.venue.address}</p>
+                      <p style={{color: 'var(--neutral-gray)'}}>
+                        {classData.venue.city}{classData.venue.state && `, ${classData.venue.state}`}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
+                  </div>
+                )}
 
-            {/* Dance Styles */}
-            {classData.classStyles && classData.classStyles.length > 0 && (
-              <div className="border-t pt-6 mt-6">
-                <h3 className="font-semibold text-gray-900 mb-3">Dance Styles</h3>
-                <div className="flex flex-wrap gap-2">
-                  {classData.classStyles.map((cs: any) => (
-                    <span key={cs.style.id} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm">
-                      {cs.style.name}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          {/* What to Expect */}
-          <div className="bg-white rounded-lg shadow-lg p-8 mt-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">What to Expect</h2>
-            <ul className="space-y-3 text-gray-600">
-              <li className="flex items-start">
-                <span className="text-purple-600 mr-2">✓</span>
-                Professional instruction from experienced dancers
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-600 mr-2">✓</span>
-                Small class sizes for personalized attention
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-600 mr-2">✓</span>
-                Progressive curriculum designed for your level
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-600 mr-2">✓</span>
-                Supportive and encouraging environment
-              </li>
-              <li className="flex items-start">
-                <span className="text-purple-600 mr-2">✓</span>
-                All necessary equipment provided
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Booking Sidebar */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-            <div className="text-center mb-6">
-              <p className="text-3xl font-bold text-gray-900">${classData.price}</p>
-              <p className="text-gray-600">per class</p>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Available spots:</span>
-                <span className={`font-semibold ${
-                  spotsLeft > 5 ? 'text-green-600' : 
-                  spotsLeft > 0 ? 'text-yellow-600' : 'text-red-600'
-                }`}>
-                  {spotsLeft > 0 ? `${spotsLeft} left` : 'Class full'}
-                </span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Class size:</span>
-                <span className="font-semibold">{classData.maxStudents} students max</span>
-              </div>
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Currently enrolled:</span>
-                <span className="font-semibold">{classData.currentStudents} students</span>
+                {/* Dance Styles */}
+                {classData.classStyles && classData.classStyles.length > 0 && (
+                  <div className="dance-card" style={{padding: '1.5rem', marginTop: '1.5rem'}}>
+                    <h3 className="font-semibold mb-3" style={{color: 'var(--primary-dark)'}}>💃 Dance Styles</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {classData.classStyles.map((cs: any) => (
+                        <span key={cs.style.id} className="px-3 py-1 rounded-full text-sm" 
+                              style={{background: 'var(--primary-gold)', color: 'white'}}>
+                          {cs.style.name}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            {isAvailable ? (
-              <QuickBooking
-                bookingType="class"
-                itemId={classData.id}
-                itemName={classData.title}
-                price={parseFloat(classData.price)}
-                userId={"temp-user-id"}  // TODO: Get from auth context
-                className="w-full py-3 rounded-lg font-semibold text-white bg-purple-600 hover:bg-purple-700 transition-colors"
-                onAuthRequired={() => {
-                  // TODO: Redirect to login
-                  alert('Please sign in to book this class')
+            {/* What to Expect */}
+            <div className="dance-card mt-6">
+              <h2 className="text-2xl font-bold mb-4" style={{color: 'var(--primary-dark)'}}>What to Expect</h2>
+              <ul className="space-y-3" style={{color: 'var(--neutral-gray)'}}>
+                <li className="flex items-start">
+                  <span style={{color: 'var(--primary-gold)'}} className="mr-2">✓</span>
+                  Professional instruction from experienced dancers
+                </li>
+                <li className="flex items-start">
+                  <span style={{color: 'var(--primary-gold)'}} className="mr-2">✓</span>
+                  Small class sizes for personalized attention
+                </li>
+                <li className="flex items-start">
+                  <span style={{color: 'var(--primary-gold)'}} className="mr-2">✓</span>
+                  Progressive curriculum designed for your level
+                </li>
+                <li className="flex items-start">
+                  <span style={{color: 'var(--primary-gold)'}} className="mr-2">✓</span>
+                  Supportive and encouraging environment
+                </li>
+                <li className="flex items-start">
+                  <span style={{color: 'var(--primary-gold)'}} className="mr-2">✓</span>
+                  All necessary equipment provided
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Booking Sidebar */}
+          <div className="lg:col-span-1">
+            <div className="dance-card sticky top-24" style={{background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))', color: 'white'}}>
+              <div className="text-center mb-6">
+                <p className="text-4xl font-bold mb-2">${classData.price}</p>
+                <p className="opacity-80">per class</p>
+              </div>
+
+              <div className="space-y-4 mb-6">
+                <div className="flex justify-between text-sm">
+                  <span className="opacity-80">Available spots:</span>
+                  <span className="font-semibold">
+                    {spotsLeft > 0 ? `${spotsLeft} left` : 'Class full'}
+                  </span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="opacity-80">Class size:</span>
+                  <span className="font-semibold">{classData.maxStudents} students max</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="opacity-80">Currently enrolled:</span>
+                  <span className="font-semibold">{classData.currentStudents} students</span>
+                </div>
+              </div>
+
+              <GuestBookingForm
+                item={{
+                  id: classData.id,
+                  title: classData.title,
+                  price: classData.price,
+                  type: 'class',
+                  spotsLeft: spotsLeft,
+                  maxCapacity: classData.maxStudents
                 }}
+                isAvailable={isAvailable}
               />
-            ) : (
-              <button
-                disabled
-                className="w-full py-3 rounded-lg font-semibold bg-gray-300 text-gray-500 cursor-not-allowed"
-              >
-                Class Unavailable
-              </button>
-            )}
-
-            <p className="text-xs text-gray-500 text-center mt-4">
-              Free cancellation up to 24 hours before class
-            </p>
+            </div>
           </div>
         </div>
       </div>
-
     </div>
   )
 }

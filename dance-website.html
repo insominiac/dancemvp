@@ -1,0 +1,3380 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DanceLink | Connect Through Movement</title>
+    <meta name="description" content="DanceLink - Where dancers connect, learn, and grow together. Join our vibrant community and discover your rhythm.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff6b6b'/%3E%3Cstop offset='50%25' style='stop-color:%234ecdc4'/%3E%3Cstop offset='100%25' style='stop-color:%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23fg)' opacity='0.9'/%3E%3Cpath d='M 11,8 Q 10,8 10,10 L 10,22 Q 10,24 11,24 L 13,24 Q 18,24 20,20 Q 22,16 20,12 Q 18,8 13,8 Z' fill='white' opacity='0.95'/%3E%3Ccircle cx='16' cy='11' r='2' fill='url(%23fg)' opacity='0.7'/%3E%3Cpath d='M 16,13 Q 18,14 17,18 L 16.5,22 M 16,13 Q 14,14 15,18 L 15.5,22 M 16,14 Q 20,13 22,11 M 16,14 Q 12,13 10,11' stroke='url(%23fg)' stroke-width='1.5' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='fg' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23ff6b6b'/%3E%3Cstop offset='50%25' style='stop-color:%234ecdc4'/%3E%3Cstop offset='100%25' style='stop-color:%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='14' fill='url(%23fg)' opacity='0.9'/%3E%3Cpath d='M 11,8 Q 10,8 10,10 L 10,22 Q 10,24 11,24 L 13,24 Q 18,24 20,20 Q 22,16 20,12 Q 18,8 13,8 Z' fill='white' opacity='0.95'/%3E%3Ccircle cx='16' cy='11' r='2' fill='url(%23fg)' opacity='0.7'/%3E%3Cpath d='M 16,13 Q 18,14 17,18 L 16.5,22 M 16,13 Q 14,14 15,18 L 15.5,22 M 16,14 Q 20,13 22,11 M 16,14 Q 12,13 10,11' stroke='url(%23fg)' stroke-width='1.5' fill='none' stroke-linecap='round' opacity='0.7'/%3E%3C/svg%3E">
+    
+    <!-- Alternative favicon for older browsers -->
+    <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOwgAADsIBFShKgAAAABl0RVh0U29mdHdhcmUAcGFpbnQubmV0IDQuMC4yMfEgaZUAAANxSURBVFhHzZdLbBNXFIb/O3dmxnbsxE5CQhIgJKEQHqVQqFRVXbRqVXXRRbtol6jqol2wQF20i3bRLtpFu2gX7aJdtKt20aoSUkUfqFAeAQKEkBASQhLyIH7Ejh/jmXvvnTt2YjuTGCgLjnQ0M3fO3O+c/5x7ZgT+x8KyrKdFUXxFEISXhBAHAGwH0AygCkAlABuACMADYBrAGIBBADcYY1cNw7jAOb8xOTl5fzVzi2IYRo8kSe9IkvSRJEmdQgjBORecc8E5F5xzwTkXnHPBOReMM8EYE4wxwRgTjDHBGBOMMcEYE5qmCU3TRCgUEsFgUPj9fuHz+YTHA8+hQ2+9D+B9ADXLGSgJx3E6JUn6RJKkTyVJOiCEELquC8MwhK7rQtd1oes613Vd6LrOdV3nuq5zTdOEpmkiFothbm5OTE5Oivvj496RkZH3NE37inN+fSUGAh6PRzHN4jdSy7bKSmIZGhubFAMDt8WtWwNDhmF8Zph8qxemLSmQJOkdSZJOCiE2G4YhdF3nuq7zmZkZMTo6Ku7eHZ4aGhr6RtO0LznnQ7k3FqIo5YQ2t4GIJXOSJCFtQ9RKXRBCHLRt+29Zls+7rmsGAoGcQnlYhFiSwMIGIrKstBLRqaqqbZqm/RKNRg/FYrGU5mJdXR1kWT7COT/v9Xr5TpOo1DW0bRe1tbUwDINFIhERDAbXKIoyKknSdU3TMDc3B03TGICdhmF8A+BtwzBczjk3DINzzrnJOTdt8wJYXV09UltbSyRJQjKZRDKZ/DGVSu1Op9OwLAuWZYExBtu2YVkWLMuCbdtMlmVZkiRJEAQBgiCA0lMYCRGQZRn19fVobW1Fc3MzGhoa4Ha70VxZiSeammZra2sXFamurv7mwIEDWxRFgcvlQigUwsjICPr7+zE4OIixsTFMT08jFoshkUggCy6XC1VVVWhqakJbWxu6urqwadMm1NfXo6amBm63G4qiIJFI4K8HD7D3yy8RDocBYGhra+tZvPitqKysPN7T0+NotQM4PT09+O2333D16lXcu3cv76eFsG0b3d3dePrpp7Fnzx60tLSAUgpKKQCA3y8nAlnrLrsOksnkCy0tLccppXlzABBCsGvXLuzcuRMej6fY9xAIAmAlFIqiwHEcOI4DpRSpVArBYBAA6O3t7S1XHwD4F3icaULZHfJNAAAAAElFTkSuQmCC">
+    
+    <!-- Meta tags for better favicon support -->
+    <meta name="theme-color" content="#d4af37">
+    <meta name="msapplication-TileColor" content="#1a1a2e">
+
+     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&amp;family=Great+Vibes&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,500;1,600;1,700&amp;family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400&amp;family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400;1,600&amp;display=swap" rel="stylesheet">
+    
+    
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Color Scheme Options - Change data-theme attribute on body to switch */
+        :root {
+            /* Default Variables */
+            --shadow-soft: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --shadow-medium: 0 10px 30px rgba(0, 0, 0, 0.15);
+            --shadow-strong: 0 20px 50px rgba(0, 0, 0, 0.25);
+            --white: #ffffff;
+        }
+        
+        /* Option 1: Electric Neon (Modern & Vibrant) */
+        [data-theme="neon"] {
+            --primary-dark: #0a0e27;
+            --primary-gold: #00ffff;
+            --accent-rose: #ff10f0;
+            --neutral-light: #f0f4ff;
+            --neutral-gray: #6b7280;
+            --logo-gradient-1: #00ffff;
+            --logo-gradient-2: #ff10f0;
+            --logo-gradient-3: #ffff00;
+            --hero-overlay: rgba(10, 14, 39, 0.9);
+        }
+        
+        /* Option 2: Sunset Vibes (Warm & Energetic) */
+        [data-theme="sunset"] {
+            --primary-dark: #1a0f1f;
+            --primary-gold: #ff6b35;
+            --accent-rose: #f72585;
+            --neutral-light: #fff5f0;
+            --neutral-gray: #6e5773;
+            --logo-gradient-1: #ff6b35;
+            --logo-gradient-2: #f72585;
+            --logo-gradient-3: #ffd23f;
+            --hero-overlay: rgba(26, 15, 31, 0.9);
+        }
+        
+        /* Option 3: Ocean Breeze (Cool & Calming) */
+        [data-theme="ocean"] {
+            --primary-dark: #0c2461;
+            --primary-gold: #40e0d0;
+            --accent-rose: #6ab7ff;
+            --neutral-light: #f0f9ff;
+            --neutral-gray: #546e7a;
+            --logo-gradient-1: #40e0d0;
+            --logo-gradient-2: #6ab7ff;
+            --logo-gradient-3: #00bcd4;
+            --hero-overlay: rgba(12, 36, 97, 0.9);
+        }
+        
+        /* Option 4: Royal Purple (Luxurious & Sophisticated) */
+        [data-theme="royal"] {
+            --primary-dark: #1a0033;
+            --primary-gold: #c9b037;
+            --accent-rose: #9c27b0;
+            --neutral-light: #faf5ff;
+            --neutral-gray: #6a5f7a;
+            --logo-gradient-1: #c9b037;
+            --logo-gradient-2: #9c27b0;
+            --logo-gradient-3: #e91e63;
+            --hero-overlay: rgba(26, 0, 51, 0.9);
+        }
+        
+        /* Option 5: Forest Dreams (Natural & Earthy) */
+        [data-theme="forest"] {
+            --primary-dark: #1b3a2f;
+            --primary-gold: #8bc34a;
+            --accent-rose: #ff9800;
+            --neutral-light: #f1f8f4;
+            --neutral-gray: #5d6d5d;
+            --logo-gradient-1: #8bc34a;
+            --logo-gradient-2: #ff9800;
+            --logo-gradient-3: #4caf50;
+            --hero-overlay: rgba(27, 58, 47, 0.9);
+        }
+        
+        /* Option 6: Midnight Jazz (Dark & Moody) */
+        [data-theme="midnight"] {
+            --primary-dark: #0d0d0d;
+            --primary-gold: #ffd700;
+            --accent-rose: #dc143c;
+            --neutral-light: #f5f5f5;
+            --neutral-gray: #808080;
+            --logo-gradient-1: #ffd700;
+            --logo-gradient-2: #dc143c;
+            --logo-gradient-3: #ff4500;
+            --hero-overlay: rgba(13, 13, 13, 0.9);
+        }
+        
+        /* Option 7: Cotton Candy (Soft & Playful) */
+        [data-theme="candy"] {
+            --primary-dark: #4a5568;
+            --primary-gold: #fbbf24;
+            --accent-rose: #ec4899;
+            --neutral-light: #fef3f8;
+            --neutral-gray: #9ca3af;
+            --logo-gradient-1: #fbbf24;
+            --logo-gradient-2: #ec4899;
+            --logo-gradient-3: #a78bfa;
+            --hero-overlay: rgba(74, 85, 104, 0.9);
+        }
+        
+        /* Option 8: Classic Elegance (Original) */
+        [data-theme="classic"] {
+            --primary-dark: #1a1a2e;
+            --primary-gold: #d4af37;
+            --accent-rose: #e8b4bc;
+            --neutral-light: #f5f5f5;
+            --neutral-gray: #666666;
+            --logo-gradient-1: #ff6b6b;
+            --logo-gradient-2: #4ecdc4;
+            --logo-gradient-3: #a855f7;
+            --hero-overlay: rgba(26, 26, 46, 0.9);
+        }
+        
+        /* Default theme - Sunset Vibes */
+        body {
+            --primary-dark: #1a0f1f;
+            --primary-gold: #ff6b35;
+            --accent-rose: #f72585;
+            --neutral-light: #fff5f0;
+            --neutral-gray: #6e5773;
+            --logo-gradient-1: #ff6b35;
+            --logo-gradient-2: #f72585;
+            --logo-gradient-3: #ffd23f;
+            --hero-overlay: rgba(26, 15, 31, 0.9);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--primary-dark);
+            background: var(--white);
+            overflow-x: hidden;
+        }
+        
+        /* Import Google Fonts for cursive dance-themed text */
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Pacifico&display=swap');
+        
+        .dance-font {
+            font-family: 'Dancing Script', cursive;
+            font-weight: 700;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 300;
+            letter-spacing: 1px;
+            line-height: 1.2;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 4rem);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            margin-bottom: 1.5rem;
+        }
+
+        h3 {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+        }
+
+        p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--neutral-light-);
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar.scrolled {
+            background: var(--white);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 20px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, var(--logo-gradient-1), var(--logo-gradient-2), var(--logo-gradient-3));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo:hover {
+            transform: scale(1.05);
+            letter-spacing: 3px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-link {
+            color: var(--neutral-gray);
+            text-decoration: none;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .menu-toggle span {
+            width: 25px;
+            height: 2px;
+            background: var(--primary-dark);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%),
+                        url('./hero.jpg') center/cover;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L35 15 L45 15 L37.5 22.5 L40 32.5 L30 25 L20 32.5 L22.5 22.5 L15 15 L25 15 Z' fill='%23d4af37' fill-opacity='0.3'/%3E%3C/svg%3E");
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            33% { transform: translateY(-20px) rotate(5deg); }
+            66% { transform: translateY(10px) rotate(-3deg); }
+        }
+
+        .hero-content {
+            text-align: center;
+            color: var(--white);
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--primary-gold);
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero-title {
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 300;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--white), var(--primary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--primary-gold);
+            color: var(--whi);
+            border: 2px solid var(--primary-gold);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+        }
+
+        .btn-secondary:hover {
+            background: var(--white);
+            color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Animated Elements */
+        .floating-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: floatRandom 15s infinite ease-in-out;
+        }
+
+        @keyframes floatRandom {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -100px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-50px, 50px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-100px, -50px) rotate(270deg);
+            }
+        }
+
+        .floating-element:nth-child(1) {
+            top: 20%;
+            left: 10%;
+            font-size: 3rem;
+            animation-delay: 0s;
+        }
+
+        .floating-element:nth-child(2) {
+            top: 60%;
+            right: 10%;
+            font-size: 2.5rem;
+            animation-delay: 3s;
+        }
+
+        .floating-element:nth-child(3) {
+            bottom: 20%;
+            left: 50%;
+            font-size: 3.5rem;
+            animation-delay: 6s;
+        }
+
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            background: var(--neutral-light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--primary-gold);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .about-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .about-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .about-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--primary-dark);
+        }
+
+        /* Classes Section */
+        .classes {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .class-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 400px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-gold));
+            transition: all 0.3s ease;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .class-card:nth-child(1) {
+            background: linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=1935&auto=format&fit=crop') center/cover;
+        }
+        
+        .class-card:nth-child(2) {
+            background: linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?q=80&w=2069&auto=format&fit=crop') center/cover;
+        }
+        
+        .class-card:nth-child(3) {
+            background: linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1535525153412-5a42439a210d?q=80&w=2070&auto=format&fit=crop') center/cover;
+        }
+        
+        .class-card:nth-child(4) {
+            background: linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=80&w=2070&auto=format&fit=crop') center/cover;
+        }
+        
+        .class-card:nth-child(5) {
+            background: linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1547153760-18fc86324498?q=80&w=1887&auto=format&fit=crop') center/cover;
+        }
+        
+        .class-card:nth-child(6) {
+            background: linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)),
+                        url('https://images.unsplash.com/photo-1518611012118-696072aa579a?q=80&w=2070&auto=format&fit=crop') center/cover;
+        }
+
+        .class-card:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .class-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 2rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            color: var(--white);
+            transform: translateY(100px);
+            transition: transform 0.3s ease;
+        }
+
+        .class-card:hover .class-content {
+            transform: translateY(0);
+        }
+
+        .class-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .class-level {
+            color: var(--primary-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .class-description {
+            margin-top: 1rem;
+            opacity: 0;
+            transition: opacity 0.3s ease 0.1s;
+        }
+
+        .class-card:hover .class-description {
+            opacity: 1;
+        }
+
+        /* Instructors Section */
+        .instructors {
+            padding: 80px 0;
+            background: var(--neutral-light);
+        }
+
+        .instructor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .instructor-card {
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .instructor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .instructor-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--white);
+            position: relative;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            border: 3px solid var(--primary-gold);
+        }
+
+        .instructor-image::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .instructor-card:hover .instructor-image::before {
+            animation: shine 0.5s ease;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .instructor-name {
+            font-size: 1.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .instructor-specialty {
+            color: var(--primary-gold);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: var(--primary-dark);
+            color: var(--white);
+        }
+
+        .contact .section-title {
+            color: var(--white);
+        }
+
+        .contact-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            color: var(--white);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .form-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--white);
+        }
+
+        /* Footer */
+        .footer {
+            padding: 40px 0;
+            background: #0a0a0a;
+            color: var(--white);
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary-gold);
+            color: var(--primary-dark);
+            transform: rotate(360deg);
+        }
+
+        .footer-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Scroll Animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: var(--white);
+                flex-direction: column;
+                padding: 2rem;
+                transition: left 0.3s ease;
+                box-shadow: var(--shadow-medium);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .menu-toggle.active span:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .menu-toggle.active span:nth-child(2) {
+                opacity: 0;
+            }
+
+            .menu-toggle.active span:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .hero-title {
+                font-size: clamp(2rem, 6vw, 3rem);
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 200px;
+                text-align: center;
+            }
+
+            .about-grid,
+            .class-grid,
+            .instructor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tablet Responsive */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .container {
+                padding: 0 40px;
+            }
+
+            .class-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Animations on Scroll */
+        .fade-in {
+            animation: fadeIn 1s ease;
+        }
+
+        .slide-in-left {
+            animation: slideInLeft 1s ease;
+        }
+
+        .slide-in-right {
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .loader-spinner {
+            width: 60px;
+            height: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--primary-gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Language Switcher Styles */
+        .language-switcher {
+            position: relative;
+            margin-left: 2rem;
+        }
+        
+        .lang-current {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 15px;
+            background: white;
+            border: 2px solid var(--neutral-light);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            color: var(--primary-dark);
+        }
+        
+        .lang-current:hover {
+            border-color: var(--primary-gold);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .flag {
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .lang-code {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .lang-arrow {
+            transition: transform 0.3s ease;
+        }
+        
+        .lang-current.active .lang-arrow {
+            transform: rotate(180deg);
+        }
+        
+        .lang-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            right: 0;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            padding: 10px;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .lang-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .lang-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: transparent;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            width: 100%;
+            text-align: left;
+            color: var(--primary-dark);
+            font-size: 0.95rem;
+        }
+        
+        .lang-option:hover {
+            background: var(--neutral-light);
+            transform: translateX(5px);
+        }
+        
+        .lang-option.active {
+            background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+            color: white;
+        }
+        
+        .lang-name {
+            font-weight: 500;
+        }
+        
+        @media (max-width: 768px) {
+            .language-switcher {
+                position: absolute;
+                right: 60px;
+                top: 50%;
+                transform: translateY(-50%);
+                margin-left: 0;
+            }
+            
+            .lang-current {
+                padding: 6px 10px;
+            }
+            
+            .lang-code {
+                display: none;
+            }
+        }
+    </style>
+<style>
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes bounceIn {
+                0% {
+                    transform: scale(0.3);
+                    opacity: 0;
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                70% {
+                    transform: scale(0.9);
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        </style>
+    </head>
+<body data-theme="sunset">
+    <!-- Loading Screen -->
+    <div class="loader hidden" id="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Theme Switcher -->
+    <div id="themeSwitcher" style="position: fixed; top: 100px; right: 20px; z-index: 9999; transition: all 0.3s ease;">
+        <!-- Minimized State -->
+        <div id="themeMinimized" style="display: none; background: white; padding: 10px; border-radius: 50px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); cursor: pointer; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; transition: all 0.3s ease;" onclick="toggleThemePanel()" onmouseover="this.style.transform='scale(1.1)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.15)';">
+            <span style="font-size: 24px; animation: rotate 10s linear infinite;">🎨</span>
+        </div>
+        
+        <!-- Expanded State -->
+        <div id="themeExpanded" style="background: white; padding: 15px; border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.2) 0px 10px 30px; max-width: 200px; transition: 0.3s; display: none;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 2px solid #eee; padding-bottom: 10px;">
+                <h4 style="margin: 0; font-size: 14px; color: #333;">🎨 Color Themes</h4>
+                <button onclick="toggleThemePanel()" style="background: none; border: none; cursor: pointer; font-size: 18px; color: #999; padding: 0; width: 25px; height: 25px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s;" onmouseover="this.style.background='#f0f0f0'; this.style.color='#333'; this.style.transform='rotate(90deg)';" onmouseout="this.style.background='none'; this.style.color='#999'; this.style.transform='rotate(0)';">
+                    ×
+                </button>
+            </div>
+            <div id="themeButtons" style="display: flex; flex-direction: column; gap: 8px; max-height: 400px; overflow-y: auto; padding-right: 5px;">
+                <button onclick="setTheme('classic')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #d4af37, #e8b4bc); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Classic Elegance</span>
+                </button>
+                <button onclick="setTheme('neon')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #00ffff, #ff10f0); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Electric Neon</span>
+                </button>
+                <button onclick="setTheme('sunset')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #ff6b35, #f72585); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Sunset Vibes</span>
+                </button>
+                <button onclick="setTheme('ocean')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #40e0d0, #6ab7ff); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Ocean Breeze</span>
+                </button>
+                <button onclick="setTheme('royal')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #c9b037, #9c27b0); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Royal Purple</span>
+                </button>
+                <button onclick="setTheme('forest')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #8bc34a, #ff9800); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Forest Dreams</span>
+                </button>
+                <button onclick="setTheme('midnight')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #ffd700, #dc143c); color: #333; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Midnight Jazz</span>
+                </button>
+                <button onclick="setTheme('candy')" class="theme-btn" style="padding: 8px 12px; border: none; border-radius: 8px; cursor: pointer; background: linear-gradient(135deg, #fbbf24, #ec4899); color: white; font-size: 12px; transition: all 0.2s; position: relative; overflow: hidden;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">
+                    <span style="position: relative; z-index: 1;">Cotton Candy</span>
+                </button>
+            </div>
+            
+            <!-- Tooltip -->
+            <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; text-align: center;">
+                <small style="color: #999; font-size: 11px;">Click to apply theme</small>
+            </div>
+        </div>
+    </div>
+    
+    <style>
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        #themeButtons::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        #themeButtons::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        #themeButtons::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 3px;
+        }
+        
+        #themeButtons::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .theme-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .theme-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+    </style>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+                           <span id="logoText" style="font-family: &quot;Dancing Script&quot;, cursive; font-size: 2.2rem; font-weight: 700; letter-spacing: 1px; background: linear-gradient(135deg, rgb(255, 107, 53), rgb(247, 37, 133), rgb(255, 210, 63)) text; -webkit-text-fill-color: transparent;">DanceLink</span>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#search" class="nav-link">Search</a></li>
+                <li><a href="#partner-match" class="nav-link">Partner Match</a></li>
+                <li><a href="#events" class="nav-link">Events</a></li>
+                <li><a href="#instructors" class="nav-link">Instructor</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#contact" class="nav-link" data-i18n="nav.contact">Contact</a></li>
+            </ul>
+            
+            <!-- Language Switcher -->
+            <div class="language-switcher" id="languageSwitcher">
+                <button class="lang-current" id="currentLang" onclick="toggleLanguageMenu()">
+                    <span class="flag" id="currentFlag">🇺🇸</span>
+                    <span class="lang-code" id="currentLangCode">EN</span>
+                    <svg class="lang-arrow" width="12" height="8" viewBox="0 0 12 8">
+                        <path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"></path>
+                    </svg>
+                </button>
+                <div class="lang-dropdown" id="langDropdown">
+                    <button class="lang-option active" onclick="changeLanguage('en')" data-lang="en">
+                        <span class="flag">🇺🇸</span>
+                        <span class="lang-name">English</span>
+                    </button>
+                    <button class="lang-option" onclick="changeLanguage('ko')" data-lang="ko">
+                        <span class="flag">🇰🇷</span>
+                        <span class="lang-name">한국어</span>
+                    </button>
+                    <button class="lang-option" onclick="changeLanguage('es')" data-lang="es">
+                        <span class="flag">🇪🇸</span>
+                        <span class="lang-name">Español</span>
+                    </button>
+                    <button class="lang-option" onclick="changeLanguage('vi')" data-lang="vi">
+                        <span class="flag">🇻🇳</span>
+                        <span class="lang-name">Tiếng Việt</span>
+                    </button>
+                </div>
+            </div>
+            
+            <button class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-background" style="transform: translateY(0px);"></div>
+        <div class="floating-elements">
+            <div class="floating-element" style="animation-delay: 0s;">✦</div>
+            <div class="floating-element" style="animation-delay: 2s;">❋</div>
+            <div class="floating-element" style="animation-delay: 4s;">✧</div>
+        </div>
+        <div class="hero-content">
+            <p class="hero-subtitle">Connect Through Movement</p>
+            <h1 class="hero-title" style="font-family: 'Dancing Script', cursive; font-weight: 700; letter-spacing: 3px;">DanceLink</h1>
+            <p class="hero-description">Where dancers unite, stories unfold, and connections are made through the universal language of movement. Join our vibrant community today.</p>
+            <div class="hero-buttons">
+                <a href="#classes" class="btn btn-primary">Explore Classes</a>
+                <a href="#contact" class="btn btn-secondary">Book Trial</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Enhanced Dance Styles Tab Section -->
+    <section id="dance-styles-tabs" style="padding: 80px 0; background: linear-gradient(135deg, var(--neutral-light) 0%, var(--white) 100%); position: relative;">
+        <style>
+            /* Enhanced Tab Styles - Integrated with site theme */
+            #dance-styles-tabs {
+                transition: all 0.5s ease;
+            }
+            
+            .dance-tab-navigation {
+                display: flex;
+                justify-content: center;
+                gap: 10px;
+                margin-bottom: 40px;
+                flex-wrap: wrap;
+                animation: fadeInUp 0.8s ease;
+            }
+
+            .dance-tab-btn {
+                padding: 15px 30px;
+                background: var(--white);
+                border: 2px solid var(--primary-gold);
+                color: var(--primary-dark);
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                font-size: 1rem;
+                font-weight: 600;
+                position: relative;
+                overflow: hidden;
+                box-shadow: var(--shadow-soft);
+            }
+
+            .dance-tab-btn::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, var(--primary-gold), transparent);
+                opacity: 0.3;
+                transition: left 0.5s ease;
+            }
+
+            .dance-tab-btn:hover::before {
+                left: 100%;
+            }
+
+            .dance-tab-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: var(--shadow-medium);
+                background: linear-gradient(135deg, var(--white) 0%, rgba(var(--primary-gold), 0.05) 100%);
+                border-color: var(--accent-rose);
+            }
+
+            .dance-tab-btn.active {
+                background: linear-gradient(135deg, var(--primary-gold) 0%, var(--accent-rose) 100%);
+                color: var(--white);
+                transform: scale(1.05);
+                box-shadow: var(--shadow-strong);
+                border-color: transparent;
+            }
+
+            .dance-tab-btn .badge {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                background: var(--accent-rose);
+                color: var(--white);
+                font-size: 0.7rem;
+                padding: 2px 8px;
+                border-radius: 20px;
+                font-weight: bold;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            }
+
+            .dance-tab-content {
+                background: var(--white);
+                border-radius: 20px;
+                padding: 40px;
+                box-shadow: var(--shadow-medium);
+                min-height: 500px;
+                animation: fadeIn 0.5s ease;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .dance-tab-panel {
+                display: none;
+                animation: slideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+
+            .dance-tab-panel.active {
+                display: block;
+            }
+
+            @keyframes slideIn {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .dance-header {
+                display: flex;
+                align-items: center;
+                gap: 30px;
+                margin-bottom: 30px;
+                padding-bottom: 30px;
+                border-bottom: 2px solid var(--neutral-light);
+            }
+
+            .dance-icon {
+                font-size: 4rem;
+                width: 100px;
+                height: 100px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+                border-radius: 20px;
+                box-shadow: var(--shadow-soft);
+                transition: all 0.3s ease;
+            }
+
+            .dance-icon:hover {
+                transform: scale(1.1) rotate(5deg);
+                box-shadow: var(--shadow-medium);
+            }
+
+            .dance-title-section h2 {
+                font-size: 2.5rem;
+                color: var(--primary-dark);
+                margin-bottom: 10px;
+                font-family: 'Playfair Display', serif;
+            }
+
+            .dance-subtitle {
+                color: var(--neutral-gray);
+                font-size: 1.1rem;
+                font-style: italic;
+            }
+
+            .dance-info-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                gap: 20px;
+                margin-bottom: 30px;
+            }
+
+            .dance-info-card {
+                background: linear-gradient(135deg, var(--neutral-light) 0%, var(--white) 100%);
+                padding: 25px;
+                border-radius: 15px;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .dance-info-card:hover {
+                transform: translateY(-5px);
+                box-shadow: var(--shadow-medium);
+                background: var(--white);
+            }
+
+            .dance-info-card h3 {
+                color: var(--primary-dark);
+                margin-bottom: 15px;
+                font-size: 1.3rem;
+                font-weight: 600;
+            }
+
+            .dance-info-card ul {
+                list-style: none;
+            }
+
+            .dance-info-card li {
+                padding: 8px 0;
+                color: var(--neutral-gray);
+                position: relative;
+                padding-left: 25px;
+                transition: color 0.3s ease;
+            }
+
+            .dance-info-card li:hover {
+                color: var(--primary-dark);
+            }
+
+            .dance-info-card li::before {
+                content: '✓';
+                position: absolute;
+                left: 0;
+                color: var(--primary-gold);
+                font-weight: bold;
+            }
+
+            .dance-schedule-section {
+                background: var(--neutral-light);
+                padding: 25px;
+                border-radius: 15px;
+                margin-bottom: 30px;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .dance-schedule-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                gap: 15px;
+                margin-top: 20px;
+            }
+
+            .dance-schedule-item {
+                background: var(--white);
+                padding: 15px;
+                border-radius: 10px;
+                border-left: 4px solid var(--primary-gold);
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: var(--shadow-soft);
+            }
+
+            .dance-schedule-item:hover {
+                transform: translateX(5px);
+                box-shadow: var(--shadow-medium);
+                border-left-color: var(--accent-rose);
+            }
+
+            .dance-cta-section {
+                background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+                padding: 30px;
+                border-radius: 15px;
+                text-align: center;
+                color: var(--white);
+                box-shadow: var(--shadow-soft);
+                transition: all 0.3s ease;
+            }
+
+            .dance-cta-section:hover {
+                box-shadow: var(--shadow-medium);
+                transform: translateY(-2px);
+            }
+
+            .dance-cta-section h3 {
+                font-size: 1.8rem;
+                margin-bottom: 15px;
+                font-family: 'Dancing Script', cursive;
+            }
+
+            .dance-cta-section .btn {
+                background: var(--white);
+                color: var(--primary-dark);
+                padding: 12px 30px;
+                border-radius: 50px;
+                text-decoration: none;
+                display: inline-block;
+                margin: 10px 5px;
+                transition: all 0.3s ease;
+                font-weight: 600;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            }
+
+            .dance-cta-section .btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            }
+
+            @media (max-width: 768px) {
+                .dance-tab-btn {
+                    padding: 12px 20px;
+                    font-size: 0.9rem;
+                }
+
+                .dance-tab-content {
+                    padding: 20px;
+                }
+
+                .dance-header {
+                    flex-direction: column;
+                    text-align: center;
+                }
+
+                .dance-title-section h2 {
+                    font-size: 1.8rem;
+                }
+
+                .dance-info-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+
+        <div class="container">
+            <!-- Header -->
+            <div style="text-align: center; margin-bottom: 50px;">
+                <h2 style="font-size: 3rem; margin-bottom: 10px; color: var(--primary-dark);">Discover Our Dance Styles</h2>
+                <p style="font-size: 1.2rem; color: var(--neutral-gray); font-style: italic;">Choose Your Perfect Dance Journey</p>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="dance-tab-navigation" id="danceTabNav">
+                <!-- Tabs will be dynamically generated -->
+            </div>
+
+            <!-- Tab Content -->
+            <div class="dance-tab-content" id="danceTabContent">
+                <!-- Content panels will be dynamically generated -->
+            </div>
+
+        <script>
+            // Dance styles data structure - Easy to add new styles!
+            const enhancedDanceStyles = [
+                {
+                    id: 'salsa',
+                    name: 'Salsa',
+                    icon: '🔥',
+                   // badge: 'Popular',
+                    theme: 'salsa-theme',
+                    subtitle: 'Feel the Cuban rhythm and energy',
+                    description: 'Experience the vibrant energy of Cuba! Salsa is a lively, passionate dance that combines African rhythms with Latin American flair.',
+                    features: {
+                        'What You\'ll Learn': [
+                            'Basic steps and timing (On1 and On2)',
+                            'Partner work and leading/following',
+                            'Spins, turns, and styling',
+                            'Musical interpretation',
+                            'Cuban motion and body movement'
+                        ],
+                        'Class Details': [
+                            'Beginner to Advanced levels',
+                            '60-90 minute sessions',
+                            'Group and private lessons',
+                            'Social dance parties included',
+                            'Performance opportunities'
+                        ],
+                        'Benefits': [
+                            'Improve coordination and rhythm',
+                            'Build confidence on the dance floor',
+                            'Meet new people and socialize',
+                            'Great cardio workout',
+                            'Stress relief and fun'
+                        ]
+                    },
+                    schedule: [
+                        { day: 'Monday', time: '7:00 PM - 8:30 PM', level: 'Beginner' },
+                        { day: 'Wednesday', time: '7:00 PM - 8:30 PM', level: 'Intermediate' },
+                        { day: 'Friday', time: '8:00 PM - 9:30 PM', level: 'Advanced' },
+                        { day: 'Saturday', time: '2:00 PM - 3:30 PM', level: 'All Levels' }
+                    ],
+                    price: '$35/class',
+                    instructors: 'Carlos & Maria'
+                },
+                {
+                    id: 'bachata',
+                    name: 'Bachata',
+                    icon: '💕',
+                   // badge: 'Romantic',
+                    theme: 'bachata-theme',
+                    subtitle: 'Experience sensual connection',
+                    description: 'Discover the romance of the Dominican Republic! Bachata is an intimate, sensual dance characterized by close connection and emotional expression.',
+                    features: {
+                        'What You\'ll Learn': [
+                            'Basic steps and hip movement',
+                            'Sensual bachata techniques',
+                            'Body isolations and waves',
+                            'Musicality and emotional expression',
+                            'Connection and frame'
+                        ],
+                        'Class Details': [
+                            'Traditional and Sensual styles',
+                            '60-90 minute sessions',
+                            'Couple-friendly classes',
+                            'Monthly workshops',
+                            'International guest instructors'
+                        ],
+                        'Benefits': [
+                            'Deepen partner connection',
+                            'Express emotions through movement',
+                            'Improve body awareness',
+                            'Build trust and communication',
+                            'Enhance musicality'
+                        ]
+                    },
+                    schedule: [
+                        { day: 'Tuesday', time: '7:00 PM - 8:30 PM', level: 'Beginner' },
+                        { day: 'Thursday', time: '7:00 PM - 8:30 PM', level: 'Intermediate' },
+                        { day: 'Saturday', time: '4:00 PM - 5:30 PM', level: 'Sensual' },
+                        { day: 'Sunday', time: '2:00 PM - 3:30 PM', level: 'All Levels' }
+                    ],
+                    price: '$40/class',
+                    instructors: 'Antonio & Isabella'
+                },
+                {
+                    id: 'kizomba',
+                    name: 'Kizomba',
+                    icon: '🌙',
+                 //   badge: 'Smooth',
+                    theme: 'kizomba-theme',
+                    subtitle: 'Embrace the African soul',
+                    description: 'Feel the soul of Angola! Kizomba is a smooth, flowing dance known for its close embrace and deep connection between partners.',
+                    features: {
+                        'What You\'ll Learn': [
+                            'Basic ginga and weight transfer',
+                            'Connection and leading/following',
+                            'Saidas and pivots',
+                            'Urban Kiz variations',
+                            'Tarraxinha movements'
+                        ],
+                        'Class Details': [
+                            'Traditional and Urban styles',
+                            '75-minute sessions',
+                            'Small group classes',
+                            'Focus on connection',
+                            'African dance foundations'
+                        ],
+                        'Benefits': [
+                            'Develop smooth movement',
+                            'Build intimate connection',
+                            'Explore African culture',
+                            'Improve balance and control',
+                            'Relaxation through movement'
+                        ]
+                    },
+                    schedule: [
+                        { day: 'Wednesday', time: '8:00 PM - 9:15 PM', level: 'Beginner' },
+                        { day: 'Friday', time: '7:00 PM - 8:15 PM', level: 'Intermediate' },
+                        { day: 'Sunday', time: '5:00 PM - 6:15 PM', level: 'Urban Kiz' }
+                    ],
+                    price: '$45/class',
+                    instructors: 'João & Amara'
+                },
+                {
+                    id: 'zouk',
+                    name: 'Brazilian Zouk',
+                    icon: '🌊',
+                    //badge: 'New',
+                    theme: 'zouk-theme',
+                    subtitle: 'Flow with Brazilian waves',
+                    description: 'Experience the flowing movements of Brazil! Zouk is characterized by wave-like body movements and creative patterns.',
+                    features: {
+                        'What You\'ll Learn': [
+                            'Basic steps and rhythm',
+                            'Head movements and cambres',
+                            'Body waves and isolations',
+                            'Counter-balance techniques',
+                            'Musical interpretation'
+                        ],
+                        'Class Details': [
+                            'Progressive curriculum',
+                            '90-minute sessions',
+                            'Safe head movement training',
+                            'Monthly practice sessions',
+                            'Video analysis included'
+                        ],
+                        'Benefits': [
+                            'Improve flexibility',
+                            'Develop flow and fluidity',
+                            'Creative expression',
+                            'Core strength building',
+                            'Mind-body connection'
+                        ]
+                    },
+                    schedule: [
+                        { day: 'Monday', time: '8:30 PM - 10:00 PM', level: 'Beginner' },
+                        { day: 'Thursday', time: '8:30 PM - 10:00 PM', level: 'Intermediate' },
+                        { day: 'Saturday', time: '6:00 PM - 7:30 PM', level: 'All Levels' }
+                    ],
+                    price: '$50/class',
+                    instructors: 'Rafael & Luna'
+                },
+                {
+                    id: 'merengue',
+                    name: 'Merengue',
+                    icon: '🎉',
+                 //   badge: 'Fun',
+                    theme: 'merengue-theme',
+                    subtitle: 'Simple steps, maximum fun',
+                    description: 'Dance to the beat of the Dominican Republic! Merengue is the easiest Latin dance to learn with its simple marching steps.',
+                    features: {
+                        'What You\'ll Learn': [
+                            'Basic marching steps',
+                            'Hip movement and styling',
+                            'Simple turn patterns',
+                            'Partner coordination',
+                            'Musical timing'
+                        ],
+                        'Class Details': [
+                            'Perfect for beginners',
+                            '45-minute sessions',
+                            'No partner required',
+                            'Fun party atmosphere',
+                            'Live music sessions'
+                        ],
+                        'Benefits': [
+                            'Easy to learn quickly',
+                            'Great for all ages',
+                            'Social and fun',
+                            'Low-impact exercise',
+                            'Instant confidence boost'
+                        ]
+                    },
+                    schedule: [
+                        { day: 'Tuesday', time: '6:00 PM - 6:45 PM', level: 'Beginner' },
+                        { day: 'Thursday', time: '6:00 PM - 6:45 PM', level: 'All Levels' },
+                        { day: 'Sunday', time: '1:00 PM - 1:45 PM', level: 'Family Class' }
+                    ],
+                    price: '$25/class',
+                    instructors: 'Miguel & Sofia'
+                },
+                {
+                    id: 'tango',
+                    name: 'Argentine Tango',
+                    icon: '🌹',
+                //    badge: 'Classic',
+                    theme: 'tango-theme',
+                    subtitle: 'Passion and elegance combined',
+                    description: 'Experience the passion of Buenos Aires! Argentine Tango is an improvisational dance of connection and expression.',
+                    features: {
+                        'What You\'ll Learn': [
+                            'Walking and embrace',
+                            'Ochos and giros',
+                            'Musicality and pauses',
+                            'Improvisation skills',
+                            'Traditional milonga etiquette'
+                        ],
+                        'Class Details': [
+                            'Traditional and Nuevo styles',
+                            '90-minute sessions',
+                            'Practica included',
+                            'Monthly milongas',
+                            'Guest maestros'
+                        ],
+                        'Benefits': [
+                            'Improve posture and balance',
+                            'Develop elegance',
+                            'Deep partner connection',
+                            'Mental focus and presence',
+                            'Cultural enrichment'
+                        ]
+                    },
+                    schedule: [
+                        { day: 'Monday', time: '9:00 PM - 10:30 PM', level: 'Beginner' },
+                        { day: 'Wednesday', time: '9:00 PM - 10:30 PM', level: 'Intermediate' },
+                        { day: 'Friday', time: '9:30 PM - 11:00 PM', level: 'Milonga' }
+                    ],
+                    price: '$55/class',
+                    instructors: 'Diego & Valentina'
+                }
+            ];
+
+            // Initialize the dance tabs
+            function initializeDanceTabs() {
+                const tabNav = document.getElementById('danceTabNav');
+                const tabContent = document.getElementById('danceTabContent');
+
+                // Generate navigation tabs
+                enhancedDanceStyles.forEach((dance, index) => {
+                    const tabBtn = document.createElement('button');
+                    tabBtn.className = `dance-tab-btn ${index === 0 ? 'active' : ''}`;
+                    tabBtn.innerHTML = `
+                        ${dance.icon} ${dance.name}
+                        ${dance.badge ? `<span class="badge">${dance.badge}</span>` : ''}
+                    `;
+                    tabBtn.onclick = () => switchDanceTab(dance.id);
+                    tabNav.appendChild(tabBtn);
+                });
+
+                // Generate content panels
+                enhancedDanceStyles.forEach((dance, index) => {
+                    const panel = document.createElement('div');
+                    panel.className = `dance-tab-panel ${dance.theme} ${index === 0 ? 'active' : ''}`;
+                    panel.id = `${dance.id}-panel`;
+                    panel.innerHTML = generateEnhancedDanceContent(dance);
+                    tabContent.appendChild(panel);
+                });
+            }
+
+            // Generate content for each dance style
+            function generateEnhancedDanceContent(dance) {
+                const featuresHTML = Object.entries(dance.features).map(([title, items]) => `
+                    <div class="dance-info-card">
+                        <h3>${title}</h3>
+                        <ul>
+                            ${items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                `).join('');
+
+                const scheduleHTML = dance.schedule.map(item => `
+                    <div class="dance-schedule-item">
+                        <div style="font-weight: bold; color: var(--primary-dark); margin-bottom: 5px;">${item.day}</div>
+                        <div style="color: #666; font-size: 0.9rem;">${item.time}</div>
+                        <div style="color: var(--primary-dark); font-size: 0.85rem; margin-top: 5px;">${item.level}</div>
+                    </div>
+                `).join('');
+
+                // Add Learn More button for Salsa, Bachata, and Kizomba
+                const learnMoreButton = (dance.id === 'salsa' || dance.id === 'bachata' || dance.id === 'kizomba') ? 
+                    `<a href="${dance.id}.html" class="btn btn-learn-more" style="background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose)); color: white; padding: 15px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; text-decoration: none; display: inline-block; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.1);" 
+                       onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.15)';"
+                       onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0,0,0,0.1)';">
+                        Learn More About ${dance.name}
+                    </a>` : '';
+
+                return `
+                    <div class="dance-header">
+                        <div class="dance-icon">${dance.icon}</div>
+                        <div class="dance-title-section">
+                            <h2>${dance.name}</h2>
+                            <p class="dance-subtitle">${dance.subtitle}</p>
+                        </div>
+                    </div>
+
+                    <p style="font-size: 1.1rem; color: #666; margin-bottom: 30px; line-height: 1.8;">
+                        ${dance.description}
+                    </p>
+
+                    <div class="dance-info-grid">
+                        ${featuresHTML}
+                    </div>
+
+                    <div class="dance-schedule-section">
+                        <h3 style="margin-bottom: 10px; color: #333;">📅 Class Schedule</h3>
+                        <p style="color: #666; margin-bottom: 20px;">Choose a time that works for you</p>
+                        <div class="dance-schedule-grid">
+                            ${scheduleHTML}
+                        </div>
+                    </div>
+
+                    <div class="dance-cta-section">
+                        <h3 style="font-size: 1.8rem; margin-bottom: 10px;">Ready to Start Your ${dance.name} Journey?</h3>
+                        <p style="margin-bottom: 10px;">Join our community of passionate dancers</p>
+                        <p style="font-size: 2rem; font-weight: bold; margin-bottom: 20px;">${dance.price}</p>
+                        <p style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 20px;">Instructors: ${dance.instructors}</p>
+                        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                            <button class="btn btn-primary" style="background: white; color: var(--primary-dark); padding: 15px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer;">Book Your First Class</button>
+                            <button class="btn btn-secondary" style="background: transparent; color: white; border: 2px solid white; padding: 15px 35px; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer;">Watch Demo Video</button>
+                            ${learnMoreButton}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Switch between dance tabs
+            function switchDanceTab(danceId) {
+                // Update navigation
+                const tabs = document.querySelectorAll('.dance-tab-btn');
+                const panels = document.querySelectorAll('.dance-tab-panel');
+                
+                tabs.forEach((tab, index) => {
+                    // Add null check to prevent error when enhancedDanceStyles[index] is undefined
+                    if (enhancedDanceStyles && enhancedDanceStyles[index] && enhancedDanceStyles[index].id === danceId) {
+                        tab.classList.add('active');
+                    } else {
+                        tab.classList.remove('active');
+                    }
+                });
+
+                // Update content panels
+                panels.forEach(panel => {
+                    if (panel.id === `${danceId}-panel`) {
+                        panel.classList.add('active');
+                    } else {
+                        panel.classList.remove('active');
+                    }
+                });
+            }
+
+            // Initialize on page load or when this section loads
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', initializeDanceTabs);
+            } else {
+                initializeDanceTabs();
+            }
+
+            // Add keyboard navigation for dance tabs
+            document.addEventListener('keydown', (e) => {
+                const activeTabs = document.querySelectorAll('.dance-tab-btn');
+                const activeIndex = Array.from(activeTabs).findIndex(tab => tab.classList.contains('active'));
+                
+                if (e.key === 'ArrowLeft' && activeIndex > 0) {
+                    switchDanceTab(enhancedDanceStyles[activeIndex - 1].id);
+                } else if (e.key === 'ArrowRight' && activeIndex < enhancedDanceStyles.length - 1) {
+                    switchDanceTab(enhancedDanceStyles[activeIndex + 1].id);
+                }
+            });
+        </script>
+    </section>
+
+    <!-- Featured Latin Dance Styles Section -->
+   
+    <!-- Expandable Dance Styles Catalog Section -->
+   
+
+    <!-- Partner Search Section -->
+    <section id="search" class="partner-search" style="padding: 80px 0; background: linear-gradient(135deg, var(--neutral-light), rgba(255,255,255,0.8));">
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Find Your Dance Partner</h2>
+                <p>Discover workshops, competitions, socials, and performances near you</p>
+            </div>
+            
+            <!-- Search Box -->
+            <div class="search-container reveal active" style="max-width: 800px; margin: 0 auto 3rem; background: white; padding: 2rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1.5rem;">
+                    <input type="text" id="partnerSearch" placeholder="🔍 Search by name, style, or location..." style="flex: 1; min-width: 250px; padding: 15px 20px; border: 2px solid var(--neutral-light); border-radius: 50px; font-size: 1rem; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-gold)'; this.style.boxShadow='0 0 20px rgba(212,175,55,0.2)';" onblur="this.style.borderColor='var(--neutral-light)'; this.style.boxShadow='none';">
+                    <button onclick="searchPartners()" style="padding: 15px 40px; background: var(--primary-gold); color: var(--white); border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(212,175,55,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Search Partners</button>
+                </div>
+                
+                <!-- Filter Options -->
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+                    <select id="styleFilter" style="padding: 10px 20px; border: 2px solid var(--neutral-light); border-radius: 25px; background: white; cursor: pointer;">
+                        <option value="">All Styles</option>
+                        <option value="salsa">Salsa</option>
+                        <option value="bachata">Bachata</option>
+                        <option value="kizomba">Kizomba</option>
+                        <option value="latin">Other Latin Styles</option>
+                        <option value="zouk">Brazilian Zouk</option>
+                        <option value="merengue">Merengue</option>
+                        <option value="cha-cha">Cha-Cha</option>
+                    </select>
+                    
+                    <select id="levelFilter" style="padding: 10px 20px; border: 2px solid var(--neutral-light); border-radius: 25px; background: white; cursor: pointer;">
+                        <option value="">All Levels</option>
+                        <option value="beginner">Beginner</option>
+                        <option value="intermediate">Intermediate</option>
+                        <option value="advanced">Advanced</option>
+                        <option value="professional">Professional</option>
+                    </select>
+                    
+                    <select id="goalFilter" style="padding: 10px 20px; border: 2px solid var(--neutral-light); border-radius: 25px; background: white; cursor: pointer;">
+                        <option value="">All Goals</option>
+                        <option value="social">Social Dancing</option>
+                        <option value="competition">Competition</option>
+                        <option value="performance">Performance</option>
+                        <option value="practice">Practice Partner</option>
+                        <option value="teaching">Teaching Partner</option>
+                    </select>
+                    
+                    <select id="distanceFilter" style="padding: 10px 20px; border: 2px solid var(--neutral-light); border-radius: 25px; background: white; cursor: pointer;">
+                        <option value="">Any Distance</option>
+                        <option value="5">Within 5 miles</option>
+                        <option value="10">Within 10 miles</option>
+                        <option value="25">Within 25 miles</option>
+                        <option value="50">Within 50 miles</option>
+                        <option value="online">Online/Virtual</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Partner Results Grid -->
+            <div id="partnerResults" class="partner-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <!-- Partner Card 1 -->
+                <div class="partner-card reveal active" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(232, 180, 188, 0.3)), url('https://images.unsplash.com/photo-1542435503-956c469947f6?q=80&amp;w=400&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">Available</span>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                            <h3 style="color: white; margin: 0;">Sarah Mitchell</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 5px 0;">📍 New York, NY • 2 miles away</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Salsa</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Bachata</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Advanced</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem;">"Looking for a dedicated partner for salsa socials and bachata performances. 5+ years experience."</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <span style="color: var(--primary-gold);">⭐⭐⭐⭐⭐</span>
+                                <span style="color: var(--neutral-gray); font-size: 0.85rem;">(4.9)</span>
+                            </div>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600;">Connect</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Partner Card 2 -->
+                <div class="partner-card reveal active" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(232, 180, 188, 0.3)), url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&amp;w=400&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">Available</span>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                            <h3 style="color: white; margin: 0;">Michael Chen</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 5px 0;">📍 Brooklyn, NY • 5 miles away</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Bachata</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Kizomba</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Intermediate</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem;">"Passionate about Bachata and Kizomba! Seeking partner for social events and practice sessions."</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <span style="color: var(--primary-gold);">⭐⭐⭐⭐⭐</span>
+                                <span style="color: var(--neutral-gray); font-size: 0.85rem;">(4.8)</span>
+                            </div>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600;">Connect</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Partner Card 3 -->
+                <div class="partner-card reveal active" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 20px; transition: 0.3s; cursor: pointer; transform: translateY(0px);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(232, 180, 188, 0.3)), url('https://images.unsplash.com/photo-1531123897727-8f129e1688ce?q=80&amp;w=400&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; right: 10px; background: #FF9800; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">Busy This Week</span>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                            <h3 style="color: white; margin: 0;">Emma Rodriguez</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 5px 0;">📍 Manhattan, NY • 3 miles away</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Kizomba</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Salsa</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Professional</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem;">"Professional Latin dancer specializing in Kizomba and Salsa. Festival and workshop experience."</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <span style="color: var(--primary-gold);">⭐⭐⭐⭐⭐</span>
+                                <span style="color: var(--neutral-gray); font-size: 0.85rem;">(5.0)</span>
+                            </div>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600;">Connect</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Partner Card 4 -->
+                <div class="partner-card reveal active" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 20px; transition: 0.3s; cursor: pointer; transform: translateY(0px);" onmouseover="this.style.transform='translateY(-10px)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.3), rgba(232, 180, 188, 0.3)), url('https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&amp;w=400&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 5px 10px; border-radius: 20px; font-size: 0.8rem;">Available</span>
+                        <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1rem; background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);">
+                            <h3 style="color: white; margin: 0;">David Thompson</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin: 5px 0;">📍 Queens, NY • 8 miles away</p>
+                        </div>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Salsa</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Bachata</span>
+                            <span style="background: var(--neutral-light); padding: 5px 12px; border-radius: 20px; font-size: 0.85rem;">Beginner</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem;">"New to Latin dancing, eager to learn Salsa and Bachata! Looking for patient partner for practice."</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; gap: 0.5rem;">
+                                <span style="color: var(--primary-gold);">⭐⭐⭐⭐</span>
+                                <span style="color: var(--neutral-gray); font-size: 0.85rem;">(4.5)</span>
+                            </div>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600;">Connect</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Load More Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button onclick="loadMorePartners()" style="padding: 15px 40px; background: transparent; color: var(--primary-dark); border: 2px solid var(--primary-gold); border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='var(--primary-gold)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(212,175,55,0.4)';" onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">Load More Partners</button>
+            </div>
+            
+            <!-- Statistics Section -->
+            <div style="margin-top: 4rem; padding: 3rem; background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; text-align: center;">
+                    <div>
+                        <div style="font-size: 3rem; font-weight: bold; color: var(--primary-gold); margin-bottom: 0.5rem;">500+</div>
+                        <div style="color: var(--neutral-gray);">Active Dancers</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; font-weight: bold; color: var(--primary-gold); margin-bottom: 0.5rem;">85%</div>
+                        <div style="color: var(--neutral-gray);">Match Success Rate</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; font-weight: bold; color: var(--primary-gold); margin-bottom: 0.5rem;">50+</div>
+                        <div style="color: var(--neutral-gray);">Dance Styles</div>
+                    </div>
+                    <div>
+                        <div style="font-size: 3rem; font-weight: bold; color: var(--primary-gold); margin-bottom: 0.5rem;">24/7</div>
+                        <div style="color: var(--neutral-gray);">Community Support</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dance Events Section -->
+    <section id="events" style="padding: 80px 0; background: var(--white);">
+        <div class="container">
+            <div class="section-header reveal active">
+               
+                <h2 class="section-title">Events</h2>
+                <p>Connect with dancers who match your style, level, and passion</p>
+            </div>
+            
+            <!-- Events Filter Container -->
+            <div class="events-filter-container reveal active" style="max-width: 1000px; margin: 0 auto 3rem; background: linear-gradient(135deg, var(--neutral-light), rgba(255,255,255,0.9)); padding: 2rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+                <h3 style="color: var(--primary-dark); margin-bottom: 1.5rem; text-align: center;">🎯 Filter Events</h3>
+                
+                <!-- Main Search Bar -->
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2rem;">
+                    <input type="text" id="eventSearch" placeholder="🔍 Search events by name, venue, or organizer..." style="flex: 1; min-width: 250px; padding: 15px 20px; border: 2px solid var(--neutral-light); border-radius: 50px; font-size: 1rem; background: white; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-gold)'; this.style.boxShadow='0 0 20px rgba(212,175,55,0.2)';" onblur="this.style.borderColor='var(--neutral-light)'; this.style.boxShadow='none';">
+                    <button onclick="searchEvents()" style="padding: 15px 40px; background: var(--primary-gold); color: var(--white); border: none; border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(212,175,55,0.4)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">Search Events</button>
+                </div>
+                
+                <!-- Filter Options Grid -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+                    <!-- Event Type Filter -->
+                    <div>
+                        <label style="display: block; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Event Type</label>
+                        <select id="eventTypeFilter" style="width: 100%; padding: 12px 15px; border: 2px solid var(--neutral-light); border-radius: 10px; background: white; cursor: pointer; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-gold)';" onblur="this.style.borderColor='var(--neutral-light)';">
+                            <option value="">All Events</option>
+                            <option value="workshop">Workshops &amp; Classes</option>
+                            <option value="competition">Competitions</option>
+                            <option value="social">Social Dances</option>
+                            <option value="performance">Performances</option>
+                            <option value="festival">Dance Festivals</option>
+                            <option value="bootcamp">Intensive Bootcamps</option>
+                            <option value="showcase">Student Showcases</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Date Range Filter -->
+                    <div>
+                        <label style="display: block; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Date Range</label>
+                        <select id="dateRangeFilter" style="width: 100%; padding: 12px 15px; border: 2px solid var(--neutral-light); border-radius: 10px; background: white; cursor: pointer; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-gold)';" onblur="this.style.borderColor='var(--neutral-light)';">
+                            <option value="">Any Time</option>
+                            <option value="today">Today</option>
+                            <option value="tomorrow">Tomorrow</option>
+                            <option value="week">This Week</option>
+                            <option value="weekend">This Weekend</option>
+                            <option value="month">This Month</option>
+                            <option value="3months">Next 3 Months</option>
+                            <option value="custom">Custom Date</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Location Filter -->
+                    <div>
+                        <label style="display: block; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Location</label>
+                        <select id="locationFilter" style="width: 100%; padding: 12px 15px; border: 2px solid var(--neutral-light); border-radius: 10px; background: white; cursor: pointer; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-gold)';" onblur="this.style.borderColor='var(--neutral-light)';">
+                            <option value="">All Locations</option>
+                            <option value="5">Within 5 miles</option>
+                            <option value="10">Within 10 miles</option>
+                            <option value="25">Within 25 miles</option>
+                            <option value="50">Within 50 miles</option>
+                            <option value="100">Within 100 miles</option>
+                            <option value="online">Online Events</option>
+                            <option value="hybrid">Hybrid (Online + In-person)</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Dance Style Filter -->
+                    <div>
+                        <label style="display: block; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Dance Style</label>
+                        <select id="danceStyleFilter" style="width: 100%; padding: 12px 15px; border: 2px solid var(--neutral-light); border-radius: 10px; background: white; cursor: pointer; transition: all 0.3s;" onfocus="this.style.borderColor='var(--primary-gold)';" onblur="this.style.borderColor='var(--neutral-light)';">
+                            <option value="">All Styles</option>
+                            <option value="salsa">Salsa</option>
+                            <option value="bachata">Bachata</option>
+                            <option value="kizomba">Kizomba</option>
+                            <option value="salsa-on2">Salsa On2</option>
+                            <option value="cuban-salsa">Cuban Salsa</option>
+                            <option value="sensual-bachata">Sensual Bachata</option>
+                            <option value="dominican-bachata">Dominican Bachata</option>
+                            <option value="urban-kiz">Urban Kiz</option>
+                            <option value="semba">Semba</option>
+                            <option value="cha-cha">Cha Cha</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Additional Filters -->
+                <div style="border-top: 1px solid rgba(0,0,0,0.1); padding-top: 1.5rem; margin-top: 1.5rem;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 1rem; align-items: center; justify-content: space-between;">
+                        <!-- Price Range -->
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display: block; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Price Range</label>
+                            <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                <input type="number" id="minPrice" placeholder="Min $" style="width: 100px; padding: 8px; border: 2px solid var(--neutral-light); border-radius: 8px;">
+                                <span>-</span>
+                                <input type="number" id="maxPrice" placeholder="Max $" style="width: 100px; padding: 8px; border: 2px solid var(--neutral-light); border-radius: 8px;">
+                            </div>
+                        </div>
+                        
+                        <!-- Level Filter -->
+                        <div style="flex: 1; min-width: 200px;">
+                            <label style="display: block; color: var(--primary-dark); font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: 600;">Skill Level</label>
+                            <select id="levelFilter" style="width: 100%; padding: 10px 15px; border: 2px solid var(--neutral-light); border-radius: 10px; background: white; cursor: pointer;">
+                                <option value="">All Levels</option>
+                                <option value="beginner">Beginner Friendly</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                                <option value="professional">Professional</option>
+                                <option value="open">Open Level</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Quick Filter Buttons -->
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                            <button onclick="filterEvents('free')" style="padding: 8px 16px; background: var(--accent-rose); color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Free Events</button>
+                            <button onclick="filterEvents('today')" style="padding: 8px 16px; background: var(--primary-gold); color: var(--primary-dark); border: none; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Today Only</button>
+                            <button onclick="filterEvents('weekend')" style="padding: 8px 16px; background: linear-gradient(135deg, var(--logo-gradient-1), var(--logo-gradient-2)); color: white; border: none; border-radius: 20px; cursor: pointer; font-size: 0.9rem; transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.2)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='none';">Weekend</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Active Filters Display -->
+                <div id="activeFilters" style="margin-top: 1.5rem; display: none;">
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+                        <span style="color: var(--primary-dark); font-weight: 600; margin-right: 0.5rem;">Active Filters:</span>
+                        <!-- Active filter tags will be dynamically added here -->
+                        <button onclick="clearAllFilters()" style="padding: 5px 12px; background: transparent; color: var(--accent-rose); border: 1px solid var(--accent-rose); border-radius: 15px; cursor: pointer; font-size: 0.85rem; transition: all 0.3s;" onmouseover="this.style.background='var(--accent-rose)'; this.style.color='white';" onmouseout="this.style.background='transparent'; this.style.color='var(--accent-rose)';">Clear All</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Events Results Grid -->
+            <div id="eventsResults" class="events-grid reveal active" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; margin-top: 3rem;">
+                <!-- Sample Event Card 1 -->
+                <div class="event-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(212, 175, 55, 0.8), rgba(232, 180, 188, 0.8)), url('https://images.unsplash.com/photo-1504609813442-a8924e83f76e?q=80&amp;w=600&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; left: 10px; background: var(--accent-rose); color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Workshop</span>
+                        <span style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); color: var(--primary-dark); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">$45</span>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <h3 style="color: var(--primary-dark); margin: 0; font-size: 1.2rem;">Sensual Bachata Intensive</h3>
+                            <span style="color: var(--primary-gold); font-size: 0.9rem; white-space: nowrap;">★ 4.8</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--neutral-gray); font-size: 0.9rem;">
+                            <span>📅 Dec 15, 2024</span>
+                            <span>⏰ 2:00 PM - 5:00 PM</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.5;">Master body waves, isolations, and connection in this intensive Sensual Bachata workshop with world champion Carlos &amp; Maria.</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--neutral-gray); font-size: 0.85rem;">📍 Dance Studio NYC</span>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">Register</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sample Event Card 2 -->
+                <div class="event-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 20px; transition: 0.3s; cursor: pointer; transform: translateY(0px) scale(1);" onmouseover="this.style.transform='translateY(-10px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(78, 205, 196, 0.8), rgba(168, 85, 247, 0.8)), url('https://images.unsplash.com/photo-1535525153412-5a42439a210d?q=80&amp;w=600&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; left: 10px; background: #4CAF50; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Competition</span>
+                        <span style="position: absolute; top: 10px; right: 10px; background: rgba(255,255,255,0.9); color: var(--primary-dark); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">$125</span>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <h3 style="color: var(--primary-dark); margin: 0; font-size: 1.2rem;">International Salsa &amp; Bachata Congress</h3>
+                            <span style="color: var(--primary-gold); font-size: 0.9rem; white-space: nowrap;">★ 5.0</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--neutral-gray); font-size: 0.9rem;">
+                            <span>📅 Jan 20-21, 2025</span>
+                            <span>⏰ All Day Event</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.5;">Two days of workshops, shows, and social dancing with international artists. Salsa, Bachata, and Kizomba rooms all night!</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--neutral-gray); font-size: 0.85rem;">📍 Grand Ballroom Hotel</span>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">Register</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sample Event Card 3 -->
+                <div class="event-card" style="background: white; border-radius: 15px; overflow: hidden; box-shadow: 0 5px 20px rgba(0,0,0,0.1); transition: all 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px) scale(1.02)'; this.style.boxShadow='0 15px 40px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateY(0) scale(1)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div style="height: 200px; background: linear-gradient(135deg, rgba(255, 107, 107, 0.8), rgba(255, 215, 0, 0.8)), url('https://images.unsplash.com/photo-1508700929628-666bc8bd84ea?q=80&amp;w=600&amp;auto=format&amp;fit=crop') center/cover; position: relative;">
+                        <span style="position: absolute; top: 10px; left: 10px; background: #FF6B6B; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">Social Dance</span>
+                        <span style="position: absolute; top: 10px; right: 10px; background: #4CAF50; color: white; padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">FREE</span>
+                    </div>
+                    <div style="padding: 1.5rem;">
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                            <h3 style="color: var(--primary-dark); margin: 0; font-size: 1.2rem;">Latin Fridays: Salsa, Bachata &amp; Kizomba</h3>
+                            <span style="color: var(--primary-gold); font-size: 0.9rem; white-space: nowrap;">★ 4.9</span>
+                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem; color: var(--neutral-gray); font-size: 0.9rem;">
+                            <span>📅 Every Friday</span>
+                            <span>⏰ 8:00 PM - 2:00 AM</span>
+                        </div>
+                        <p style="color: var(--neutral-gray); font-size: 0.95rem; margin-bottom: 1rem; line-height: 1.5;">Three rooms: Salsa, Bachata, and Kizomba! Free intro lessons at 8 PM. DJ performances and live bands. All levels welcome!</p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span style="color: var(--neutral-gray); font-size: 0.85rem;">📍 Latin Dance Club</span>
+                            <button style="background: var(--primary-gold); color: var(--white); border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: 600; font-size: 0.9rem;">RSVP</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Load More Events Button -->
+            <div style="text-align: center; margin-top: 3rem;">
+                <button onclick="loadMoreEvents()" style="padding: 15px 40px; background: transparent; color: var(--primary-dark); border: 2px solid var(--primary-gold); border-radius: 50px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='var(--primary-gold)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 10px 30px rgba(212,175,55,0.4)';" onmouseout="this.style.background='transparent'; this.style.transform='translateY(0)'; this.style.boxShadow='none';">Show More Events</button>
+            </div>
+        </div>
+    </section>
+
+     <!-- Instructors Section -->
+    <section class="instructors" id="instructors">
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Instructors</h2>
+                <p>World-class talent dedicated to your growth</p>
+            </div>
+            <div class="instructor-grid">
+                <div class="instructor-card reveal active">
+                    <div class="instructor-image" style="background-image: url('https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?q=80&amp;w=1887&amp;auto=format&amp;fit=crop');"></div>
+                    <h3 class="instructor-name">Alexandra Rose</h3>
+                    <p class="instructor-specialty">Ballet Master</p>
+                </div>
+                <div class="instructor-card reveal active">
+                    <div class="instructor-image" style="background-image: url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&amp;w=1887&amp;auto=format&amp;fit=crop');"></div>
+                    <h3 class="instructor-name">Marcus Chen</h3>
+                    <p class="instructor-specialty">Contemporary</p>
+                </div>
+                <div class="instructor-card reveal active">
+                    <div class="instructor-image" style="background-image: url('https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&amp;w=1961&amp;auto=format&amp;fit=crop');"></div>
+                    <h3 class="instructor-name">Sofia Martinez</h3>
+                    <p class="instructor-specialty">Latin &amp; Ballroom</p>
+                </div>
+                <div class="instructor-card reveal active">
+                    <div class="instructor-image" style="background-image: url('https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&amp;w=1887&amp;auto=format&amp;fit=crop');"></div>
+                    <h3 class="instructor-name">James Williams</h3>
+                    <p class="instructor-specialty">Jazz &amp; Hip Hop</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+      <!-- Register Section -->
+    <section id="register" style="padding: 80px 0; background: linear-gradient(135deg, var(--primary-dark), rgba(26, 15, 31, 0.95));">
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title" style="color: var(--white);">Join DanceLink Today</h2>
+                <p style="color: rgba(255,255,255,0.8);">Create your profile and connect with dancers worldwide</p>
+            </div>
+            <div style="max-width: 500px; margin: 0 auto;" class="reveal active">
+                <form style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 2rem; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2);">
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="text" placeholder="Full Name" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; color: white;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="email" placeholder="Email Address" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; color: white;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <input type="password" placeholder="Create Password" style="width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; color: white;">
+                    </div>
+                    <div style="margin-bottom: 1.5rem;">
+                        <select style="width: 100%; padding: 15px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.3); border-radius: 10px; color: white;">
+                            <option value="" style="background: var(--primary-dark);">Select Your Main Dance Style</option>
+                            <option value="ballet" style="background: var(--primary-dark);">Ballet</option>
+                            <option value="contemporary" style="background: var(--primary-dark);">Contemporary</option>
+                            <option value="latin" style="background: var(--primary-dark);">Latin &amp; Ballroom</option>
+                            <option value="hiphop" style="background: var(--primary-dark);">Hip Hop</option>
+                            <option value="jazz" style="background: var(--primary-dark);">Jazz</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; padding: 15px; color:var(--white)" >Create Account</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partner Match Section 
+    <section id="partner-match" style="padding: 80px 0; background: var(--white);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2 class="section-title">AI Partner Matching</h2>
+                <p>Let our smart algorithm find your perfect dance partner</p>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto; background: var(--neutral-light); padding: 3rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);" class="reveal">
+                <div style="text-align: center; margin-bottom: 2rem;">
+                    <div style="font-size: 4rem; margin-bottom: 1rem;">🤝</div>
+                    <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">Get Your Perfect Match</h3>
+                    <p style="color: var(--neutral-gray);">Answer a few questions and we'll match you with compatible dance partners based on your style, level, and goals.</p>
+                </div>
+                <button class="btn btn-primary" style="width: 100%; padding: 20px; font-size: 1.1rem;">Start Matching Process</button>
+            </div>
+        </div>
+    </section>
+-->
+  
+
+    <!-- Forum Section -->
+    <section id="forum" style="padding: 80px 0; background: var(--neutral-light);">
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Community Forum</h2>
+                <p>Join discussions, share experiences, and learn from fellow dancers</p>
+            </div>
+            <div class="reveal active" style="display: grid; gap: 1.5rem; max-width: 900px; margin: 0 auto;">
+                <!-- Forum Category Cards -->
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; transform: translateX(0px);" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">💬 General Discussion</h3>
+                        <p style="color: var(--neutral-gray); margin: 0;">Chat about all things dance • 1.2k topics</p>
+                    </div>
+                    <span style="color: var(--primary-gold); font-size: 1.5rem;">→</span>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">🎯 Partner Search</h3>
+                        <p style="color: var(--neutral-gray); margin: 0;">Find practice partners • 856 topics</p>
+                    </div>
+                    <span style="color: var(--primary-gold); font-size: 1.5rem;">→</span>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">📚 Tips &amp; Tutorials</h3>
+                        <p style="color: var(--neutral-gray); margin: 0;">Learn from experts • 2.3k topics</p>
+                    </div>
+                    <span style="color: var(--primary-gold); font-size: 1.5rem;">→</span>
+                </div>
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; box-shadow: rgba(0, 0, 0, 0.1) 0px 5px 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; transition: 0.3s; transform: translateX(0px);" onmouseover="this.style.transform='translateX(10px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.15)';" onmouseout="this.style.transform='translateX(0)'; this.style.boxShadow='0 5px 20px rgba(0,0,0,0.1)';">
+                    <div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">🏆 Events &amp; Competitions</h3>
+                        <p style="color: var(--neutral-gray); margin: 0;">Upcoming events and results • 543 topics</p>
+                    </div>
+                    <span style="color: var(--primary-gold); font-size: 1.5rem;">→</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Settings Section -->
+    <section id="settings" style="padding: 80px 0; background: var(--white);">
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Account Settings</h2>
+                <p>Manage your profile and preferences</p>
+            </div>
+            <div style="max-width: 800px; margin: 0 auto;" class="reveal active">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                    <div style="background: var(--neutral-light); padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">👤</div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">Profile</h3>
+                        <p style="color: var(--neutral-gray);">Edit your personal information</p>
+                    </div>
+                    <div style="background: var(--neutral-light); padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔔</div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">Notifications</h3>
+                        <p style="color: var(--neutral-gray);">Manage alerts and messages</p>
+                    </div>
+                    <div style="background: var(--neutral-light); padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s; transform: translateY(0px); box-shadow: none;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">🔒</div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">Privacy</h3>
+                        <p style="color: var(--neutral-gray);">Control your privacy settings</p>
+                    </div>
+                    <div style="background: var(--neutral-light); padding: 2rem; border-radius: 15px; text-align: center; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 10px 30px rgba(0,0,0,0.1)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none';">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;">💳</div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 0.5rem;">Subscription</h3>
+                        <p style="color: var(--neutral-gray);">Manage your plan and billing</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about" style="position: relative; overflow: hidden;">
+        <!-- Background decoration -->
+        <div style="position: absolute; top: 0; right: 0; width: 300px; height: 300px; opacity: 0.1; background: url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&amp;w=500&amp;auto=format&amp;fit=crop') center/cover; border-radius: 50%; transform: translate(50%, -50%);"></div>
+        <div style="position: absolute; bottom: 0; left: 0; width: 250px; height: 250px; opacity: 0.1; background: url('https://images.unsplash.com/photo-1495791185843-c73f2269f669?q=80&amp;w=500&amp;auto=format&amp;fit=crop') center/cover; border-radius: 50%; transform: translate(-50%, 50%);"></div>
+        
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Our Philosophy</h2>
+                <p>Dance is not just movement, it's a language of the soul</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card reveal active" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; opacity: 0.05; background: url('https://images.unsplash.com/photo-1574482620811-1aa16ffe3c82?q=80&amp;w=300&amp;auto=format&amp;fit=crop') center/cover; border-radius: 0 10px 0 50%;"></div>
+                    <div class="about-icon">◈</div>
+                    <h3 class="about-title">Professional Excellence</h3>
+                    <p>Learn from internationally acclaimed instructors with decades of experience in their craft.</p>
+                </div>
+                <div class="about-card reveal active" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; opacity: 0.05; background: url('https://images.unsplash.com/photo-1490730141103-6cac27aaab94?q=80&amp;w=300&amp;auto=format&amp;fit=crop') center/cover; border-radius: 0 10px 0 50%;"></div>
+                    <div class="about-icon">◆</div>
+                    <h3 class="about-title">Personalized Journey</h3>
+                    <p>Every dancer is unique. We tailor our approach to match your goals and abilities.</p>
+                </div>
+                <div class="about-card reveal active" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; opacity: 0.05; background: url('https://images.unsplash.com/photo-1524863479829-916d8e77f114?q=80&amp;w=300&amp;auto=format&amp;fit=crop') center/cover; border-radius: 0 10px 0 50%;"></div>
+                    <div class="about-icon">◇</div>
+                    <h3 class="about-title">Holistic Development</h3>
+                    <p>Beyond technique, we nurture creativity, confidence, and artistic expression.</p>
+                </div>
+                <div class="about-card reveal active" style="position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; right: 0; width: 80px; height: 80px; opacity: 0.05; background: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?q=80&amp;w=300&amp;auto=format&amp;fit=crop') center/cover; border-radius: 0 10px 0 50%;"></div>
+                    <div class="about-icon">◊</div>
+                    <h3 class="about-title">Community Spirit</h3>
+                    <p>Join a supportive community of passionate dancers who inspire and grow together.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section class="classes" id="classes" style="position: relative;">
+        <!-- Decorative elements -->
+        <div style="position: absolute; top: 10%; left: 5%; width: 100px; height: 100px; opacity: 0.05; background: radial-gradient(circle, var(--primary-gold), transparent); border-radius: 50%; animation: float 15s ease-in-out infinite;"></div>
+        <div style="position: absolute; bottom: 10%; right: 5%; width: 150px; height: 150px; opacity: 0.05; background: radial-gradient(circle, var(--accent-rose), transparent); border-radius: 50%; animation: float 20s ease-in-out infinite; animation-delay: 5s;"></div>
+        
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Our Classes</h2>
+                <p>From classical to contemporary, find your perfect rhythm</p>
+            </div>
+            <div class="class-grid">
+                <div class="class-card reveal active">
+                    <div class="class-content">
+                        <h3 class="class-title">Salsa Fundamentals</h3>
+                        <p class="class-level">Beginner to Intermediate</p>
+                        <p class="class-description">Master the foundations of Salsa On1 and On2. Learn timing, footwork, turns, and partner connection.</p>
+                    </div>
+                </div>
+                <div class="class-card reveal active">
+                    <div class="class-content">
+                        <h3 class="class-title">Sensual Bachata</h3>
+                        <p class="class-level">All Levels</p>
+                        <p class="class-description">Explore body movement, waves, and the intimate connection that defines Sensual Bachata.</p>
+                    </div>
+                </div>
+                <div class="class-card reveal active">
+                    <div class="class-content">
+                        <h3 class="class-title">Kizomba &amp; Urban Kiz</h3>
+                        <p class="class-level">Beginner to Advanced</p>
+                        <p class="class-description">Discover the smooth, flowing movements of Kizomba and the dynamic style of Urban Kiz.</p>
+                    </div>
+                </div>
+                <div class="class-card reveal active">
+                    <div class="class-content">
+                        <h3 class="class-title">Cuban Salsa (Casino)</h3>
+                        <p class="class-level">All Levels</p>
+                        <p class="class-description">Learn the circular, energetic style of Cuban Salsa with its unique turns and Rueda de Casino.</p>
+                    </div>
+                </div>
+                <div class="class-card reveal active">
+                    <div class="class-content">
+                        <h3 class="class-title">Bachata Fusion</h3>
+                        <p class="class-level">Intermediate to Advanced</p>
+                        <p class="class-description">Combine traditional Dominican Bachata with modern Sensual and Urban elements.</p>
+                    </div>
+                </div>
+                <div class="class-card reveal active">
+                    <div class="class-content">
+                        <h3 class="class-title">Ladies &amp; Men's Styling</h3>
+                        <p class="class-level">Open Level</p>
+                        <p class="class-description">Perfect your individual style, body movement, and confidence in Salsa, Bachata, and Kizomba.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact" style="position: relative; overflow: hidden;">
+        <!-- Decorative background pattern -->
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 600px; height: 600px; opacity: 0.03;">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <pattern id="contactPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <circle cx="10" cy="10" r="2" fill="white" opacity="0.5"></circle>
+                    <path d="M 5,5 L 15,15 M 15,5 L 5,15" stroke="white" stroke-width="0.5" opacity="0.3"></path>
+                </pattern>
+                <rect width="100" height="100" fill="url(#contactPattern)"></rect>
+            </svg>
+        </div>
+        <div class="container">
+            <div class="section-header reveal active">
+                <h2 class="section-title">Begin Your Journey</h2>
+                <p>Take the first step towards mastering the art of dance</p>
+            </div>
+            <div class="contact-content">
+                <form class="contact-form reveal">
+                    <div class="form-group">
+                        <input type="text" class="form-input" placeholder="Your Name" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-input" placeholder="Your Email" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-input" placeholder="Phone Number">
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-input form-textarea" placeholder="Tell us about your dance goals..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="color: #fff;">Send Message</button>
+                </form>
+                <div class="contact-info reveal">
+                    <div class="info-item">
+                        <div class="info-icon">⚐</div>
+                        <div>
+                            <h4>Visit Our Studio</h4>
+                            <p>123 Dance Avenue, Arts District<br>New York, NY 10001</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">✉</div>
+                        <div>
+                            <h4>Get in Touch</h4>
+                            <p>hello@eleganceinmotion.com<br>+1 (555) 123-4567</p>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-icon">◷</div>
+                        <div>
+                            <h4>Studio Hours</h4>
+                            <p>Monday - Friday: 9am - 9pm<br>Saturday - Sunday: 10am - 6pm</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social-links">
+                <a href="#" class="social-link">f</a>
+                <a href="#" class="social-link">ig</a>
+                <a href="#" class="social-link">tw</a>
+                <a href="#" class="social-link">yt</a>
+            </div>
+            <div class="footer-legal-links" style="margin: 20px 0; font-size: 0.95rem;">
+                <a href="privacy-policy.html" style="color: var(--primary-gold); text-decoration: none; margin: 0 15px; transition: color 0.3s ease;">Privacy Policy</a>
+                <span style="color: var(--primary-gold); opacity: 0.5;">|</span>
+                <a href="terms-of-use.html" style="color: var(--primary-gold); text-decoration: none; margin: 0 15px; transition: color 0.3s ease;">Terms of Use</a>
+                <span style="color: var(--primary-gold); opacity: 0.5;">|</span>
+                <a href="refund-policy.html" style="color: var(--primary-gold); text-decoration: none; margin: 0 15px; transition: color 0.3s ease;">Refund Policy</a>
+            </div>
+            <p class="footer-text">© 2025 DanceLink. All rights reserved. | Connect. Dance. Inspire.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Theme Panel
+        function toggleThemePanel() {
+            const minimized = document.getElementById('themeMinimized');
+            const expanded = document.getElementById('themeExpanded');
+            const isMinimized = expanded.style.display === 'none';
+            
+            if (isMinimized) {
+                // Expand
+                minimized.style.display = 'none';
+                expanded.style.display = 'block';
+                expanded.style.animation = 'slideInRight 0.3s ease';
+                localStorage.setItem('theme-panel-state', 'expanded');
+            } else {
+                // Minimize
+                expanded.style.animation = 'slideOutRight 0.3s ease';
+                setTimeout(() => {
+                    expanded.style.display = 'none';
+                    minimized.style.display = 'flex';
+                    minimized.style.animation = 'bounceIn 0.5s ease';
+                }, 250);
+                localStorage.setItem('theme-panel-state', 'minimized');
+            }
+        }
+        
+        // Animation keyframes
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideInRight {
+                from {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+            }
+            
+            @keyframes slideOutRight {
+                from {
+                    transform: translateX(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: translateX(100%);
+                    opacity: 0;
+                }
+            }
+            
+            @keyframes bounceIn {
+                0% {
+                    transform: scale(0.3);
+                    opacity: 0;
+                }
+                50% {
+                    transform: scale(1.05);
+                }
+                70% {
+                    transform: scale(0.9);
+                }
+                100% {
+                    transform: scale(1);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(styleSheet);
+        
+        // Theme Switcher Function
+        function setTheme(theme) {
+            document.body.setAttribute('data-theme', theme);
+            
+            // Update logo text gradient colors
+            const computedStyle = getComputedStyle(document.body);
+            const gradient1 = computedStyle.getPropertyValue('--logo-gradient-1');
+            const gradient2 = computedStyle.getPropertyValue('--logo-gradient-2');
+            const gradient3 = computedStyle.getPropertyValue('--logo-gradient-3');
+            
+            // Update logo text gradient
+            const logoText = document.getElementById('logoText');
+            if (logoText) {
+                logoText.style.background = `linear-gradient(135deg, ${gradient1}, ${gradient2}, ${gradient3})`;
+                logoText.style.webkitBackgroundClip = 'text';
+                logoText.style.webkitTextFillColor = 'transparent';
+                logoText.style.backgroundClip = 'text';
+            }
+            
+            // Save theme preference
+            localStorage.setItem('dancelink-theme', theme);
+        }
+        
+        // Load saved theme and panel state on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('dancelink-theme') || 'sunset';
+            setTheme(savedTheme);
+            
+            // Load panel state
+            const panelState = localStorage.getItem('theme-panel-state') || 'expanded';
+            const minimized = document.getElementById('themeMinimized');
+            const expanded = document.getElementById('themeExpanded');
+            
+            if (panelState === 'minimized') {
+                expanded.style.display = 'none';
+                minimized.style.display = 'flex';
+            } else {
+                minimized.style.display = 'none';
+                expanded.style.display = 'block';
+            }
+            
+            // Add keyboard shortcut (Ctrl/Cmd + T) to toggle theme panel
+            document.addEventListener('keydown', (e) => {
+                if ((e.ctrlKey || e.metaKey) && e.key === 't') {
+                    e.preventDefault();
+                    toggleThemePanel();
+                }
+            });
+        });
+        
+        // Loader
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navMenu = document.getElementById('navMenu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when link is clicked
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('active');
+                navMenu.classList.remove('active');
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Initial check
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your interest! We will contact you soon.');
+            e.target.reset();
+        });
+
+        // Parallax effect for hero background
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const heroBackground = document.querySelector('.hero-background');
+            if (heroBackground) {
+                heroBackground.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // Add animation to floating elements
+        const floatingElements = document.querySelectorAll('.floating-element');
+        floatingElements.forEach((element, index) => {
+            element.style.animationDelay = `${index * 2}s`;
+        });
+
+        // Dynamic year in footer
+        const currentYear = new Date().getFullYear();
+        document.querySelector('.footer-text').innerHTML = 
+            `© ${currentYear} DanceLink. All rights reserved. | Connect. Dance. Inspire.`;
+        
+        // Partner Search Functions
+        function searchPartners() {
+            const searchTerm = document.getElementById('partnerSearch').value;
+            const styleFilter = document.getElementById('styleFilter').value;
+            const levelFilter = document.getElementById('levelFilter').value;
+            const goalFilter = document.getElementById('goalFilter').value;
+            const distanceFilter = document.getElementById('distanceFilter').value;
+            
+            // Show loading animation
+            const resultsContainer = document.getElementById('partnerResults');
+            resultsContainer.style.opacity = '0.5';
+            
+            // Simulate search delay
+            setTimeout(() => {
+                resultsContainer.style.opacity = '1';
+                
+                // Show notification
+                showNotification(`Found 4 partners matching your criteria`);
+                
+                // Scroll to results
+                resultsContainer.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 500);
+        }
+        
+        function loadMorePartners() {
+            // Simulate loading more partners
+            showNotification('Loading more partners...');
+            setTimeout(() => {
+                showNotification('4 more partners loaded!');
+            }, 1000);
+        }
+        
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary-gold);
+                color: var(--primary-dark);
+                padding: 15px 25px;
+                border-radius: 50px;
+                font-weight: 600;
+                z-index: 9999;
+                animation: slideInRight 0.5s ease;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOutRight 0.5s ease';
+                setTimeout(() => notification.remove(), 500);
+            }, 3000);
+        }
+        
+        // Add search on Enter key
+        document.getElementById('partnerSearch').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                searchPartners();
+            }
+        });
+        
+        // Filter change handlers
+        ['styleFilter', 'levelFilter', 'goalFilter', 'distanceFilter'].forEach(id => {
+            document.getElementById(id).addEventListener('change', searchPartners);
+        });
+        
+        // Language Switcher Functionality
+        let currentLanguage = 'en';
+        
+        // Translation data
+        const translations = {
+            en: {
+                nav: {
+                    home: 'Home',
+                    search: 'Search',
+                    register: 'Register',
+                    partnerMatch: 'Partner Match',
+                    forum: 'Forum',
+                    settings: 'Settings',
+                    about: 'About',
+                    contact: 'Contact'
+                },
+                hero: {
+                    subtitle: 'Connect Through Movement',
+                    description: 'Where dancers unite, stories unfold, and connections are made through the universal language of movement. Join our vibrant community today.',
+                    exploreClasses: 'Explore Classes',
+                    bookTrial: 'Book Trial'
+                },
+                sections: {
+                    findPartner: 'Find Your Dance Partner',
+                    partnerDesc: 'Connect with dancers who match your style, level, and passion',
+                    upcomingEvents: 'Events',
+                    eventsDesc: 'Discover workshops, competitions, socials, and performances near you',
+                   // aiMatching: 'AI Partner Matching',
+                   // aiDesc: 'Let our smart algorithm find your perfect dance partner',
+                    joinToday: 'Join DanceLink Today',
+                    joinDesc: 'Create your profile and connect with dancers worldwide',
+                    communityForum: 'Community Forum',
+                    forumDesc: 'Join discussions, share experiences, and learn from fellow dancers',
+                    accountSettings: 'Account Settings',
+                    settingsDesc: 'Manage your profile and preferences',
+                    philosophy: 'Our Philosophy',
+                    philosophyDesc: 'Dance is not just movement, it\'s a language of the soul',
+                    ourClasses: 'Our Classes',
+                    classesDesc: 'From classical to contemporary, find your perfect rhythm',
+                    instructors: 'Instructors',
+                    instructorsDesc: 'World-class talent dedicated to your growth',
+                    beginJourney: 'Begin Your Journey',
+                    journeyDesc: 'Take the first step towards mastering the art of dance'
+                }
+            },
+            ko: {
+                nav: {
+                    home: '홈',
+                    search: '검색',
+                    register: '등록',
+                    partnerMatch: '파트너 매칭',
+                    forum: '포럼',
+                    settings: '설정',
+                    about: '소개',
+                    contact: '연락처'
+                },
+                hero: {
+                    subtitle: '움직임을 통한 연결',
+                    description: '댄서들이 하나되고, 이야기가 펼쳐지며, 움직임의 보편적 언어를 통해 연결이 만들어지는 곳. 오늘 우리의 활기찬 커뮤니티에 참여하세요.',
+                    exploreClasses: '수업 탐색',
+                    bookTrial: '체험 예약'
+                },
+                sections: {
+                    findPartner: '댄스 파트너 찾기',
+                    partnerDesc: '당신의 스타일, 레벨, 열정과 맞는 댄서들과 연결하세요',
+                    upcomingEvents: '다가오는 댄스 이벤트',
+                    eventsDesc: '주변의 워크샵, 대회, 소셜, 공연을 발견하세요',
+                  //  aiMatching: 'AI 파트너 매칭',
+                  //  aiDesc: '스마트 알고리즘이 완벽한 댄스 파트너를 찾아드립니다',
+                    joinToday: '오늘 DanceLink에 가입하세요',
+                    joinDesc: '프로필을 만들고 전 세계 댄서들과 연결하세요',
+                    communityForum: '커뮤니티 포럼',
+                    forumDesc: '토론에 참여하고, 경험을 공유하며, 동료 댄서들로부터 배우세요',
+                    accountSettings: '계정 설정',
+                    settingsDesc: '프로필과 환경설정을 관리하세요',
+                    philosophy: '우리의 철학',
+                    philosophyDesc: '춤은 단순한 움직임이 아니라 영혼의 언어입니다',
+                    ourClasses: '우리의 수업',
+                    classesDesc: '클래식부터 컨템포러리까지, 당신의 완벽한 리듬을 찾으세요',
+                    instructors: '강사진 소개',
+                    instructorsDesc: '당신의 성장을 위해 헌신하는 세계적 수준의 인재들',
+                    beginJourney: '여정을 시작하세요',
+                    journeyDesc: '춤의 예술을 마스터하기 위한 첫 걸음을 내디디세요'
+                }
+            },
+            es: {
+                nav: {
+                    home: 'Inicio',
+                    search: 'Buscar',
+                    register: 'Registrar',
+                    partnerMatch: 'Emparejamiento',
+                    forum: 'Foro',
+                    settings: 'Configuración',
+                    about: 'Acerca de',
+                    contact: 'Contacto'
+                },
+                hero: {
+                    subtitle: 'Conecta a Través del Movimiento',
+                    description: 'Donde los bailarines se unen, las historias se desarrollan y las conexiones se hacen a través del lenguaje universal del movimiento. Únete a nuestra vibrante comunidad hoy.',
+                    exploreClasses: 'Explorar Clases',
+                    bookTrial: 'Reservar Prueba'
+                },
+                sections: {
+                    findPartner: 'Encuentra tu Pareja de Baile',
+                    partnerDesc: 'Conecta con bailarines que coincidan con tu estilo, nivel y pasión',
+                    upcomingEvents: 'Próximos Eventos de Baile',
+                    eventsDesc: 'Descubre talleres, competencias, sociales y presentaciones cerca de ti',
+                  //  aiMatching: 'Emparejamiento IA',
+                 //   aiDesc: 'Deja que nuestro algoritmo inteligente encuentre tu pareja de baile perfecta',
+                    joinToday: 'Únete a DanceLink Hoy',
+                    joinDesc: 'Crea tu perfil y conecta con bailarines de todo el mundo',
+                    communityForum: 'Foro Comunitario',
+                    forumDesc: 'Únete a discusiones, comparte experiencias y aprende de otros bailarines',
+                    accountSettings: 'Configuración de Cuenta',
+                    settingsDesc: 'Administra tu perfil y preferencias',
+                    philosophy: 'Nuestra Filosofía',
+                    philosophyDesc: 'El baile no es solo movimiento, es un lenguaje del alma',
+                    ourClasses: 'Nuestras Clases',
+                    classesDesc: 'Desde clásico hasta contemporáneo, encuentra tu ritmo perfecto',
+                    instructors: 'Conoce a Nuestros Instructores',
+                    instructorsDesc: 'Talento de clase mundial dedicado a tu crecimiento',
+                    beginJourney: 'Comienza tu Viaje',
+                    journeyDesc: 'Da el primer paso hacia el dominio del arte de la danza'
+                }
+            },
+            vi: {
+                nav: {
+                    home: 'Trang chủ',
+                    search: 'Tìm kiếm',
+                    register: 'Đăng ký',
+                    partnerMatch: 'Ghép đôi',
+                    forum: 'Diễn đàn',
+                    settings: 'Cài đặt',
+                    about: 'Giới thiệu',
+                    contact: 'Liên hệ'
+                },
+                hero: {
+                    subtitle: 'Kết Nối Qua Chuyển Động',
+                    description: 'Nơi các vũ công hội tụ, câu chuyện được mở ra và kết nối được tạo ra thông qua ngôn ngữ chung của chuyển động. Tham gia cộng đồng sôi động của chúng tôi ngay hôm nay.',
+                    exploreClasses: 'Khám Phá Lớp Học',
+                    bookTrial: 'Đặt Buổi Thử'
+                },
+                sections: {
+                    findPartner: 'Tìm Bạn Nhảy Của Bạn',
+                    partnerDesc: 'Kết nối với các vũ công phù hợp với phong cách, trình độ và đam mê của bạn',
+                    upcomingEvents: 'Sự Kiện Khiêu Vũ Sắp Tới',
+                    eventsDesc: 'Khám phá các hội thảo, cuộc thi, tiệc khiêu vũ và biểu diễn gần bạn',
+                  //  aiMatching: 'Ghép Đôi Bằng AI',
+                 //   aiDesc: 'Để thuật toán thông minh của chúng tôi tìm bạn nhảy hoàn hảo cho bạn',
+                    joinToday: 'Tham Gia DanceLink Ngay Hôm Nay',
+                    joinDesc: 'Tạo hồ sơ của bạn và kết nối với các vũ công trên toàn thế giới',
+                    communityForum: 'Diễn Đàn Cộng Đồng',
+                    forumDesc: 'Tham gia thảo luận, chia sẻ kinh nghiệm và học hỏi từ các vũ công khác',
+                    accountSettings: 'Cài Đặt Tài Khoản',
+                    settingsDesc: 'Quản lý hồ sơ và tùy chọn của bạn',
+                    philosophy: 'Triết Lý Của Chúng Tôi',
+                    philosophyDesc: 'Khiêu vũ không chỉ là chuyển động, đó là ngôn ngữ của tâm hồn',
+                    ourClasses: 'Các Lớp Học',
+                    classesDesc: 'Từ cổ điển đến đương đại, tìm nhịp điệu hoàn hảo của bạn',
+                    instructors: 'Gặp Gỡ Giảng Viên',
+                    instructorsDesc: 'Tài năng đẳng cấp thế giới tận tâm cho sự phát triển của bạn',
+                    beginJourney: 'Bắt Đầu Hành Trình',
+                    journeyDesc: 'Thực hiện bước đầu tiên hướng tới việc làm chủ nghệ thuật khiêu vũ'
+                }
+            }
+        };
+        
+        function toggleLanguageMenu() {
+            const dropdown = document.getElementById('langDropdown');
+            const currentBtn = document.getElementById('currentLang');
+            
+            dropdown.classList.toggle('active');
+            currentBtn.classList.toggle('active');
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function closeDropdown(e) {
+                if (!e.target.closest('.language-switcher')) {
+                    dropdown.classList.remove('active');
+                    currentBtn.classList.remove('active');
+                    document.removeEventListener('click', closeDropdown);
+                }
+            });
+        }
+        
+        function changeLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update current language display
+            const flags = {
+                en: '🇺🇸',
+                ko: '🇰🇷',
+                es: '🇪🇸',
+                vi: '🇻🇳'
+            };
+            
+            const langCodes = {
+                en: 'EN',
+                ko: 'KO',
+                es: 'ES',
+                vi: 'VI'
+            };
+            
+            document.getElementById('currentFlag').textContent = flags[lang];
+            document.getElementById('currentLangCode').textContent = langCodes[lang];
+            
+            // Update active language option
+            document.querySelectorAll('.lang-option').forEach(option => {
+                if (option.dataset.lang === lang) {
+                    option.classList.add('active');
+                } else {
+                    option.classList.remove('active');
+                }
+            });
+            
+            // Close dropdown
+            document.getElementById('langDropdown').classList.remove('active');
+            document.getElementById('currentLang').classList.remove('active');
+            
+            // Apply translations
+            applyTranslations(lang);
+            
+            // Save language preference
+            localStorage.setItem('preferred-language', lang);
+            
+            // Update HTML lang attribute
+            document.documentElement.lang = lang;
+        }
+        
+        function applyTranslations(lang) {
+            const t = translations[lang];
+            
+            // Update navigation - Updated to match new navigation structure
+            const navLinks = document.querySelectorAll('.nav-link');
+            if (navLinks[0]) navLinks[0].textContent = t.nav.home;
+            if (navLinks[1]) navLinks[1].textContent = t.nav.search;
+            if (navLinks[2]) navLinks[2].textContent = t.nav.partnerMatch;
+            if (navLinks[3]) navLinks[3].textContent = t.sections.upcomingEvents || 'Events';
+            if (navLinks[4]) navLinks[4].textContent = t.sections.instructors || 'Instructor';
+            if (navLinks[5]) navLinks[5].textContent = t.nav.about;
+            if (navLinks[6]) navLinks[6].textContent = t.nav.contact;
+            
+            // Update hero section
+            document.querySelector('.hero-subtitle').textContent = t.hero.subtitle;
+            document.querySelector('.hero-description').textContent = t.hero.description;
+            document.querySelector('.btn-primary').textContent = t.hero.exploreClasses;
+            document.querySelector('.btn-secondary').textContent = t.hero.bookTrial;
+            
+            // Update section titles and descriptions
+            const sectionTitles = document.querySelectorAll('.section-title');
+            const sectionDescriptions = document.querySelectorAll('.section-header p');
+            
+            if (sectionTitles[0]) sectionTitles[0].textContent = t.sections.findPartner;
+            if (sectionDescriptions[0]) sectionDescriptions[0].textContent = t.sections.eventsDesc;
+            
+            if (sectionTitles[1]) sectionTitles[1].textContent = t.sections.upcomingEvents;
+            if (sectionDescriptions[1]) sectionDescriptions[1].textContent = t.sections.partnerDesc;
+            
+            if (sectionTitles[2]) sectionTitles[2].textContent = t.sections.instructors;
+            if (sectionDescriptions[2]) sectionDescriptions[2].textContent = t.sections.instructorsDesc;
+            
+            if (sectionTitles[3]) sectionTitles[3].textContent = t.sections.joinToday;
+            if (sectionDescriptions[3]) sectionDescriptions[3].textContent = t.sections.joinDesc;
+            
+            if (sectionTitles[4]) sectionTitles[4].textContent = t.sections.communityForum;
+            if (sectionDescriptions[4]) sectionDescriptions[4].textContent = t.sections.forumDesc;
+            
+            if (sectionTitles[5]) sectionTitles[5].textContent = t.sections.accountSettings;
+            if (sectionDescriptions[5]) sectionDescriptions[5].textContent = t.sections.settingsDesc;
+            
+            if (sectionTitles[6]) sectionTitles[6].textContent = t.sections.philosophy;
+            if (sectionDescriptions[6]) sectionDescriptions[6].textContent = t.sections.philosophyDesc;
+            
+            if (sectionTitles[7]) sectionTitles[7].textContent = t.sections.ourClasses;
+            if (sectionDescriptions[7]) sectionDescriptions[7].textContent = t.sections.classesDesc;
+            
+            if (sectionTitles[8]) sectionTitles[8].textContent = t.sections.beginJourney;
+            if (sectionDescriptions[8]) sectionDescriptions[8].textContent = t.sections.journeyDesc;
+            
+           // if (sectionTitles[9]) sectionTitles[9].textContent = t.sections.;
+            //if (sectionDescriptions[9]) sectionDescriptions[9].textContent = t.sections.journeyDesc;
+        }
+        
+        // Load saved language preference on page load
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedLang = localStorage.getItem('preferred-language') || 'en';
+            changeLanguage(savedLang);
+        });
+        
+        // Dance Tabs Functionality
+        function initializeDanceTabs() {
+            const tabButtons = document.querySelectorAll('#danceTabNav .dance-tab-btn');
+            const tabPanels = document.querySelectorAll('#danceTabContent .dance-tab-panel');
+            
+            if (tabButtons.length === 0 || tabPanels.length === 0) return;
+            
+            // Add click event to each tab button
+            tabButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    // Remove active class from all buttons and panels
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabPanels.forEach(panel => panel.classList.remove('active'));
+                    
+                    // Add active class to clicked button and corresponding panel
+                    button.classList.add('active');
+                    if (tabPanels[index]) {
+                        tabPanels[index].classList.add('active');
+                    }
+                    
+                    // Smooth scroll to tab content
+                    const tabSection = document.getElementById('dance-styles-tabs');
+                    if (tabSection) {
+                        const yOffset = -100; // Offset for fixed navbar
+                        const y = tabSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                    }
+                });
+            });
+            
+            // Keyboard navigation
+            tabButtons.forEach((button, index) => {
+                button.addEventListener('keydown', (e) => {
+                    let newIndex = index;
+                    
+                    if (e.key === 'ArrowLeft' && index > 0) {
+                        newIndex = index - 1;
+                    } else if (e.key === 'ArrowRight' && index < tabButtons.length - 1) {
+                        newIndex = index + 1;
+                    } else if (e.key === 'Home') {
+                        e.preventDefault();
+                        newIndex = 0;
+                    } else if (e.key === 'End') {
+                        e.preventDefault();
+                        newIndex = tabButtons.length - 1;
+                    }
+                    
+                    if (newIndex !== index) {
+                        tabButtons[newIndex].click();
+                        tabButtons[newIndex].focus();
+                    }
+                });
+            });
+        }
+        
+        // Initialize tabs when DOM is ready
+        document.addEventListener('DOMContentLoaded', initializeDanceTabs);
+    </script>
+</body>
+</html>

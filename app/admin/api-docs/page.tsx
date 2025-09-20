@@ -97,7 +97,7 @@ export default function ApiDocsPage() {
       {/* Header */}
       <div className="bg-gray-900 text-white p-6 shadow-lg">
         <div className="max-w-7xl mx-auto">
-          <h1 className="text-3xl font-bold mb-2">Dance Platform API Documentation</h1>
+          <h1 className="text-3xl font-bold mb-2 dance-logo">Dance Platform API Documentation</h1>
           <p className="text-gray-300">
             Interactive API documentation for the Dance Platform admin panel. 
             Use this interface to explore and test all available endpoints.
