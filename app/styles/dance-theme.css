@@ -274,7 +274,7 @@ p {
 }
 
 .dance-btn-secondary {
-  background: transparent;
+  background: var(--white);
   color: var(--primary-dark);
   border: 2px solid var(--primary-dark);
 }

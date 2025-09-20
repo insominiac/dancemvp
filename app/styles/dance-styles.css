@@ -33,7 +33,7 @@
 }
 
 .dance-btn-secondary {
-  @apply bg-transparent text-gray-800 border-2 border-gray-800 hover:bg-gray-800 hover:text-white hover:shadow-lg hover:-translate-y-0.5;
+  @apply bg-white text-gray-800 border-2 border-gray-800 hover:bg-gray-800 hover:text-white hover:shadow-lg hover:-translate-y-0.5;
 }
 
 /* Hero Section */
