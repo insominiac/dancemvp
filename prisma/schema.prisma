@@ -36,6 +36,8 @@ model User {
   attendance      ClassAttendance[]
   feedback        StudentFeedback[]
   engagement      StudentEngagement[]
+  createdLoginTokens LoginToken[]    @relation("CreatedLoginTokens")
+  loginAttempts   LoginAttempt[]
 
   @@index([role])
   @@index([createdAt])
@@ -780,4 +782,67 @@ model ClassAnalytics {
   @@index([instructorId])
   @@index([date])
   @@map("class_analytics")
+}
+
+// Login Token Model for Unique Login URLs
+model LoginToken {
+  id              String     @id @default(cuid())
+  token           String     @unique // Unique token for the login URL
+  name            String?    // Optional name/description for the token
+  purpose         String?    // Purpose: 'marketing', 'campaign', 'referral', 'admin', etc.
+  createdByUserId String?    @map("created_by_user_id") // Admin who created this token
+  
+  // Usage restrictions
+  maxUses         Int?       @map("max_uses") // Maximum number of uses (null = unlimited)
+  usedCount       Int        @default(0) @map("used_count") // How many times it's been used
+  expiresAt       DateTime?  @map("expires_at") // Optional expiration date
+  
+  // Access control
+  isActive        Boolean    @default(true) @map("is_active")
+  allowedRoles    String[]   @map("allowed_roles") // Roles allowed to use this token
+  
+  // Tracking fields
+  metadata        String?    // JSON metadata (campaign info, utm params, etc.)
+  lastUsedAt      DateTime?  @map("last_used_at")
+  lastUsedIp      String?    @map("last_used_ip")
+  lastUserAgent   String?    @map("last_user_agent")
+  
+  // Timestamps
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  
+  // Relations
+  createdByUser   User?      @relation("CreatedLoginTokens", fields: [createdByUserId], references: [id], onDelete: SetNull)
+  loginAttempts   LoginAttempt[]
+  
+  @@index([token])
+  @@index([createdByUserId])
+  @@index([isActive])
+  @@index([expiresAt])
+  @@index([purpose])
+  @@map("login_tokens")
+}
+
+// Track login attempts via unique URLs
+model LoginAttempt {
+  id           String      @id @default(cuid())
+  tokenId      String      @map("token_id")
+  email        String?
+  success      Boolean
+  failureReason String?    @map("failure_reason")
+  ipAddress    String      @map("ip_address")
+  userAgent    String?     @map("user_agent")
+  userId       String?     @map("user_id") // Set if login was successful
+  metadata     String?     // Additional tracking data (referrer, utm params, etc.)
+  createdAt    DateTime    @default(now()) @map("created_at")
+  
+  // Relations
+  token        LoginToken  @relation(fields: [tokenId], references: [id], onDelete: Cascade)
+  user         User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  @@index([tokenId])
+  @@index([userId])
+  @@index([success])
+  @@index([createdAt])
+  @@map("login_attempts")
 }
