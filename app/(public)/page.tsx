@@ -46,10 +46,35 @@ interface PopularStyle {
   }
 }
 
+interface Event {
+  id: string
+  title: string
+  description: string
+  startDate: string
+  endDate: string
+  price: number
+  maxAttendees: number
+  currentAttendees: number
+  venue: {
+    id: string
+    name: string
+    city: string
+  } | null
+  eventStyles: Array<{
+    style: {
+      id: string
+      name: string
+      category: string
+    }
+  }>
+  isFeatured: boolean
+}
+
 interface HomepageContent {
   heroTitle: string
   heroSubtitle: string
   heroButtonText: string
+  heroBackgroundImage: string | null
   aboutTitle: string
   aboutDescription: string
   testimonialsEnabled: boolean
@@ -94,17 +119,19 @@ export default function HomePage() {
   const [homepageContent, setHomepageContent] = useState<HomepageContent | null>(null)
   const [siteSettings, setSiteSettings] = useState<SiteSettings | null>(null)
   const [danceStyles, setDanceStyles] = useState<DanceStyle[]>([])
+  const [events, setEvents] = useState<Event[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [statsRes, featuredRes, homepageRes, settingsRes, danceStylesRes] = await Promise.all([
+        const [statsRes, featuredRes, homepageRes, settingsRes, danceStylesRes, eventsRes] = await Promise.all([
           fetch('/api/public/stats'),
           fetch('/api/public/featured'),
           fetch('/api/public/content/homepage'),
           fetch('/api/public/content/settings'),
-          fetch('/api/public/dance-styles')
+          fetch('/api/public/dance-styles'),
+          fetch('/api/public/events')
         ])
 
         if (statsRes.ok) {
@@ -130,9 +157,18 @@ export default function HomePage() {
 
         if (danceStylesRes.ok) {
           const danceStylesData = await danceStylesRes.json()
-          if (danceStylesData.success) {
+          if (danceStylesData.success && danceStylesData.data?.styles) {
             setDanceStyles(danceStylesData.data.styles)
           }
+        } else {
+          console.error('Dance styles API failed:', danceStylesRes.status)
+        }
+
+        if (eventsRes.ok) {
+          const eventsData = await eventsRes.json()
+          setEvents(eventsData.events?.slice(0, 3) || []) // Get first 3 events
+        } else {
+          console.error('Events API failed:', eventsRes.status)
         }
       } catch (error) {
         console.error('Error fetching homepage data:', error)
@@ -154,6 +190,26 @@ export default function HomePage() {
       'Ballet': 'https://images.unsplash.com/photo-1547036967-23d11aacaee0?q=80&w=400&auto=format&fit=crop'
     }
     return images[styleName] || 'https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=400&auto=format&fit=crop'
+  }
+
+  const formatEventDate = (dateString: string) => {
+    const eventDate = new Date(dateString)
+    const now = new Date()
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+    const eventDay = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate())
+    
+    const diffTime = eventDay.getTime() - today.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+    
+    if (diffDays === 0) return 'Today'
+    if (diffDays === 1) return 'Tomorrow'
+    if (diffDays < 7) return `In ${diffDays} days`
+    
+    return eventDate.toLocaleDateString('en-US', { 
+      month: 'short', 
+      day: 'numeric',
+      year: eventDate.getFullYear() !== now.getFullYear() ? 'numeric' : undefined
+    })
   }
   return (
     <div>
@@ -237,19 +293,17 @@ export default function HomePage() {
       </section>
 
       {/* Dance Styles Section */}
-      <DanceStylesTabs danceStyles={danceStyles.length > 0 ? danceStyles : undefined} />
+      <DanceStylesTabs danceStyles={danceStyles} />
 
-      {/* Featured Classes Section */}
+      {/* Upcoming Events Section */}
       <section className="py-20 bg-white">
         <div className="dance-container">
           <div className="dance-section-header">
             <h2 className="dance-section-title">
-              {featuredClasses.length > 0 ? t('classes.popularClasses') : t('classes.discoverStyles')}
+              🎉 Upcoming Dance Events
             </h2>
             <p>
-              {featuredClasses.length > 0 
-                ? t('classes.joinPopular') 
-                : t('classes.exploreDiverse')}
+              Join our vibrant dance community at these exciting upcoming events and workshops
             </p>
           </div>
           
@@ -257,54 +311,66 @@ export default function HomePage() {
             <div className="flex justify-center items-center h-64">
               <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
             </div>
-          ) : (
+          ) : events.length > 0 ? (
             <div className="dance-card-grid">
-              {featuredClasses.length > 0 ? (
-                // Display real featured classes
-                featuredClasses.map((cls) => {
-                  const primaryStyle = cls.classStyles[0]?.style
-                  const styleImage = primaryStyle ? getStyleImage(primaryStyle.name) : getStyleImage('Salsa')
-                  
-                  return (
-                    <Link key={cls.id} href={`/classes/${cls.id}`} className="dance-class-card" style={{
-                      background: `linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)), url('${styleImage}') center/cover`
-                    }}>
-                      <div className="dance-class-content">
-                        <h3 className="text-2xl font-semibold mb-2">{cls.title}</h3>
-                        <p className="text-sm uppercase tracking-wide" style={{color: 'var(--primary-gold)'}}>{cls.level}</p>
-                        <p className="mt-3 opacity-0 class-description">{cls.description}</p>
-                        <div className="mt-4 flex justify-between items-center opacity-0 class-details">
-                          <span className="text-lg font-bold">${cls.price}</span>
-                          <span className="text-sm">{cls.spotsLeft} spots left</span>
-                        </div>
-                      </div>
-                    </Link>
-                  )
-                })
-              ) : (
-                // Fallback to popular styles if no featured classes
-                popularStyles.map((style) => (
-                  <Link key={style.id} href={`/classes?style=${style.name}`} className="dance-class-card" style={{
-                    background: `linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)), url('${getStyleImage(style.name)}') center/cover`
+              {events.map((event) => {
+                const eventDate = new Date(event.startDate)
+                const eventEndDate = new Date(event.endDate)
+                const spotsLeft = event.maxAttendees - event.currentAttendees
+                const primaryStyle = event.eventStyles[0]?.style
+                const styleImage = primaryStyle ? getStyleImage(primaryStyle.name) : getStyleImage('Salsa')
+                
+                return (
+                  <Link key={event.id} href={`/events/${event.id}`} className="dance-class-card" style={{
+                    background: `linear-gradient(rgba(26, 26, 46, 0.4), rgba(26, 26, 46, 0.7)), url('${styleImage}') center/cover`
                   }}>
                     <div className="dance-class-content">
-                      <h3 className="text-2xl font-semibold mb-2">{style.name}</h3>
-                      <p className="text-sm uppercase tracking-wide" style={{color: 'var(--primary-gold)'}}>{style.category}</p>
-                      <p className="mt-3 opacity-0 class-description">
-                        {style._count.classStyles} classes • {style._count.eventStyles} events
+                      <h3 className="text-2xl font-semibold mb-2">{event.title}</h3>
+                      <p className="text-sm uppercase tracking-wide" style={{color: 'var(--primary-gold)'}}>
+                        {formatEventDate(event.startDate)}
+                        {event.venue && ` • ${event.venue.name}`}
                       </p>
+                      <p className="mt-3 opacity-0 class-description text-white">{event.description}</p>
+                      <div className="mt-4 flex justify-between items-center opacity-0 class-details">
+                        <span className="text-lg font-bold">
+                          {event.price > 0 ? `$${event.price}` : 'Free'}
+                        </span>
+                        <span className="text-sm">
+                          {spotsLeft > 0 ? `${spotsLeft} spots left` : 'Sold out'}
+                        </span>
+                      </div>
+                      {event.isFeatured && (
+                        <div className="absolute top-4 right-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold">
+                          ⭐ Featured
+                        </div>
+                      )}
                     </div>
                   </Link>
-                ))
-              )}
+                )
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="text-6xl mb-4">🗓️</div>
+              <h3 className="text-2xl font-semibold mb-4" style={{color: 'var(--primary-dark)'}}>
+                No Upcoming Events
+              </h3>
+              <p className="text-lg opacity-75 mb-8">
+                Stay tuned! We're planning some amazing dance events for you.
+              </p>
+              <Link href="/contact" className="dance-btn dance-btn-primary">
+                📧 Get Notified
+              </Link>
             </div>
           )}
           
-          <div className="text-center mt-12">
-            <Link href="/classes" className="dance-btn dance-btn-primary hover:transform hover:scale-105 transition-all duration-300">
-              💃 {t('classes.viewAll')}
-            </Link>
-          </div>
+          {events.length > 0 && (
+            <div className="text-center mt-12">
+              <Link href="/events" className="dance-btn dance-btn-primary hover:transform hover:scale-105 transition-all duration-300">
+                🎪 View All Events
+              </Link>
+            </div>
+          )}
         </div>
       </section>
 

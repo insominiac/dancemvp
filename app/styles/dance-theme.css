@@ -214,14 +214,14 @@ p {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 24px;
   
   @media (max-width: 768px) {
-    padding: 0 16px;
+    padding: 0 20px;
   }
   
   @media (max-width: 480px) {
-    padding: 0 12px;
+    padding: 0 16px;
   }
 }
 
@@ -406,6 +406,16 @@ p {
   box-shadow: var(--shadow-soft);
   transition: all 0.3s ease;
   border: 1px solid rgba(0,0,0,0.05);
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.25rem;
+    border-radius: 10px;
+  }
 }
 
 .dance-card:hover {
@@ -1053,6 +1063,57 @@ html {
     color: black !important;
     background: white !important;
   }
+}
+
+/* Accent button (gold -> rose gradient) */
+.dance-btn-accent {
+  background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+  color: var(--white);
+  border: 2px solid transparent;
+}
+
+.dance-btn-accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+}
+
+/* Outline button for dark sections */
+.dance-btn-outline {
+  background: transparent;
+  color: var(--white);
+  border: 2px solid rgba(255,255,255,0.85);
+}
+
+.dance-btn-outline:hover {
+  background: var(--white);
+  color: var(--primary-dark);
+  transform: translateY(-2px);
+}
+
+/* Reusable gradient background block for CTA/Newsletter */
+.dance-hero-gradient {
+  background: linear-gradient(135deg, var(--primary-gold), var(--accent-rose));
+  border-radius: 20px;
+  box-shadow: var(--shadow-medium);
+}
+
+/* Badge pill used in CTA */
+.dance-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.1);
+  color: var(--white);
+  backdrop-filter: blur(8px);
+}
+
+/* Final CTA section wrapper */
+.dance-cta {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%);
+  padding: 4rem 0;
 }
 
 .dance-nav-link:hover {
