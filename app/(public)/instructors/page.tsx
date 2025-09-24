@@ -112,7 +112,7 @@ export default function InstructorsPage() {
       <div className="min-h-[calc(100vh-200px)]" style={{background: 'var(--neutral-light)'}}>
         {/* Hero Section - Shorter Version */}
         <section 
-          className="relative py-16 md:py-20 overflow-hidden"
+          className="relative py-16 md:py-20 overflow-hidden mt-20"
           style={{
             background: 'linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fef3c7 100%)'
           }}
@@ -204,7 +204,7 @@ export default function InstructorsPage() {
     <div className="min-h-[calc(100vh-200px)]" style={{background: 'var(--neutral-light)'}}>
       {/* Hero Section - Shorter Version */}
       <section 
-        className="relative py-16 md:py-20 overflow-hidden"
+        className="relative py-16 md:py-20 overflow-hidden mt-20"
         style={{
           background: 'linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fef3c7 100%)'
         }}
