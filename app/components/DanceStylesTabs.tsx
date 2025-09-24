@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
+import { useTranslation } from 'react-i18next'
 import cssStyles from './DanceStylesTabs.module.css'
 
 interface DanceStyle {
@@ -27,9 +28,10 @@ interface DanceStylesTabsProps {
 }
 
 export default function DanceStylesTabs({ danceStyles, className = '' }: DanceStylesTabsProps) {
+  const { t } = useTranslation('common')
   const [activeTab, setActiveTab] = useState<string>('')
-  const [isLoading, setIsLoading] = useState(!danceStyles?.length)
-  const [styles, setStyles] = useState<DanceStyle[]>(danceStyles || [])
+  const [isLoading, setIsLoading] = useState(true)
+  const [styles, setStyles] = useState<DanceStyle[]>([])
   const [isMounted, setIsMounted] = useState(false)
   const [canScrollLeft, setCanScrollLeft] = useState(false)
   const [canScrollRight, setCanScrollRight] = useState(false)
@@ -38,14 +40,12 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
   useEffect(() => {
     setIsMounted(true)
     
-    if (!danceStyles?.length) {
-      fetchDanceStyles()
-    } else {
+    if (danceStyles && danceStyles.length > 0) {
       setStyles(danceStyles)
-      if (danceStyles.length > 0) {
-        setActiveTab(danceStyles[0].id)
-      }
+      setActiveTab(danceStyles[0].id)
       setIsLoading(false)
+    } else {
+      fetchDanceStyles()
     }
   }, [danceStyles])
 
@@ -171,10 +171,10 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
         <div className="dance-container">
           <div className="text-center mb-12">
             <h2 className="text-5xl font-bold mb-4" style={{ color: 'var(--primary-dark)' }}>
-              Discover Our Dance Styles
+              {t('danceStyles.title')}
             </h2>
             <p className="text-xl opacity-70" style={{ color: 'var(--neutral-gray)' }}>
-              Loading our amazing dance styles...
+              {t('danceStyles.loading')}
             </p>
           </div>
           <div className="flex justify-center">
@@ -194,10 +194,10 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
         <div className="dance-container">
           <div className="text-center mb-12">
             <h2 className="text-5xl font-bold mb-4" style={{ color: 'var(--primary-dark)' }}>
-              Discover Our Dance Styles
+              {t('danceStyles.title')}
             </h2>
             <p className="text-xl opacity-70" style={{ color: 'var(--neutral-gray)' }}>
-              Loading our amazing dance styles...
+              {t('danceStyles.loading')}
             </p>
           </div>
           <div className="flex justify-center">
@@ -217,10 +217,10 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
         <div className="dance-container">
           <div className="text-center">
             <h2 className="text-5xl font-bold mb-4" style={{ color: 'var(--primary-dark)' }}>
-              Discover Our Dance Styles
+              {t('danceStyles.title')}
             </h2>
             <p className="text-xl opacity-70" style={{ color: 'var(--neutral-gray)' }}>
-              No dance styles available at the moment.
+              {t('danceStyles.noStyles')}
             </p>
           </div>
         </div>
@@ -237,10 +237,10 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
           {/* Header */}
           <div className="text-center mb-12">
             <h2 className="text-5xl font-bold mb-4" style={{ color: 'var(--primary-dark)' }}>
-              Discover Our Dance Styles
+              {t('danceStyles.title')}
             </h2>
             <p className="text-xl italic" style={{ color: 'var(--neutral-gray)' }}>
-              Choose Your Perfect Dance Journey
+              {t('danceStyles.subtitle')}
             </p>
           </div>
 
@@ -252,8 +252,8 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
                 className={`${cssStyles.scrollButton} ${cssStyles.scrollLeft} ${!canScrollLeft ? cssStyles.disabled : ''}`}
                 onClick={scrollLeft}
                 disabled={!canScrollLeft}
-                aria-label="Scroll tabs left"
-                title="Scroll left"
+                aria-label={t('danceStyles.scrollLeft')}
+                title={t('danceStyles.scrollLeft')}
               >
                 ←
               </button>
@@ -306,8 +306,8 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
                 className={`${cssStyles.scrollButton} ${cssStyles.scrollRight} ${!canScrollRight ? cssStyles.disabled : ''}`}
                 onClick={scrollRight}
                 disabled={!canScrollRight}
-                aria-label="Scroll tabs right"
-                title="Scroll right"
+                aria-label={t('danceStyles.scrollRight')}
+                title={t('danceStyles.scrollRight')}
               >
                 →
               </button>
@@ -317,7 +317,7 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
             {styles.length > 3 && (
               <div className="text-center mt-2">
                 <p className="text-xs text-gray-500 md:hidden">
-                  💡 Swipe left or right to see more dance styles
+                  {t('danceStyles.swipeHint')}
                 </p>
               </div>
             )}
@@ -351,19 +351,19 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
                 <div className={cssStyles.danceInfoGrid}>
                   <div className={cssStyles.danceInfoCard}>
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--primary-dark)' }}>
-                      📊 Style Information
+                      {t('danceStyles.styleInfo')}
                     </h3>
                     <ul className="space-y-2">
-                      <li><strong>Origin:</strong> {activeStyle.origin}</li>
-                      <li><strong>Difficulty:</strong> {activeStyle.difficulty}</li>
-                      <li><strong>Music Style:</strong> {activeStyle.musicStyle}</li>
-                      <li><strong>Category:</strong> {activeStyle.category}</li>
+                      <li><strong>{t('danceStyles.origin')}:</strong> {activeStyle.origin}</li>
+                      <li><strong>{t('danceStyles.difficulty')}:</strong> {activeStyle.difficulty}</li>
+                      <li><strong>{t('danceStyles.musicStyle')}:</strong> {activeStyle.musicStyle}</li>
+                      <li><strong>{t('danceStyles.category')}:</strong> {activeStyle.category}</li>
                     </ul>
                   </div>
 
                   <div className={cssStyles.danceInfoCard}>
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--primary-dark)' }}>
-                      ✨ Characteristics
+                      {t('danceStyles.characteristics')}
                     </h3>
                     <ul className="space-y-1">
                       {activeStyle.characteristics.map((char, index) => (
@@ -377,35 +377,35 @@ export default function DanceStylesTabs({ danceStyles, className = '' }: DanceSt
 
                   <div className={cssStyles.danceInfoCard}>
                     <h3 className="text-xl font-semibold mb-4" style={{ color: 'var(--primary-dark)' }}>
-                      📈 Availability
+                      {t('danceStyles.availability')}
                     </h3>
                     <ul className="space-y-2">
-                      <li><strong>Classes:</strong> {activeStyle.classCount} available</li>
-                      <li><strong>Events:</strong> {activeStyle.eventCount} upcoming</li>
-                      <li><strong>Students:</strong> {activeStyle.studentCount} learning</li>
+                      <li><strong>{t('danceStyles.classes')}:</strong> {activeStyle.classCount} {t('danceStyles.available')}</li>
+                      <li><strong>{t('danceStyles.events')}:</strong> {activeStyle.eventCount} {t('danceStyles.upcoming')}</li>
+                      <li><strong>{t('danceStyles.students')}:</strong> {activeStyle.studentCount} {t('danceStyles.learning')}</li>
                     </ul>
                   </div>
                 </div>
 
                 <div className={`${cssStyles.danceCtaSection} mt-8`}>
                   <h3 className="text-2xl font-bold mb-4" style={{ fontFamily: 'Dancing Script, cursive' }}>
-                    Ready to Start Your {activeStyle.name} Journey?
+                    {t('danceStyles.readyToStart', { style: activeStyle.name })}
                   </h3>
                   <p className="mb-6 opacity-90">
-                    Join our community of passionate dancers and discover the joy of {activeStyle.name}
+                    {t('danceStyles.joinCommunity', { style: activeStyle.name })}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Link 
                       href={`/classes?style=${activeStyle.name}`}
                       className="px-8 py-3 bg-white text-gray-800 rounded-full font-semibold hover:transform hover:scale-105 hover:shadow-xl transition-all duration-300"
                     >
-                      View {activeStyle.name} Classes
+                      {t('danceStyles.viewClasses', { style: activeStyle.name })}
                     </Link>
                     <Link 
                       href="/contact"
                       className="px-8 py-3 border-2 border-white text-white rounded-full font-semibold hover:bg-white hover:text-gray-800 hover:transform hover:scale-105 hover:shadow-xl transition-all duration-300"
                     >
-                      Book Free Trial
+                      {t('danceStyles.bookFreeTrial')}
                     </Link>
                   </div>
                 </div>

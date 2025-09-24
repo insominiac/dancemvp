@@ -1,5 +1,5 @@
 import webpush from 'web-push';
-import { db } from './db';
+import prisma from './db';
 import { NotificationType, DeliveryMethod } from '@prisma/client';
 
 // Configure web-push with VAPID keys
@@ -39,7 +39,7 @@ export class PushNotificationService {
   ): Promise<{ success: number; failed: number; errors: any[] }> {
     try {
       // Get active push subscriptions for the user
-      const subscriptions = await db.pushSubscription.findMany({
+      const subscriptions = await prisma.pushSubscription.findMany({
         where: {
           userId,
           isActive: true
@@ -127,7 +127,7 @@ export class PushNotificationService {
   ): Promise<boolean> {
     try {
       // Check user's notification preferences
-      const preferences = await db.notificationPreference.findUnique({
+      const preferences = await prisma.notificationPreference.findUnique({
         where: {
           userId_type: {
             userId,
@@ -176,7 +176,7 @@ export class PushNotificationService {
     } = {}
   ): Promise<{ notification: any; pushResult?: any }> {
     // Create database notification
-    const notification = await db.notification.create({
+    const notification = await prisma.notification.create({
       data: {
         userId,
         type,
@@ -210,7 +210,7 @@ export class PushNotificationService {
       
       // Update delivery status
       if (pushResult) {
-        await db.notification.update({
+        await prisma.notification.update({
           where: { id: notification.id },
           data: {
             isDelivered: true,
@@ -294,7 +294,7 @@ export class PushNotificationService {
       .map(sub => sub.id);
 
     if (invalidSubscriptionIds.length > 0) {
-      await db.pushSubscription.updateMany({
+      await prisma.pushSubscription.updateMany({
         where: {
           id: { in: invalidSubscriptionIds }
         },

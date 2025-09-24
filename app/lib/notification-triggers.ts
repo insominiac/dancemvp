@@ -1,6 +1,7 @@
 import { PushNotificationService } from './push-notifications';
 import { NotificationType, NotificationPriority } from '@prisma/client';
-import { db } from './db';
+import prisma from './db';
+import { emailService, NewUserWelcomeData, NewUserAdminNotificationData } from './email';
 
 export class NotificationTriggers {
   /**
@@ -8,7 +9,7 @@ export class NotificationTriggers {
    */
   static async sendBookingConfirmation(bookingId: string): Promise<void> {
     try {
-      const booking = await db.booking.findUnique({
+      const booking = await prisma.booking.findUnique({
         where: { id: bookingId },
         include: {
           user: true,
@@ -62,7 +63,7 @@ export class NotificationTriggers {
    */
   static async sendClassReminder(classId: string, userIds: string[]): Promise<void> {
     try {
-      const classInfo = await db.class.findUnique({
+      const classInfo = await prisma.class.findUnique({
         where: { id: classId },
         include: {
           venue: true,
@@ -113,7 +114,7 @@ export class NotificationTriggers {
         deliveredAt: new Date()
       }));
 
-      await db.notification.createMany({
+      await prisma.notification.createMany({
         data: notifications
       });
 
@@ -127,7 +128,7 @@ export class NotificationTriggers {
    */
   static async sendEventReminder(eventId: string, userIds: string[], reminderType: '24h' | '1h'): Promise<void> {
     try {
-      const event = await db.event.findUnique({
+      const event = await prisma.event.findUnique({
         where: { id: eventId },
         include: {
           venue: true,
@@ -173,7 +174,7 @@ export class NotificationTriggers {
         deliveredAt: new Date()
       }));
 
-      await db.notification.createMany({
+      await prisma.notification.createMany({
         data: notifications
       });
 
@@ -187,7 +188,7 @@ export class NotificationTriggers {
    */
   static async sendPaymentConfirmation(bookingId: string, transactionId: string): Promise<void> {
     try {
-      const booking = await db.booking.findUnique({
+      const booking = await prisma.booking.findUnique({
         where: { id: bookingId },
         include: {
           user: true,
@@ -235,7 +236,7 @@ export class NotificationTriggers {
    */
   static async sendPaymentFailed(bookingId: string, reason?: string): Promise<void> {
     try {
-      const booking = await db.booking.findUnique({
+      const booking = await prisma.booking.findUnique({
         where: { id: bookingId },
         include: {
           user: true,
@@ -279,7 +280,7 @@ export class NotificationTriggers {
    */
   static async sendClassCancelled(classId: string, reason?: string): Promise<void> {
     try {
-      const classInfo = await db.class.findUnique({
+      const classInfo = await prisma.class.findUnique({
         where: { id: classId },
         include: {
           bookings: {
@@ -325,7 +326,7 @@ export class NotificationTriggers {
         deliveredAt: new Date()
       }));
 
-      await db.notification.createMany({
+      await prisma.notification.createMany({
         data: notifications
       });
 
@@ -339,7 +340,7 @@ export class NotificationTriggers {
    */
   static async sendWaitlistSpotAvailable(classId: string, userId: string): Promise<void> {
     try {
-      const classInfo = await db.class.findUnique({
+      const classInfo = await prisma.class.findUnique({
         where: { id: classId },
         include: {
           venue: true
@@ -385,7 +386,7 @@ export class NotificationTriggers {
     classId?: string
   ): Promise<void> {
     try {
-      const fromUser = await db.user.findUnique({
+      const fromUser = await prisma.user.findUnique({
         where: { id: fromUserId }
       });
 
@@ -420,7 +421,7 @@ export class NotificationTriggers {
         deliveredAt: new Date()
       }));
 
-      await db.notification.createMany({
+      await prisma.notification.createMany({
         data: notifications
       });
 
@@ -445,7 +446,7 @@ export class NotificationTriggers {
         userIds = targetUserIds;
       } else {
         // Send to all active users
-        const users = await db.user.findMany({
+        const users = await prisma.user.findMany({
           where: { 
             // Add any criteria for active users
           },
@@ -488,13 +489,131 @@ export class NotificationTriggers {
       const batchSize = 1000;
       for (let i = 0; i < notifications.length; i += batchSize) {
         const batch = notifications.slice(i, i + batchSize);
-        await db.notification.createMany({
+        await prisma.notification.createMany({
           data: batch
         });
       }
 
     } catch (error) {
       console.error('Error sending system announcement:', error);
+    }
+  }
+
+  /**
+   * Send notifications for new user registration
+   */
+  static async sendNewUserRegistrationNotifications(userId: string): Promise<void> {
+    try {
+      const user = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          email: true,
+          fullName: true,
+          createdAt: true
+        }
+      });
+
+      if (!user) {
+        console.error('User not found for new registration notification:', userId);
+        return;
+      }
+
+      // Get total user count for admin notification
+      const totalUsers = await prisma.user.count();
+
+      // Prepare data for welcome email
+      const welcomeData: NewUserWelcomeData = {
+        user: {
+          name: user.fullName,
+          email: user.email,
+          id: user.id
+        }
+      };
+
+      // Send welcome email to new user
+      const welcomeEmailSent = await emailService.sendWelcomeEmail(welcomeData);
+      if (welcomeEmailSent) {
+        console.log(`✅ Welcome email sent to: ${user.email}`);
+      } else {
+        console.error(`❌ Failed to send welcome email to: ${user.email}`);
+      }
+
+      // Get admin emails for notifications
+      const adminUsers = await prisma.user.findMany({
+        where: { role: 'ADMIN' },
+        select: { email: true, fullName: true }
+      });
+
+      // Prepare data for admin notification
+      const adminNotificationData: NewUserAdminNotificationData = {
+        user: {
+          name: user.fullName,
+          email: user.email,
+          id: user.id,
+          registrationDate: user.createdAt.toISOString()
+        },
+        totalUsers
+      };
+
+      // Send admin notifications
+      for (const admin of adminUsers) {
+        try {
+          const adminEmailSent = await emailService.sendNewUserAdminNotification(
+            adminNotificationData,
+            admin.email
+          );
+          if (adminEmailSent) {
+            console.log(`✅ Admin notification sent to: ${admin.email}`);
+          } else {
+            console.error(`❌ Failed to send admin notification to: ${admin.email}`);
+          }
+        } catch (error) {
+          console.error(`Error sending admin notification to ${admin.email}:`, error);
+        }
+      }
+
+      // Create in-app notification for admins
+      if (adminUsers.length > 0) {
+        // Get admin user IDs from the admin users we already fetched
+        const adminUserDetails = await prisma.user.findMany({
+          where: {
+            email: { in: adminUsers.map(admin => admin.email) }
+          },
+          select: { id: true }
+        });
+
+        const adminIds = adminUserDetails.map(admin => admin.id);
+
+        if (adminIds.length > 0) {
+          const title = 'New User Registration 👤';
+          const message = `${user.fullName} (${user.email}) has joined DanceLink. Total users: ${totalUsers}`;
+
+          // Create database notifications for admins
+          const notifications = adminIds.map(adminId => ({
+            userId: adminId,
+            type: 'SYSTEM_ANNOUNCEMENT' as any, // Using SYSTEM_ANNOUNCEMENT as fallback since NEW_USER doesn't exist
+            title,
+            message,
+            priority: 'NORMAL' as any,
+            actionUrl: '/admin/users',
+            relatedEntityId: userId,
+            relatedEntityType: 'user',
+            deliveryMethod: 'IN_APP' as const,
+            isDelivered: true,
+            deliveredAt: new Date()
+          }));
+
+          await prisma.notification.createMany({
+            data: notifications
+          });
+
+          console.log(`✅ In-app notifications created for ${adminIds.length} admins`);
+        }
+      }
+
+    } catch (error) {
+      console.error('Error sending new user registration notifications:', error);
     }
   }
 
@@ -506,7 +625,7 @@ export class NotificationTriggers {
     try {
       const now = new Date();
       
-      const scheduledNotifications = await db.notification.findMany({
+      const scheduledNotifications = await prisma.notification.findMany({
         where: {
           scheduledFor: {
             lte: now
@@ -535,7 +654,7 @@ export class NotificationTriggers {
 
           // Mark as delivered if successful
           if (result.success > 0) {
-            await db.notification.update({
+            await prisma.notification.update({
               where: { id: notification.id },
               data: {
                 isDelivered: true,

@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import jwt from 'jsonwebtoken'
 import bcryptjs from 'bcryptjs'
 import prisma from './db'
+import { validateSession } from './session-middleware'
 
 // User type from database
 export interface User {
@@ -39,43 +40,25 @@ export async function verifyToken(token: string): Promise<JWTPayload | null> {
 }
 
 /**
- * Get current user from request
- * In development, returns a mock admin user if no token is present
+ * Get current user from request using session-based authentication
  */
 export async function getCurrentUser(request: NextRequest): Promise<User | null> {
   try {
-    // Try to get token from Authorization header
-    const authHeader = request.headers.get('authorization')
-    const token = authHeader?.replace('Bearer ', '')
-
-    // If no token, try to get from cookies
-    const cookieToken = cookies().get('auth-token')?.value
-
-    const finalToken = token || cookieToken
-
-    if (!finalToken) {
+    // Use session-based authentication
+    const sessionResult = await validateSession(request)
+    
+    if (!sessionResult.isValid || !sessionResult.user) {
       return null
     }
 
-    // Verify token
-    const payload = await verifyToken(finalToken)
-    if (!payload) {
-      return null
+    // Return user in the expected format
+    return {
+      id: sessionResult.user.id,
+      email: sessionResult.user.email,
+      fullName: sessionResult.user.fullName,
+      role: sessionResult.user.role,
+      isVerified: sessionResult.user.isVerified
     }
-
-    // Get user from database
-    const user = await prisma.user.findUnique({
-      where: { id: payload.userId },
-      select: {
-        id: true,
-        email: true,
-        fullName: true,
-        role: true,
-        isVerified: true
-      }
-    })
-
-    return user
   } catch (error) {
     console.error('Error getting current user:', error)
     return null

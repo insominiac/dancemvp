@@ -56,6 +56,24 @@ export interface BookingConfirmationData {
   }
 }
 
+export interface NewUserWelcomeData {
+  user: {
+    name: string
+    email: string
+    id: string
+  }
+}
+
+export interface NewUserAdminNotificationData {
+  user: {
+    name: string
+    email: string
+    id: string
+    registrationDate: string
+  }
+  totalUsers: number
+}
+
 class EmailService {
   private config: EmailConfig
   private transporter: any
@@ -393,6 +411,215 @@ class EmailService {
   async sendPaymentReceipt(data: BookingConfirmationData): Promise<boolean> {
     const template = this.generatePaymentReceiptEmail(data)
     return await this.sendEmail(data.user.email, template)
+  }
+
+  // Generate welcome email for new users
+  generateWelcomeEmail(data: NewUserWelcomeData): EmailTemplate {
+    const { user } = data
+
+    const subject = `Welcome to DanceLink, ${user.name.split(' ')[0]}! 🎉`
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>Welcome to DanceLink</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: linear-gradient(135deg, #ff6b35, #f72585); color: white; padding: 40px 30px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: white; padding: 30px; border: 1px solid #ddd; }
+          .footer { background: #f8f9fa; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
+          .feature-box { background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0; border-left: 4px solid #f72585; }
+          .button { background: #f72585; color: white; padding: 15px 30px; text-decoration: none; border-radius: 8px; display: inline-block; margin: 10px 0; font-weight: bold; }
+          .emoji { font-size: 1.2em; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>🎉 Welcome to DanceLink!</h1>
+            <p>Your journey into the world of dance begins now</p>
+          </div>
+          
+          <div class="content">
+            <h2>Hello ${user.name}!</h2>
+            <p>Thank you for joining DanceLink - the premier platform for dancers, instructors, and dance enthusiasts. We're thrilled to have you as part of our vibrant community!</p>
+            
+            <div class="feature-box">
+              <h3><span class="emoji">💃</span> What you can do on DanceLink:</h3>
+              <ul>
+                <li><strong>Discover Classes:</strong> Browse and book dance classes from talented instructors</li>
+                <li><strong>Join Events:</strong> Attend workshops, performances, and special dance events</li>
+                <li><strong>Connect with Partners:</strong> Find dance partners who match your style and skill level</li>
+                <li><strong>Track Progress:</strong> Monitor your dance journey and achievements</li>
+                <li><strong>Community Forum:</strong> Share tips, ask questions, and connect with fellow dancers</li>
+              </ul>
+            </div>
+
+            <div class="feature-box">
+              <h3><span class="emoji">🚀</span> Getting Started:</h3>
+              <ol>
+                <li>Complete your profile to help others find you</li>
+                <li>Browse available classes and events in your area</li>
+                <li>Book your first dance class or event</li>
+                <li>Connect with the dance community</li>
+              </ol>
+            </div>
+
+            <p style="text-align: center;">
+              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/dashboard" class="button">
+                Complete Your Profile
+              </a>
+            </p>
+
+            <p>Ready to start dancing? Explore our classes and events, or connect with other dancers in your area. If you have any questions, our community is here to help!</p>
+          </div>
+
+          <div class="footer">
+            <p>Need help getting started? Check out our <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/help">Help Center</a> or contact us at <a href="mailto:support@dancelink.com">support@dancelink.com</a></p>
+            <p>&copy; 2024 DanceLink. All rights reserved.</p>
+            <p style="font-size: 12px; color: #666;">You received this email because you created an account on DanceLink.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+
+    const text = `
+      Welcome to DanceLink, ${user.name}!
+
+      Thank you for joining DanceLink - the premier platform for dancers, instructors, and dance enthusiasts. We're thrilled to have you as part of our vibrant community!
+
+      What you can do on DanceLink:
+      • Discover Classes: Browse and book dance classes from talented instructors
+      • Join Events: Attend workshops, performances, and special dance events
+      • Connect with Partners: Find dance partners who match your style and skill level
+      • Track Progress: Monitor your dance journey and achievements
+      • Community Forum: Share tips, ask questions, and connect with fellow dancers
+
+      Getting Started:
+      1. Complete your profile to help others find you
+      2. Browse available classes and events in your area
+      3. Book your first dance class or event
+      4. Connect with the dance community
+
+      Visit your dashboard: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/dashboard
+
+      Ready to start dancing? Explore our classes and events, or connect with other dancers in your area. If you have any questions, our community is here to help!
+
+      Need help getting started? Check out our Help Center or contact us at support@dancelink.com
+
+      © 2024 DanceLink. All rights reserved.
+      You received this email because you created an account on DanceLink.
+    `
+
+    return { subject, html, text }
+  }
+
+  // Generate admin notification for new user registration
+  generateNewUserAdminNotificationEmail(data: NewUserAdminNotificationData): EmailTemplate {
+    const { user, totalUsers } = data
+
+    const subject = `New User Registration: ${user.name}`
+
+    const html = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="utf-8">
+        <title>New User Registration</title>
+        <style>
+          body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+          .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+          .header { background: #1a1a2e; color: white; padding: 30px; text-align: center; border-radius: 10px 10px 0 0; }
+          .content { background: white; padding: 30px; border: 1px solid #ddd; }
+          .footer { background: #f8f9fa; padding: 20px; text-align: center; border-radius: 0 0 10px 10px; }
+          .user-info { background: #f0f9ff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+          .stat-box { background: #f0f9ff; padding: 15px; border-radius: 8px; text-align: center; margin: 15px 0; }
+          .button { background: #7c3aed; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; margin: 10px 0; }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <div class="header">
+            <h1>👤 New User Registration</h1>
+            <p>DanceLink Admin Notification</p>
+          </div>
+          
+          <div class="content">
+            <p>A new user has registered on the DanceLink platform:</p>
+            
+            <div class="user-info">
+              <h3>User Details</h3>
+              <p><strong>Name:</strong> ${user.name}</p>
+              <p><strong>Email:</strong> ${user.email}</p>
+              <p><strong>User ID:</strong> ${user.id}</p>
+              <p><strong>Registration Date:</strong> ${new Date(user.registrationDate).toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}</p>
+            </div>
+
+            <div class="stat-box">
+              <h3 style="margin: 0; color: #7c3aed;">🎯 Platform Stats</h3>
+              <p style="margin: 10px 0 0 0; font-size: 1.2em;"><strong>Total Users: ${totalUsers}</strong></p>
+            </div>
+
+            <p style="text-align: center;">
+              <a href="${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/admin/users" class="button">
+                View User in Admin Panel
+              </a>
+            </p>
+          </div>
+
+          <div class="footer">
+            <p>This is an automated notification from the DanceLink platform.</p>
+            <p>&copy; 2024 DanceLink. All rights reserved.</p>
+          </div>
+        </div>
+      </body>
+      </html>
+    `
+
+    const text = `
+      New User Registration - DanceLink Admin Notification
+      
+      A new user has registered on the DanceLink platform:
+      
+      User Details:
+      - Name: ${user.name}
+      - Email: ${user.email}
+      - User ID: ${user.id}
+      - Registration Date: ${new Date(user.registrationDate).toLocaleDateString()}
+      
+      Platform Stats:
+      Total Users: ${totalUsers}
+      
+      View user in admin panel: ${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3001'}/admin/users
+      
+      This is an automated notification from the DanceLink platform.
+      © 2024 DanceLink. All rights reserved.
+    `
+
+    return { subject, html, text }
+  }
+
+  // Send welcome email to new user
+  async sendWelcomeEmail(data: NewUserWelcomeData): Promise<boolean> {
+    const template = this.generateWelcomeEmail(data)
+    return await this.sendEmail(data.user.email, template)
+  }
+
+  // Send admin notification for new user registration
+  async sendNewUserAdminNotification(data: NewUserAdminNotificationData, adminEmail: string): Promise<boolean> {
+    const template = this.generateNewUserAdminNotificationEmail(data)
+    return await this.sendEmail(adminEmail, template)
   }
 }
 

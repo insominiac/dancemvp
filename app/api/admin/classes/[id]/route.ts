@@ -49,8 +49,8 @@ export const PUT = withAdminAuth(async (request, { params, user }) => {
     const body = await request.json()
     const { 
       title, description, level, durationMins, maxCapacity, 
-      price, scheduleDays, scheduleTime, requirements, 
-      imageUrl, isActive, instructorIds, styleIds 
+      price, scheduleDays, scheduleTime, startDate, endDate,
+      requirements, imageUrl, isActive, instructorIds, styleIds 
     } = body
     
     // Update class
@@ -65,6 +65,8 @@ export const PUT = withAdminAuth(async (request, { params, user }) => {
         price: parseFloat(price),
         scheduleDays,
         scheduleTime,
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
         requirements,
         imageUrl,
         isActive

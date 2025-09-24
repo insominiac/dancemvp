@@ -50,39 +50,30 @@ export default function GuestBookingForm({ item, isAvailable }: GuestBookingForm
     setIsSubmitting(true)
     
     try {
+      // Prepare booking data to pass to payment page
       const bookingData = {
         [item.type === 'class' ? 'classId' : 'eventId']: item.id,
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        emergencyContact: formData.emergencyContact,
-        emergencyPhone: formData.emergencyPhone,
-        experience: formData.experience,
-        notes: formData.notes,
+        className: item.title,
+        price: item.price,
         bookingType: item.type,
-        isGuestBooking: true
+        userDetails: {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          emergencyContact: formData.emergencyContact,
+          emergencyPhone: formData.emergencyPhone,
+          experience: formData.experience,
+          notes: formData.notes
+        }
       }
 
-      const response = await fetch('/api/public/bookings', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingData)
-      })
-
-      const result = await response.json()
-
-      if (response.ok && result.success) {
-        // Redirect to success page
-        router.push(`/booking-success?bookingId=${result.bookingId}&guest=true`)
-      } else {
-        alert(result.error || 'Failed to create booking')
-      }
+      // Redirect to payment page with booking data
+      const encodedData = encodeURIComponent(JSON.stringify(bookingData))
+      router.push(`/booking/payment?data=${encodedData}`)
+      
     } catch (error) {
-      console.error('Booking error:', error)
-      alert('Failed to create booking. Please try again.')
-    } finally {
+      console.error('Booking preparation error:', error)
+      alert('Failed to prepare booking. Please try again.')
       setIsSubmitting(false)
     }
   }

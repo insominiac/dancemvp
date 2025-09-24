@@ -59,10 +59,13 @@ export async function GET() {
       ]
     })
 
-    // Calculate current students for each class
+    // Calculate current students for each class and map field names
     const classesWithStudentCount = classes.map(cls => ({
       ...cls,
-      currentStudents: cls._count.bookings
+      currentStudents: cls._count.bookings,
+      maxStudents: cls.maxCapacity, // Map maxCapacity to maxStudents for frontend compatibility
+      duration: cls.durationMins, // Map durationMins to duration for frontend compatibility
+      schedule: cls.scheduleTime || cls.scheduleDays || 'TBD' // Map schedule fields
     }))
 
     return NextResponse.json({ 

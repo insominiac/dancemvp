@@ -66,7 +66,7 @@ function BookingSuccessContent() {
           </div>
 
           {/* Success Message */}
-          <h1 className="text-4xl font-bold mb-4">
+          <h1 className="text-4xl font-bold mb-4 dance-font">
             {isGuest ? '🎉 Booking Submitted!' : '✅ Booking Confirmed!'}
           </h1>
 

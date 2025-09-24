@@ -1,6 +1,39 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+
+// Custom styles for date picker
+const datePickerCustomStyles = `
+  .react-datepicker {
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+  .react-datepicker__header {
+    background-color: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  .react-datepicker__current-month {
+    color: #1f2937;
+    font-weight: 600;
+  }
+  .react-datepicker__day--selected {
+    background-color: #8b5cf6 !important;
+    color: white !important;
+  }
+  .react-datepicker__day--keyboard-selected {
+    background-color: #a78bfa !important;
+    color: white !important;
+  }
+  .react-datepicker__day:hover {
+    background-color: #ede9fe;
+  }
+  .react-datepicker__day--in-range {
+    background-color: #e0e7ff;
+  }
+`
 
 interface Class {
   id: string
@@ -12,10 +45,34 @@ interface Class {
   price: string
   scheduleDays?: string
   scheduleTime?: string
+  startDate?: string | Date
+  endDate?: string | Date
   isActive: boolean
   classInstructors?: any[]
   classStyles?: any[]
   _count?: { bookings: number }
+}
+
+// Helper function to calculate duration between dates
+function calculateDuration(startDate: Date | null, endDate: Date | null): string {
+  if (!startDate || !endDate) return ''
+  
+  const diffTime = Math.abs(endDate.getTime() - startDate.getTime())
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+  const weeks = Math.floor(diffDays / 7)
+  const remainingDays = diffDays % 7
+  
+  let duration = ''
+  if (weeks > 0) {
+    duration += `${weeks} week${weeks > 1 ? 's' : ''}`
+    if (remainingDays > 0) {
+      duration += ` ${remainingDays} day${remainingDays > 1 ? 's' : ''}`
+    }
+  } else {
+    duration = `${diffDays} day${diffDays > 1 ? 's' : ''}`
+  }
+  
+  return `(${duration})`
 }
 
 export default function ClassManagement({ helperData }: { helperData: any }) {
@@ -32,6 +89,8 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
     price: '25',
     scheduleDays: '',
     scheduleTime: '',
+    startDate: null as Date | null,
+    endDate: null as Date | null,
     requirements: '',
     imageUrl: '',
     isActive: true,
@@ -69,6 +128,8 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
       price: '25',
       scheduleDays: '',
       scheduleTime: '',
+      startDate: null,
+      endDate: null,
       requirements: '',
       imageUrl: '',
       isActive: true,
@@ -89,6 +150,8 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
       price: classItem.price.toString(),
       scheduleDays: classItem.scheduleDays || '',
       scheduleTime: classItem.scheduleTime || '',
+      startDate: classItem.startDate ? new Date(classItem.startDate) : null,
+      endDate: classItem.endDate ? new Date(classItem.endDate) : null,
       requirements: '',
       imageUrl: '',
       isActive: classItem.isActive,
@@ -153,6 +216,8 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
 
   return (
     <div>
+      {/* Custom CSS for date picker */}
+      <style jsx global>{datePickerCustomStyles}</style>
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-3xl font-bold">Class Management</h2>
         <button
@@ -171,6 +236,7 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Class</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Level</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Schedule</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Duration</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Price</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Capacity</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
@@ -196,6 +262,20 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
                   <td className="px-6 py-4 text-sm text-gray-500">
                     <div>{classItem.scheduleDays || 'Not set'}</div>
                     <div>{classItem.scheduleTime || ''}</div>
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-500">
+                    <div className="text-xs">
+                      {classItem.startDate ? (
+                        <div>Start: {new Date(classItem.startDate).toLocaleDateString()}</div>
+                      ) : (
+                        <div className="text-gray-400">No start date</div>
+                      )}
+                      {classItem.endDate ? (
+                        <div>End: {new Date(classItem.endDate).toLocaleDateString()}</div>
+                      ) : (
+                        <div className="text-gray-400">No end date</div>
+                      )}
+                    </div>
                   </td>
                   <td className="px-6 py-4 text-sm font-medium">
                     ${classItem.price}
@@ -336,6 +416,77 @@ export default function ClassManagement({ helperData }: { helperData: any }) {
                     placeholder="e.g., 6:00 PM"
                   />
                 </div>
+              </div>
+              
+              {/* Class Duration Section */}
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      📅 Class Start Date
+                    </label>
+                    <div className="relative">
+                      <DatePicker
+                        selected={formData.startDate}
+                        onChange={(date) => setFormData({...formData, startDate: date})}
+                        selectsStart
+                        startDate={formData.startDate}
+                        endDate={formData.endDate}
+                        placeholderText="Select start date"
+                        dateFormat="MMM d, yyyy"
+                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        calendarClassName="shadow-lg border-0"
+                        popperClassName="z-50"
+                        showPopperArrow={false}
+                        minDate={new Date()}
+                        todayButton="Today"
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">When does this class series begin?</p>
+                  </div>
+                  
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      📅 Class End Date
+                    </label>
+                    <div className="relative">
+                      <DatePicker
+                        selected={formData.endDate}
+                        onChange={(date) => setFormData({...formData, endDate: date})}
+                        selectsEnd
+                        startDate={formData.startDate}
+                        endDate={formData.endDate}
+                        placeholderText="Select end date"
+                        dateFormat="MMM d, yyyy"
+                        className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        calendarClassName="shadow-lg border-0"
+                        popperClassName="z-50"
+                        showPopperArrow={false}
+                        minDate={formData.startDate || new Date()}
+                        disabled={!formData.startDate}
+                        todayButton="Today"
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">
+                      {formData.startDate ? 'When does this class series end?' : 'Select start date first'}
+                    </p>
+                  </div>
+                </div>
+                
+                {/* Duration Display */}
+                {formData.startDate && formData.endDate && (
+                  <div className="bg-purple-50 border border-purple-200 rounded-lg p-3">
+                    <div className="flex items-center space-x-2">
+                      <span className="text-purple-600">⏱️</span>
+                      <span className="text-sm font-medium text-purple-800">
+                        Class Duration: {calculateDuration(formData.startDate, formData.endDate)}
+                      </span>
+                    </div>
+                    <p className="text-xs text-purple-600 mt-1">
+                      From {formData.startDate.toLocaleDateString()} to {formData.endDate.toLocaleDateString()}
+                    </p>
+                  </div>
+                )}
               </div>
               
               {helperData && (

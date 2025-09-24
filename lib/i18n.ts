@@ -52,6 +52,32 @@ const resources = {
         browseClasses: 'Browse Classes',
         benefits: '✅ No commitment required • ✅ All skill levels welcome • ✅ Professional instructors'
       },
+      danceStyles: {
+        title: 'Discover Our Dance Styles',
+        subtitle: 'Choose Your Perfect Dance Journey',
+        loading: 'Loading our amazing dance styles...',
+        noStyles: 'No dance styles available at the moment.',
+        scrollLeft: 'Scroll tabs left',
+        scrollRight: 'Scroll tabs right',
+        swipeHint: '💡 Swipe left or right to see more dance styles',
+        styleInfo: '📊 Style Information',
+        characteristics: '✨ Characteristics',
+        availability: '📈 Availability',
+        origin: 'Origin',
+        difficulty: 'Difficulty',
+        musicStyle: 'Music Style',
+        category: 'Category',
+        classes: 'Classes',
+        events: 'Events',
+        students: 'Students',
+        available: 'available',
+        upcoming: 'upcoming',
+        learning: 'learning',
+        readyToStart: 'Ready to Start Your {style} Journey?',
+        joinCommunity: 'Join our community of passionate dancers and discover the joy of {style}',
+        viewClasses: 'View {style} Classes',
+        bookFreeTrial: 'Book Free Trial'
+      },
       footer: {
         allRightsReserved: 'All rights reserved.'
       }
@@ -105,6 +131,32 @@ const resources = {
         browseClasses: '수업 둘러보기',
         benefits: '✅ 약속 불필요 • ✅ 모든 실력 수준 환영 • ✅ 전문 강사진'
       },
+      danceStyles: {
+        title: '저희의 댄스 스타일을 발견하세요',
+        subtitle: '당신에게 완벽한 댄스 여정을 선택하세요',
+        loading: '매력적인 댄스 스타일을 로딩 중...',
+        noStyles: '현재 사용 가능한 댄스 스타일이 없습니다.',
+        scrollLeft: '탭 왼쪽으로 스크롤',
+        scrollRight: '탭 오른쪽으로 스크롤',
+        swipeHint: '💡 더 많은 댄스 스타일을 보려면 왼쪽 또는 오른쪽으로 스와이프하세요',
+        styleInfo: '📊 스타일 정보',
+        characteristics: '✨ 특징',
+        availability: '📈 사용 가능성',
+        origin: '기원',
+        difficulty: '난이도',
+        musicStyle: '음악 스타일',
+        category: '카테고리',
+        classes: '수업',
+        events: '이벤트',
+        students: '학생',
+        available: '사용 가능',
+        upcoming: '예정된',
+        learning: '학습 중',
+        readyToStart: '{style} 여정을 시작할 준비가 되션나요?',
+        joinCommunity: '열정적인 댄서들의 커뮤니티에 참여하여 {style}의 즐거움을 발견하세요',
+        viewClasses: '{style} 수업 보기',
+        bookFreeTrial: '무료 체험 예약'
+      },
       footer: {
         allRightsReserved: '모든 권리 보유.'
       }
@@ -157,6 +209,32 @@ const resources = {
         startFreeTrial: 'Bắt đầu học thử miễn phí',
         browseClasses: 'Duyệt lớp học',
         benefits: '✅ Không cam kết • ✅ Chào đón mọi trình độ • ✅ Giảng viên chuyên nghiệp'
+      },
+      danceStyles: {
+        title: 'Khám phá phong cách khiêu vũ của chúng tôi',
+        subtitle: 'Chọn hành trình khiêu vũ hoàn hảo của bạn',
+        loading: 'Đang tải các phong cách khiêu vũ tuyệt vời...',
+        noStyles: 'Hiện tại không có phong cách khiêu vũ nào.',
+        scrollLeft: 'Cuộn tab sang trái',
+        scrollRight: 'Cuộn tab sang phải',
+        swipeHint: '💡 Trượt sang trái hoặc phải để xem thêm phong cách khiêu vũ',
+        styleInfo: '📊 Thông tin phong cách',
+        characteristics: '✨ Đặc điểm',
+        availability: '📈 Tình trạng',
+        origin: 'Xuất xứ',
+        difficulty: 'Độ khó',
+        musicStyle: 'Phong cách âm nhạc',
+        category: 'Thể loại',
+        classes: 'Lớp học',
+        events: 'Sự kiện',
+        students: 'Học viên',
+        available: 'có sẵn',
+        upcoming: 'sắp tới',
+        learning: 'đang học',
+        readyToStart: 'Sẵn sàng bắt đầu hành trình {style}?',
+        joinCommunity: 'Tham gia cộng đồng các vũ công đam mê và khám phá niềm vui của {style}',
+        viewClasses: 'Xem các lớp {style}',
+        bookFreeTrial: 'Đặt học thử miễn phí'
       },
       footer: {
         allRightsReserved: 'Tất cả quyền được bảo lưu.'

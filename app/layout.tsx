@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Dancing_Script } from 'next/font/google'
 import './globals.css'
+import './styles/dance-theme.css'
 import { AuthProvider } from '@/app/lib/auth-context'
 import ServiceWorkerProvider from '@/app/components/ServiceWorkerProvider'
 
@@ -36,9 +37,7 @@ export default function RootLayout({
       <body className={`${dancingScript.variable}`} style={{fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif"}}>
         <ServiceWorkerProvider>
           <AuthProvider>
-            <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-50">
-              {children}
-            </div>
+            {children}
           </AuthProvider>
         </ServiceWorkerProvider>
       </body>

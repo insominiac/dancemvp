@@ -5,7 +5,7 @@ export default function PricingPage() {
       <section className="py-20" style={{background: 'linear-gradient(135deg, var(--neutral-light), rgba(255,255,255,0.8)'}}>
         <div className="dance-container">
           <div className="dance-section-header">
-            <h1 className="dance-section-title text-5xl mb-4">Pricing</h1>
+            <h1 className="dance-section-title text-5xl mb-4 dance-font">Pricing</h1>
             <p className="text-xl">Simple, transparent pricing for everyone</p>
           </div>
         </div>

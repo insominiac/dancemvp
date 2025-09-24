@@ -1,0 +1,22 @@
+
+
+# Stripe Setup Instructions
+
+## To fix the Stripe payment error, you need to:
+
+1. Create a Stripe account at https://dashboard.stripe.com
+2. Get your test API keys from the Stripe dashboard
+3. Update your .env file with the actual keys
+
+## Environment Variables Needed:
+
+```
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_[your_publishable_key_here]
+STRIPE_SECRET_KEY=sk_test_[your_secret_key_here]
+```
+
+## Important:
+- Use test keys for development (they start with pk_test_ and sk_test_)
+- Never commit actual keys to version control
+- Use production keys only in production environment
+

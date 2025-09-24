@@ -6,6 +6,7 @@ import {
   isValidPassword, 
   createSession 
 } from '@/app/lib/auth'
+import { NotificationTriggers } from '@/app/lib/notification-triggers'
 
 export async function POST(request: NextRequest) {
   try {
@@ -76,6 +77,12 @@ export async function POST(request: NextRequest) {
 
     // Create session
     const token = await createSession(user)
+
+    // Send welcome email and admin notifications asynchronously
+    // Don't await this to avoid blocking the response
+    NotificationTriggers.sendNewUserRegistrationNotifications(user.id).catch(error => {
+      console.error('Error sending new user registration notifications:', error)
+    })
 
     return NextResponse.json(
       {

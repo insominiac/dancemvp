@@ -3,24 +3,26 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import GuestBookingForm from '@/app/(public)/components/GuestBookingForm'
+import EnhancedGuestBookingForm from '@/app/(public)/components/EnhancedGuestBookingForm'
 
 interface ClassDetail {
   id: string
   title: string
   description: string
   level: string
-  duration: number
+  durationMins: number
   price: string
-  maxStudents: number
+  maxCapacity: number
   currentStudents: number
-  schedule: string
+  scheduleDays: string
+  scheduleTime: string
   startDate: string
   endDate: string
   status: string
+  isActive: boolean
   venue?: { 
     name: string
-    address: string
+    addressLine1: string
     city: string
     state?: string
   }
@@ -77,8 +79,8 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
     )
   }
 
-  const spotsLeft = classData.maxStudents - classData.currentStudents
-  const isAvailable = spotsLeft > 0 && classData.status === 'ACTIVE'
+  const spotsLeft = classData.maxCapacity - classData.currentStudents
+  const isAvailable = spotsLeft > 0 && classData.isActive
 
   return (
     <div>
@@ -118,11 +120,12 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
                 <div className="grid grid-cols-2 gap-6 mb-8">
                   <div className="dance-card" style={{padding: '1.5rem'}}>
                     <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>📅 Schedule</h3>
-                    <p style={{color: 'var(--neutral-gray)'}}>{classData.schedule}</p>
+                    <p style={{color: 'var(--neutral-gray)'}}>{classData.scheduleDays}</p>
+                    <p style={{color: 'var(--neutral-gray)'}}>{classData.scheduleTime}</p>
                   </div>
                   <div className="dance-card" style={{padding: '1.5rem'}}>
                     <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>⏱️ Duration</h3>
-                    <p style={{color: 'var(--neutral-gray)'}}>{classData.duration} minutes per session</p>
+                    <p style={{color: 'var(--neutral-gray)'}}>{classData.durationMins} minutes per session</p>
                   </div>
                   <div className="dance-card" style={{padding: '1.5rem'}}>
                     <h3 className="font-semibold mb-2" style={{color: 'var(--primary-dark)'}}>🗓️ Start Date</h3>
@@ -144,7 +147,7 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
                     <h3 className="font-semibold mb-3" style={{color: 'var(--primary-dark)'}}>📍 Location</h3>
                     <div>
                       <p className="font-medium mb-1" style={{color: 'var(--primary-dark)'}}>{classData.venue.name}</p>
-                      <p style={{color: 'var(--neutral-gray)'}}>{classData.venue.address}</p>
+                      <p style={{color: 'var(--neutral-gray)'}}>{classData.venue.addressLine1}</p>
                       <p style={{color: 'var(--neutral-gray)'}}>
                         {classData.venue.city}{classData.venue.state && `, ${classData.venue.state}`}
                       </p>
@@ -214,7 +217,7 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="opacity-80">Class size:</span>
-                  <span className="font-semibold">{classData.maxStudents} students max</span>
+                  <span className="font-semibold">{classData.maxCapacity} students max</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="opacity-80">Currently enrolled:</span>
@@ -222,14 +225,14 @@ export default function ClassDetailPage({ params }: { params: { id: string } }) 
                 </div>
               </div>
 
-              <GuestBookingForm
+              <EnhancedGuestBookingForm
                 item={{
                   id: classData.id,
                   title: classData.title,
                   price: classData.price,
                   type: 'class',
                   spotsLeft: spotsLeft,
-                  maxCapacity: classData.maxStudents
+                  maxCapacity: classData.maxCapacity
                 }}
                 isAvailable={isAvailable}
               />

@@ -8,7 +8,6 @@ import FloatingCTA from './components/FloatingCTA'
 import UrgencyBanner from './components/UrgencyBanner'
 import LanguageSwitcher from '../components/LanguageSwitcher'
 import '../../lib/i18n' // Initialize i18n
-import '../styles/dance-theme.css'
 
 interface SiteSettings {
   siteName: string
@@ -50,7 +49,9 @@ export default function PublicLayout({
   }, [])
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', theme)
+    if (typeof document !== 'undefined') {
+      document.body.setAttribute('data-theme', theme)
+    }
   }, [theme])
 
   useEffect(() => {
@@ -82,7 +83,7 @@ export default function PublicLayout({
   }, [])
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex flex-col">
       {/* Urgency Banner */}
       <UrgencyBanner onVisibilityChange={setIsBannerVisible} />
       
@@ -128,7 +129,7 @@ export default function PublicLayout({
       {/* Floating CTA Button */}
       <FloatingCTA />
 
-      <footer className="footer bg-gray-900 text-white py-12">
+      <footer className="footer bg-gray-900 text-white py-12 mt-auto">
         <div className="dance-container text-center">
           <div className="social-links flex justify-center gap-8 mb-8">
             {siteSettings?.socialMedia.facebook && (

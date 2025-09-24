@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 // import { PushNotificationService } from '@/app/lib/push-notifications';
-// import { NotificationTriggers } from '@/app/lib/notification-triggers';
+import { NotificationTriggers } from '@/app/lib/notification-triggers';
 
 // POST /api/test/notifications - Create test notifications
 export async function POST(request: NextRequest) {
@@ -12,14 +12,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'User ID is required' }, { status: 400 });
     }
 
-    // Temporarily disabled until auth is implemented
-    console.log(`Creating test notification: ${type} for user: ${userId}`);
-
-    return NextResponse.json({
-      success: true,
-      message: `Test notification (${type}) would be created for user ${userId}`,
-      note: 'Notification system will be fully functional once authentication is implemented'
-    });
+    // Handle different test notification types
+    switch (type) {
+      case 'new_user_registration':
+        try {
+          await NotificationTriggers.sendNewUserRegistrationNotifications(userId);
+          return NextResponse.json({
+            success: true,
+            message: `New user registration notifications sent for user ${userId}`,
+            note: 'Check console logs and email provider for delivery status'
+          });
+        } catch (error) {
+          console.error('Error testing new user registration notifications:', error);
+          return NextResponse.json({
+            error: 'Failed to send new user registration notifications',
+            details: error instanceof Error ? error.message : 'Unknown error'
+          }, { status: 500 });
+        }
+      
+      default:
+        // Other test notifications temporarily disabled until auth is fully implemented
+        console.log(`Creating test notification: ${type} for user: ${userId}`);
+        return NextResponse.json({
+          success: true,
+          message: `Test notification (${type}) would be created for user ${userId}`,
+          note: 'Most notification types will be fully functional once authentication is implemented'
+        });
+    }
 
   } catch (error) {
     console.error('Error creating test notification:', error);
@@ -58,6 +77,11 @@ export async function GET() {
         type: 'waitlist_available',
         name: 'Waitlist Spot Available',
         description: 'Test waitlist spot available notification'
+      },
+      {
+        type: 'new_user_registration',
+        name: 'New User Registration',
+        description: 'Test new user welcome email and admin notifications'
       },
       {
         type: 'test',
