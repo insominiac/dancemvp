@@ -112,7 +112,7 @@ export default function InstructorsPage() {
       <div className="min-h-[calc(100vh-200px)]" style={{background: 'var(--neutral-light)'}}>
         {/* Hero Section - Shorter Version */}
         <section 
-          className="relative py-12 md:py-16 overflow-hidden"
+          className="relative py-16 md:py-20 overflow-hidden"
           style={{
             background: 'linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%)'
           }}
@@ -132,16 +132,16 @@ export default function InstructorsPage() {
           </div>
           
           <div className="relative z-10 dance-container text-center text-white">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-4">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-5">
               <span className="mr-2">👨‍🏫</span>
               <span className="text-sm font-medium">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 dance-font">
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 dance-font">
               {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent dance-font">Instructors</span>
             </h1>
             
-            <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-white/90 mb-7 max-w-2xl mx-auto leading-relaxed">
               {pageContent?.heroSubtitle || "Meet the talented professionals behind our classes. Experienced, passionate, and dedicated to helping you achieve your dance goals."}
             </p>
           </div>
@@ -204,7 +204,7 @@ export default function InstructorsPage() {
     <div className="min-h-[calc(100vh-200px)]" style={{background: 'var(--neutral-light)'}}>
       {/* Hero Section - Shorter Version */}
       <section 
-        className="relative py-12 md:py-16 overflow-hidden"
+        className="relative py-16 md:py-20 overflow-hidden"
         style={{
           background: 'linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%)'
         }}
@@ -225,16 +225,16 @@ export default function InstructorsPage() {
         </div>
         
         <div className="relative z-10 dance-container text-center text-white">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-4">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-5">
             <span className="mr-2">👨‍🏫</span>
             <span className="text-sm font-medium">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</span>
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 dance-font">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 dance-font">
             {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent dance-font">Instructors</span>
           </h1>
           
-          <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-white/90 mb-7 max-w-2xl mx-auto leading-relaxed">
             {pageContent?.heroSubtitle || `Meet the ${instructors.length} talented professionals behind our classes. Experienced, passionate, and dedicated to helping you achieve your dance goals.`}
           </p>
           
