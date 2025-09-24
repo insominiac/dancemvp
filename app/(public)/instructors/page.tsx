@@ -114,34 +114,34 @@ export default function InstructorsPage() {
         <section 
           className="relative py-16 md:py-20 overflow-hidden"
           style={{
-            background: 'linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%)'
+            background: 'linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fef3c7 100%)'
           }}
         >
           <div 
-            className="absolute inset-0 opacity-10"
+            className="absolute inset-0 opacity-20"
             style={{
-              backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M30 5 L35 15 L45 15 L37.5 22.5 L40 32.5 L30 25 L20 32.5 L22.5 22.5 L15 15 L25 15 Z" fill="%23d4af37" fill-opacity="0.3"/%3E%3C/svg%3E")',
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M30 5 L35 15 L45 15 L37.5 22.5 L40 32.5 L30 25 L20 32.5 L22.5 22.5 L15 15 L25 15 Z" fill="%236366f1" fill-opacity="0.1"/%3E%3C/svg%3E")',
               backgroundSize: '30px 30px'
             }}
           ></div>
           
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute top-8 left-10 text-2xl opacity-10 animate-pulse">👨‍🏫</div>
-            <div className="absolute top-12 right-10 text-2xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}>✨</div>
-            <div className="absolute bottom-8 left-1/2 text-2xl opacity-10 animate-pulse" style={{animationDelay: '2s'}}>🎆</div>
+            <div className="absolute top-8 left-10 text-2xl opacity-20 text-indigo-500 animate-pulse">👨‍🏫</div>
+            <div className="absolute top-12 right-10 text-2xl opacity-20 text-purple-500 animate-pulse" style={{animationDelay: '1s'}}>✨</div>
+            <div className="absolute bottom-8 left-1/2 text-2xl opacity-20 text-amber-500 animate-pulse" style={{animationDelay: '2s'}}>🎆</div>
           </div>
           
-          <div className="relative z-10 dance-container text-center text-white">
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-5">
+          <div className="relative z-10 dance-container text-center">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 border border-indigo-200 text-indigo-700 mb-5">
               <span className="mr-2">👨‍🏫</span>
               <span className="text-sm font-medium">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</span>
             </div>
             
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 dance-font">
-              {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent dance-font">Instructors</span>
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 dance-font text-gray-800">
+              {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent dance-font">Instructors</span>
             </h1>
             
-            <p className="text-base md:text-lg text-white/90 mb-7 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base md:text-lg text-gray-700 mb-7 max-w-2xl mx-auto leading-relaxed">
               {pageContent?.heroSubtitle || "Meet the talented professionals behind our classes. Experienced, passionate, and dedicated to helping you achieve your dance goals."}
             </p>
           </div>
@@ -206,7 +206,7 @@ export default function InstructorsPage() {
       <section 
         className="relative py-16 md:py-20 overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%)'
+          background: 'linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 50%, #fef3c7 100%)'
         }}
       >
         <div 
@@ -224,17 +224,17 @@ export default function InstructorsPage() {
           <div className="absolute bottom-8 left-1/2 text-2xl opacity-10 animate-pulse" style={{animationDelay: '2s'}}>🎆</div>
         </div>
         
-        <div className="relative z-10 dance-container text-center text-white">
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-5">
+        <div className="relative z-10 dance-container text-center">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-indigo-100 border border-indigo-200 text-indigo-700 mb-5">
             <span className="mr-2">👨‍🏫</span>
             <span className="text-sm font-medium">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</span>
           </div>
           
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 dance-font">
-            {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent dance-font">Instructors</span>
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5 dance-font text-gray-800">
+            {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent dance-font">Instructors</span>
           </h1>
           
-          <p className="text-base md:text-lg text-white/90 mb-7 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base md:text-lg text-gray-700 mb-7 max-w-2xl mx-auto leading-relaxed">
             {pageContent?.heroSubtitle || `Meet the ${instructors.length} talented professionals behind our classes. Experienced, passionate, and dedicated to helping you achieve your dance goals.`}
           </p>
           
@@ -245,8 +245,8 @@ export default function InstructorsPage() {
               { icon: "✨", text: "Personalized guidance" }
             ]).map((feature, index) => (
               <div key={index} className="flex items-center">
-                {index > 0 && <div className="hidden sm:block text-white/40 mx-4">•</div>}
-                <div className="flex items-center text-white/90">
+                {index > 0 && <div className="hidden sm:block text-gray-400 mx-4">•</div>}
+                <div className="flex items-center text-gray-600">
                   <span className="mr-2">{feature.icon}</span>
                   <span className="font-medium">{feature.text}</span>
                 </div>
