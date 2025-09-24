@@ -432,7 +432,10 @@ export default function InstructorsPage() {
                       <div className="flex gap-3 pt-2">
                         <Link 
                           href={`/classes?instructor=${instructor.name}`}
-                          className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-3 px-4 rounded-xl text-center text-sm transition-all duration-300 hover:from-indigo-600 hover:to-purple-700 hover:shadow-lg hover:-translate-y-0.5"
+                          className="flex-1 text-white font-semibold py-3 px-4 rounded-xl text-center text-sm transition-all duration-300 hover:shadow-lg hover:-translate-y-0.5"
+                          style={{
+                            background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))'
+                          }}
                         >
                           View Classes
                         </Link>
