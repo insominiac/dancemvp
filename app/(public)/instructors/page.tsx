@@ -110,25 +110,38 @@ export default function InstructorsPage() {
   if (isLoading) {
     return (
       <div className="min-h-[calc(100vh-200px)]" style={{background: 'var(--neutral-light)'}}>
-        {/* Hero Section */}
-        <section className="dance-hero">
+        {/* Hero Section - Shorter Version */}
+        <section 
+          className="relative py-12 md:py-16 overflow-hidden"
+          style={{
+            background: 'linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%)'
+          }}
+        >
           <div 
-            className="dance-hero-background"
+            className="absolute inset-0 opacity-10"
             style={{
-              opacity: 0.1
+              backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M30 5 L35 15 L45 15 L37.5 22.5 L40 32.5 L30 25 L20 32.5 L22.5 22.5 L15 15 L25 15 Z" fill="%23d4af37" fill-opacity="0.3"/%3E%3C/svg%3E")',
+              backgroundSize: '30px 30px'
             }}
           ></div>
-          <div className="floating-elements">
-            <div className="floating-element" style={{top: '20%', left: '10%', animationDelay: '0s'}}>👨‍🏫</div>
-            <div className="floating-element" style={{top: '60%', right: '10%', animationDelay: '3s'}}>✨</div>
-            <div className="floating-element" style={{bottom: '20%', left: '50%', animationDelay: '6s'}}>🎆</div>
+          
+          <div className="absolute inset-0 pointer-events-none">
+            <div className="absolute top-8 left-10 text-2xl opacity-10 animate-pulse">👨‍🏫</div>
+            <div className="absolute top-12 right-10 text-2xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}>✨</div>
+            <div className="absolute bottom-8 left-1/2 text-2xl opacity-10 animate-pulse" style={{animationDelay: '2s'}}>🎆</div>
           </div>
-          <div className="dance-hero-content">
-            <p className="dance-hero-subtitle">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</p>
-            <h1 className="dance-hero-title dance-font">
+          
+          <div className="relative z-10 dance-container text-center text-white">
+            <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-4">
+              <span className="mr-2">👨‍🏫</span>
+              <span className="text-sm font-medium">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</span>
+            </div>
+            
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 dance-font">
               {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent dance-font">Instructors</span>
             </h1>
-            <p className="dance-hero-description">
+            
+            <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed">
               {pageContent?.heroSubtitle || "Meet the talented professionals behind our classes. Experienced, passionate, and dedicated to helping you achieve your dance goals."}
             </p>
           </div>
@@ -189,38 +202,53 @@ export default function InstructorsPage() {
 
   return (
     <div className="min-h-[calc(100vh-200px)]" style={{background: 'var(--neutral-light)'}}>
-      {/* Hero Section */}
-      <section className="dance-hero">
+      {/* Hero Section - Shorter Version */}
+      <section 
+        className="relative py-12 md:py-16 overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, var(--hero-overlay) 0%, var(--hero-overlay) 100%)'
+        }}
+      >
         <div 
-          className="dance-hero-background"
+          className="absolute inset-0 opacity-10"
           style={{
-            opacity: 0.1
+            backgroundImage: 'url("data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M30 5 L35 15 L45 15 L37.5 22.5 L40 32.5 L30 25 L20 32.5 L22.5 22.5 L15 15 L25 15 Z" fill="%23d4af37" fill-opacity="0.3"/%3E%3C/svg%3E")',
+            backgroundSize: '30px 30px'
           }}
         ></div>
-        <div className="floating-elements">
-          <div className="floating-element" style={{top: '20%', left: '10%', animationDelay: '0s'}}>👨‍🏫</div>
-          <div className="floating-element" style={{top: '60%', right: '10%', animationDelay: '3s'}}>✨</div>
-          <div className="floating-element" style={{bottom: '20%', left: '50%', animationDelay: '6s'}}>🎆</div>
+        
+        {/* Floating elements - positioned for shorter section */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-8 left-10 text-2xl opacity-10 animate-pulse">👨‍🏫</div>
+          <div className="absolute top-12 right-10 text-2xl opacity-10 animate-pulse" style={{animationDelay: '1s'}}>✨</div>
+          <div className="absolute bottom-8 left-1/2 text-2xl opacity-10 animate-pulse" style={{animationDelay: '2s'}}>🎆</div>
         </div>
-        <div className="dance-hero-content">
-          <p className="dance-hero-subtitle">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</p>
-          <h1 className="dance-hero-title dance-font">
+        
+        <div className="relative z-10 dance-container text-center text-white">
+          <div className="inline-flex items-center px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-white mb-4">
+            <span className="mr-2">👨‍🏫</span>
+            <span className="text-sm font-medium">{pageContent?.heroBadgeText || "Meet Our Expert Team"}</span>
+          </div>
+          
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 dance-font">
             {pageContent?.heroTitle || "Our"} <span className="bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent dance-font">Instructors</span>
           </h1>
-          <p className="dance-hero-description">
+          
+          <p className="text-base md:text-lg text-white/90 mb-6 max-w-2xl mx-auto leading-relaxed">
             {pageContent?.heroSubtitle || `Meet the ${instructors.length} talented professionals behind our classes. Experienced, passionate, and dedicated to helping you achieve your dance goals.`}
           </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+          
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
             {(pageContent?.heroFeatures || [
               { icon: "🎭", text: "Expert instructors" },
               { icon: "🏆", text: "Years of experience" },
               { icon: "✨", text: "Personalized guidance" }
             ]).map((feature, index) => (
               <div key={index} className="flex items-center">
-                {index > 0 && <div className="hidden sm:block text-white/60 mr-4">•</div>}
+                {index > 0 && <div className="hidden sm:block text-white/40 mx-4">•</div>}
                 <div className="flex items-center text-white/90">
                   <span className="mr-2">{feature.icon}</span>
-                  <span>{feature.text}</span>
+                  <span className="font-medium">{feature.text}</span>
                 </div>
               </div>
             ))}
