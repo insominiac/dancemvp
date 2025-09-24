@@ -254,34 +254,22 @@ export default function InstructorsPage() {
                 <h2 className="dance-section-title">{pageContent?.statsSection.title || "Our Teaching Excellence"}</h2>
                 <p className="max-w-2xl mx-auto mb-12">{pageContent?.statsSection.subtitle || "Meet our diverse team of professional dance instructors, each bringing unique expertise and passion to every class"}</p>
                 
-                <div className="dance-card-grid max-w-4xl mx-auto">
-                  <div className="dance-card text-center">
-                    <div className="text-4xl font-bold mb-2" style={{
-                      background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
-                    }}>{instructors.length}</div>
-                    <div style={{color: 'var(--neutral-gray)'}}>{pageContent?.statsSection.labels.instructorsLabel || "Expert Instructors"}</div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+                  <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                    <div className="text-4xl font-bold mb-2 text-indigo-600">{instructors.length}</div>
+                    <div className="text-gray-700 font-medium">{pageContent?.statsSection.labels.instructorsLabel || "Expert Instructors"}</div>
                   </div>
-                  <div className="dance-card text-center">
-                    <div className="text-4xl font-bold mb-2" style={{
-                      background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
-                    }}>
+                  <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                    <div className="text-4xl font-bold mb-2 text-emerald-600">
                       {instructors.reduce((sum, instructor) => sum + instructor.classCount, 0)}
                     </div>
-                    <div style={{color: 'var(--neutral-gray)'}}>{pageContent?.statsSection.labels.classesLabel || "Active Classes"}</div>
+                    <div className="text-gray-700 font-medium">{pageContent?.statsSection.labels.classesLabel || "Active Classes"}</div>
                   </div>
-                  <div className="dance-card text-center">
-                    <div className="text-4xl font-bold mb-2" style={{
-                      background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
-                      WebkitBackgroundClip: 'text',
-                      WebkitTextFillColor: 'transparent'
-                    }}>
+                  <div className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100 hover:shadow-xl transition-shadow duration-300">
+                    <div className="text-4xl font-bold mb-2 text-purple-600">
                       {Math.round(instructors.reduce((sum, instructor) => sum + parseFloat(instructor.experience || '0'), 0) / instructors.length) || 0}+
                     </div>
-                    <div style={{color: 'var(--neutral-gray)'}}>{pageContent?.statsSection.labels.experienceLabel || "Years Experience"}</div>
+                    <div className="text-gray-700 font-medium">{pageContent?.statsSection.labels.experienceLabel || "Years Experience"}</div>
                   </div>
                 </div>
               </div>
@@ -289,27 +277,29 @@ export default function InstructorsPage() {
               {/* Instructors Grid */}
               <div className="dance-card-grid mb-16">
                 {instructors.map((instructor) => (
-                  <div key={instructor.id} className="dance-card group relative overflow-hidden transform hover:-translate-y-2 transition-all duration-500">
+                  <div key={instructor.id} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 group hover:-translate-y-1">
                     {/* Instructor Header */}
-                    <div className="relative h-48 overflow-hidden" style={{background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))'}}>
-                      <div className="absolute inset-0" style={{background: 'rgba(26, 15, 31, 0.2)'}}></div>
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <img
-                          src={instructor.imageUrl || getPlaceholderImage(instructor.name)}
-                          alt={instructor.name}
-                          className="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg group-hover:scale-110 transition-transform duration-500"
-                          onError={(e) => {
-                            const target = e.target as HTMLImageElement
-                            target.src = getPlaceholderImage(instructor.name)
-                          }}
-                        />
-                      </div>
-                      <div className="absolute bottom-4 left-4 right-4 text-center">
-                        <h3 className="text-xl font-bold text-white mb-1 group-hover:text-yellow-300 transition-colors">
+                    <div className="relative p-8 pb-6 bg-gradient-to-br from-blue-50 to-indigo-100">
+                      <div className="flex flex-col items-center">
+                        <div className="relative mb-4">
+                          <img
+                            src={instructor.imageUrl || getPlaceholderImage(instructor.name)}
+                            alt={instructor.name}
+                            className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-md group-hover:scale-105 transition-transform duration-300"
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement
+                              target.src = getPlaceholderImage(instructor.name)
+                            }}
+                          />
+                          <div className="absolute -top-2 -right-2 w-6 h-6 bg-emerald-500 rounded-full border-2 border-white flex items-center justify-center">
+                            <span className="text-white text-xs font-bold">✓</span>
+                          </div>
+                        </div>
+                        <h3 className="text-xl font-bold text-gray-900 mb-1 text-center">
                           {instructor.name}
                         </h3>
                         {instructor.experience && (
-                          <p className="text-purple-100 text-sm font-medium uppercase tracking-wide">
+                          <p className="text-indigo-600 text-sm font-medium px-3 py-1 bg-indigo-100 rounded-full">
                             {instructor.experience} Experience
                           </p>
                         )}
@@ -320,7 +310,7 @@ export default function InstructorsPage() {
                     <div className="p-6">
                       {/* Bio */}
                       {instructor.bio && (
-                        <p style={{color: 'var(--neutral-gray)'}} className="mb-6 leading-relaxed line-clamp-3">
+                        <p className="text-gray-600 mb-6 leading-relaxed text-sm">
                           {instructor.bio.length > 120 
                             ? `${instructor.bio.substring(0, 120)}...` 
                             : instructor.bio}
@@ -330,22 +320,28 @@ export default function InstructorsPage() {
                       {/* Specialties */}
                       {instructor.specialtiesArray.length > 0 && (
                         <div className="mb-6">
-                          <p className="text-xs font-semibold mb-2" style={{color: 'var(--neutral-gray)'}}>SPECIALTIES</p>
-                          <div className="flex flex-wrap justify-center gap-2">
-                            {instructor.specialtiesArray.slice(0, 5).map((specialty, index) => (
-                              <span 
-                                key={index} 
-                                className="px-3 py-1 rounded-full text-xs border text-white"
-                                style={{
-                                  background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
-                                  border: '1px solid rgba(255, 255, 255, 0.2)'
-                                }}
-                              >
-                                {specialty}
-                              </span>
-                            ))}
+                          <p className="text-xs font-semibold mb-3 text-gray-700 uppercase tracking-wider">Specialties</p>
+                          <div className="flex flex-wrap gap-2">
+                            {instructor.specialtiesArray.slice(0, 5).map((specialty, index) => {
+                              const colors = [
+                                'bg-blue-100 text-blue-700 border-blue-200',
+                                'bg-purple-100 text-purple-700 border-purple-200', 
+                                'bg-emerald-100 text-emerald-700 border-emerald-200',
+                                'bg-orange-100 text-orange-700 border-orange-200',
+                                'bg-pink-100 text-pink-700 border-pink-200'
+                              ]
+                              const colorClass = colors[index % colors.length]
+                              return (
+                                <span 
+                                  key={index} 
+                                  className={`px-3 py-1 rounded-full text-xs font-medium border ${colorClass}`}
+                                >
+                                  {specialty}
+                                </span>
+                              )
+                            })}
                             {instructor.specialtiesArray.length > 5 && (
-                              <span className="px-3 py-1 rounded-full text-xs border" style={{backgroundColor: 'var(--neutral-light)', color: 'var(--neutral-gray)', border: '1px solid var(--neutral-gray)'}}>
+                              <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-600 border border-gray-200">
                                 +{instructor.specialtiesArray.length - 5} more
                               </span>
                             )}
@@ -356,25 +352,17 @@ export default function InstructorsPage() {
                       {/* Classes Info */}
                       <div className="mb-6">
                         <div className="grid grid-cols-2 gap-4 text-center">
-                          <div className="rounded-xl p-4" style={{background: 'linear-gradient(135deg, var(--neutral-light), rgba(255, 107, 53, 0.1))'}}>
-                            <div className="text-2xl font-bold" style={{
-                              background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent'
-                            }}>
+                          <div className="rounded-xl p-4 bg-gradient-to-br from-blue-50 to-blue-100 border border-blue-200">
+                            <div className="text-2xl font-bold text-blue-600">
                               {instructor.classCount}
                             </div>
-                            <div className="text-xs font-medium" style={{color: 'var(--neutral-gray)'}}>Active Classes</div>
+                            <div className="text-xs font-medium text-blue-700">Active Classes</div>
                           </div>
-                          <div className="rounded-xl p-4" style={{background: 'linear-gradient(135deg, rgba(247, 37, 133, 0.1), var(--neutral-light))'}}>
-                            <div className="text-2xl font-bold" style={{
-                              background: 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent'
-                            }}>
+                          <div className="rounded-xl p-4 bg-gradient-to-br from-emerald-50 to-emerald-100 border border-emerald-200">
+                            <div className="text-2xl font-bold text-emerald-600">
                               {instructor.activeClasses.filter(c => c.isPrimary).length}
                             </div>
-                            <div className="text-xs font-medium" style={{color: 'var(--neutral-gray)'}}>Lead Instructor</div>
+                            <div className="text-xs font-medium text-emerald-700">Lead Instructor</div>
                           </div>
                         </div>
                       </div>
@@ -382,37 +370,28 @@ export default function InstructorsPage() {
                       {/* Active Classes */}
                       {instructor.activeClasses.length > 0 && (
                         <div className="mb-6">
-                          <p className="text-xs font-semibold mb-3" style={{color: 'var(--neutral-gray)'}}>CURRENT CLASSES</p>
+                          <p className="text-xs font-semibold mb-3 text-gray-700 uppercase tracking-wider">Current Classes</p>
                           <div className="space-y-2">
                             {instructor.activeClasses.slice(0, 3).map((cls) => (
                               <Link 
                                 key={cls.id} 
                                 href={`/classes/${cls.id}`}
-                                className="block p-2 rounded-lg text-sm transition-all duration-300 border border-transparent hover:transform hover:scale-105"
-                                style={{
-                                  backgroundColor: 'var(--neutral-light)',
-                                  color: 'var(--neutral-gray)',
-                                  borderColor: 'transparent'
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.background = 'linear-gradient(135deg, var(--primary-gold), var(--accent-rose))'
-                                  e.currentTarget.style.color = 'white'
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.backgroundColor = 'var(--neutral-light)'
-                                  e.currentTarget.style.color = 'var(--neutral-gray)'
-                                }}
+                                className="block p-3 rounded-lg text-sm transition-all duration-300 border border-gray-200 hover:border-indigo-300 hover:bg-indigo-50 bg-gray-50 hover:transform hover:translate-x-1"
                               >
                                 <div className="flex items-center justify-between">
-                                  <span className="font-medium">{cls.title}</span>
-                                  {cls.isPrimary && <span className="text-xs ml-1">★</span>}
+                                  <span className="font-medium text-gray-900">{cls.title}</span>
+                                  {cls.isPrimary && (
+                                    <span className="text-xs bg-amber-100 text-amber-700 px-2 py-1 rounded-full border border-amber-200 font-medium">
+                                      ⭐ Lead
+                                    </span>
+                                  )}
                                 </div>
-                                <div className="text-xs opacity-75">Level: {cls.level}</div>
+                                <div className="text-xs text-gray-600 mt-1">Level: {cls.level}</div>
                               </Link>
                             ))}
                             {instructor.activeClasses.length > 3 && (
                               <div className="text-center">
-                                <span className="text-xs px-3 py-1 rounded-full" style={{backgroundColor: 'var(--neutral-light)', color: 'var(--neutral-gray)'}}>
+                                <span className="text-xs px-3 py-1 rounded-full bg-gray-100 text-gray-600 border border-gray-200 font-medium">
                                   +{instructor.activeClasses.length - 3} more classes
                                 </span>
                               </div>
@@ -421,21 +400,23 @@ export default function InstructorsPage() {
                         </div>
                       )}
                   
-                      {/* Contact Button */}
-                      <div className="flex gap-2">
+                      {/* Contact Buttons */}
+                      <div className="flex gap-3 pt-2">
                         <Link 
                           href={`/classes?instructor=${instructor.name}`}
-                          className="dance-btn dance-btn-accent flex-1 hover:transform hover:scale-105 transition-all duration-300 text-center text-sm"
+                          className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-3 px-4 rounded-xl text-center text-sm transition-all duration-300 hover:from-indigo-600 hover:to-purple-700 hover:shadow-lg hover:-translate-y-0.5"
                         >
                           View Classes
                         </Link>
                         {instructor.email && (
                           <Link 
                             href={`mailto:${instructor.email}`}
-                            className="dance-btn dance-btn-secondary hover:transform hover:scale-105 transition-all duration-300 flex items-center justify-center"
+                            className="bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-xl transition-all duration-300 flex items-center justify-center border border-gray-200 hover:border-gray-300 hover:-translate-y-0.5"
                             title="Contact instructor"
                           >
-                            📧
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                            </svg>
                           </Link>
                         )}
                       </div>
