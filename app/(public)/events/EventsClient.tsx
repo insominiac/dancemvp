@@ -86,8 +86,8 @@ export default function EventsClient({
       setIsLoading(true)
       try {
         const [evRes, pcRes] = await Promise.all([
-          fetch(apiUrl('public/events')),
-          fetch(apiUrl('public/content/events'))
+          fetch(apiUrl('public/events'), { cache: 'no-store' }),
+          fetch(apiUrl('public/content/events'), { cache: 'no-store' })
         ])
         if (evRes.ok) {
           const data = await evRes.json()

@@ -135,12 +135,12 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const [statsRes, featuredRes, homepageRes, settingsRes, danceStylesRes, eventsRes] = await Promise.all([
-          fetch(apiUrl('public/stats')),
-          fetch(apiUrl('public/featured')),
-          fetch(apiUrl('public/content/homepage')),
-          fetch(apiUrl('public/content/settings')),
-          fetch(apiUrl('public/dance-styles')),
-          fetch(apiUrl('public/events'))
+          fetch(apiUrl('public/stats'), { cache: 'no-store' }),
+          fetch(apiUrl('public/featured'), { cache: 'no-store' }),
+          fetch(apiUrl('public/content/homepage'), { cache: 'no-store' }),
+          fetch(apiUrl('public/content/settings'), { cache: 'no-store' }),
+          fetch(apiUrl('public/dance-styles'), { cache: 'no-store' }),
+          fetch(apiUrl('public/events'), { cache: 'no-store' })
         ])
 
         if (statsRes.ok) {

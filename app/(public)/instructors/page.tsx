@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useTranslation } from 'react-i18next'
 import TranslatedText from '../../components/TranslatedText'
 import '@/lib/i18n'
+import { apiUrl } from '@/app/lib/api'
 
 interface Instructor {
   id: string
@@ -79,8 +80,8 @@ export default function InstructorsPage() {
       try {
         // Fetch both instructors and page content in parallel
         const [instructorsResponse, contentResponse] = await Promise.all([
-          fetch('/api/public/instructors'),
-          fetch('/api/admin/content/instructors')
+          fetch(apiUrl('public/instructors'), { cache: 'no-store' }),
+          fetch(apiUrl('public/content/instructors'), { cache: 'no-store' })
         ])
         
         if (instructorsResponse.ok) {

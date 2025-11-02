@@ -3,6 +3,7 @@ import EventsClient from './EventsClient'
 import { translationService } from '@/lib/translation-service'
 import { generateMetadata as genMeta } from '@/app/lib/seo'
 import { apiUrl } from '@/app/lib/api'
+export const dynamic = 'force-dynamic'
 
 interface Event {
   id: string

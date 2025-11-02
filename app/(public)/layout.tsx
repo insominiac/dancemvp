@@ -96,7 +96,7 @@ export default function PublicLayout({
   useEffect(() => {
     const loadSiteSettings = async () => {
       try {
-        const response = await fetch('/api/public/content/settings')
+        const response = await fetch('/api/public/content/settings', { cache: 'no-store' })
         if (response.ok) {
           const settings = await response.json()
           setSiteSettings(settings)
