@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next'
 import '@/lib/i18n' // Initialize unified i18n
 import TranslatedText from '../../components/TranslatedText'
 import SEOHead from '@/components/SEOHead'
+import { apiUrl } from '@/app/lib/api'
 
 interface Class {
   id: string
@@ -60,7 +61,7 @@ export default function ClassesPage() {
   const fetchClasses = async () => {
     setIsLoading(true)
     try {
-      const res = await fetch('/api/public/classes')
+      const res = await fetch(apiUrl('public/classes'))
       if (res.ok) {
         const data = await res.json()
         setClasses(data.classes)
@@ -76,7 +77,7 @@ export default function ClassesPage() {
   const fetchSeo = async () => {
     try {
       // Fetch SEO content for the classes page from DB
-      const res = await fetch('/api/seo?path=/classes')
+      const res = await fetch(apiUrl('seo?path=/classes'))
       if (res.ok) {
         const data = await res.json()
         if (data?.seoData) {

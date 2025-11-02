@@ -8,6 +8,7 @@ import '@/lib/i18n'
 import DanceStylesTabs from '../components/DanceStylesTabs'
 import TranslatedText from '../components/TranslatedText'
 import '../styles/homepage-grid.css'
+import { apiUrl } from '@/app/lib/api'
 
 interface Stats {
   students: number
@@ -134,12 +135,12 @@ export default function HomePage() {
     const fetchData = async () => {
       try {
         const [statsRes, featuredRes, homepageRes, settingsRes, danceStylesRes, eventsRes] = await Promise.all([
-          fetch('/api/public/stats'),
-          fetch('/api/public/featured'),
-          fetch('/api/public/content/homepage'),
-          fetch('/api/public/content/settings'),
-          fetch('/api/public/dance-styles'),
-          fetch('/api/public/events')
+          fetch(apiUrl('public/stats')),
+          fetch(apiUrl('public/featured')),
+          fetch(apiUrl('public/content/homepage')),
+          fetch(apiUrl('public/content/settings')),
+          fetch(apiUrl('public/dance-styles')),
+          fetch(apiUrl('public/events'))
         ])
 
         if (statsRes.ok) {

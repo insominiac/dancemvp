@@ -2,6 +2,7 @@ import { headers } from 'next/headers'
 import EventsClient from './EventsClient'
 import { translationService } from '@/lib/translation-service'
 import { generateMetadata as genMeta } from '@/app/lib/seo'
+import { apiUrl } from '@/app/lib/api'
 
 interface Event {
   id: string
@@ -54,11 +55,7 @@ interface EventsPageContent {
 
 export async function generateMetadata() {
   try {
-    const h = headers()
-    const protocol = h.get('x-forwarded-proto') || 'http'
-    const host = h.get('host') || 'localhost:3000'
-    const baseUrl = `${protocol}://${host}`
-    const res = await fetch(`${baseUrl}/api/seo?path=/events`, { cache: 'no-store' })
+    const res = await fetch(apiUrl('seo?path=/events'), { cache: 'no-store' })
     if (res.ok) {
       const data = await res.json()
       return genMeta('/events', data.seoData)
@@ -77,14 +74,10 @@ export default async function EventsPage() {
   const rawLang = (cookieLang || acceptLang || 'en').toLowerCase()
   const lang = /^[a-z]{2}$/.test(rawLang) ? (rawLang as string) : 'en'
 
-  // Fetch events and page content on server
-  const protocol = h.get('x-forwarded-proto') || 'http'
-  const host = h.get('host') || 'localhost:3000'
-  const baseUrl = `${protocol}://${host}`
-  
+  // Fetch events and page content from external API
   const [eventsRes, contentRes] = await Promise.all([
-    fetch(`${baseUrl}/api/public/events`, { cache: 'no-store' }),
-    fetch(`${baseUrl}/api/public/content/events`, { cache: 'no-store' })
+    fetch(apiUrl('public/events'), { cache: 'no-store' }),
+    fetch(apiUrl('public/content/events'), { cache: 'no-store' })
   ])
 
   let events: Event[] = []
